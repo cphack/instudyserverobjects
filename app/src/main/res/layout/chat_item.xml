@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="false"
+    android:layout_marginTop="25dp"
+    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded">
+
+    <ImageView
+        android:id="@+id/ivProfileOther"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="@string/profile_other"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="42dp"
+        android:layout_marginStart="10dp"
+        android:hint="Your message?"
+        android:gravity="center|top"
+        android:lines="3"
+        android:textAlignment="viewEnd"
+        android:textSize="12sp"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/ivProfileMe"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="-33dp"
+        android:contentDescription="@string/profile_me"
+        android:src="@mipmap/ic_launcher" />
+</LinearLayout>

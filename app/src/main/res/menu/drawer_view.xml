@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:title="User Type"
+    tools:ignore="HardcodedText">
+    <menu>
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_first_fragment"
+            android:icon="@drawable/studyowl"
+            android:title="@string/teacher" />
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:icon="@drawable/studyowl"
+            android:title="@string/student" />
+        </group>
+    </menu>
+</item>
+<item android:title="Actions"
+    tools:ignore="HardcodedText">
+    <menu>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_third_fragment"
+            android:icon="@drawable/studyowl"
+            android:title="@string/Groups" />
+        <item
+            android:id="@+id/nav_fourth_fragment"
+            android:icon="@drawable/studyowl"
+            android:title="@string/Search" />
+        </group>
+    </menu>
+</item>
+</menu>

@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/studyowl"
+        tools:ignore="ContentDescription,RtlHardcoded"
+        android:id="@+id/imageView" />
+
+    <ListView
+        android:id="@+id/lvChat"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_above="@+id/rlSend"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageView"
+        android:transcriptMode="alwaysScroll"
+        tools:ignore="RtlHardcoded" />
+
+    <RelativeLayout
+        android:id="@+id/rlSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="5dp">
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btSend"
+            android:layout_toLeftOf="@+id/btSend"
+            android:gravity="top"
+            android:hint="@string/message_hint"
+            android:imeOptions="actionSend"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/btSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="@string/send"
+            android:textSize="18sp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"></Button>
+    </RelativeLayout>
+
+</RelativeLayout>
