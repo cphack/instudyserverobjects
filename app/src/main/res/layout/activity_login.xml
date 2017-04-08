@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context="com.codepath.android.instudy.activities.LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="30dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_below="@+id/imageView2"
+        android:fontFamily="sans-serif"
+        android:text="sign in"
+        android:textColor="@color/login_active"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="75dp"
+        android:layout_height="2dip"
+        android:layout_alignStart="@+id/tvSignIn"
+        android:layout_below="@+id/tvSignIn"
+        android:layout_marginTop="5dp"
+        android:background="@color/login_active_line" />
+
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_toRightOf="@+id/tvSignIn"
+        android:paddingLeft="40dp"
+        android:text="sign up"
+        android:textColor="@color/login_inactive"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:paddingTop="40dp"
+        android:text="USERNAME"
+        android:textColor="@color/login_inactive"
+        android:textSize="16sp"
+
+        android:layout_below="@+id/tvSignIn"
+        android:layout_alignStart="@+id/etLogin" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsername"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_text_round"
+        android:ems="13"
+        android:inputType="textPersonName"
+        android:padding="5dip"
+        android:text="Alexandr Climov"
+        android:textColor="@color/login_active"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/etLogin"
+        android:layout_below="@+id/etLogin"
+        android:fontFamily="sans-serif"
+        android:paddingTop="20dp"
+        android:text="PASSWORD"
+        android:textColor="@color/login_inactive"
+        android:textSize="16sp"
+
+        />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etLogin"
+        android:layout_below="@+id/tvPassword"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_text_round"
+        android:ems="13"
+        android:inputType="textPassword"
+        android:padding="5dip"
+        android:textColor="@color/login_active"
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/login_button_round"
+        android:text="sign in"
+        android:textColor="@color/login_active" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="250dp"
+        android:layout_height="1dip"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@color/login_inactive" />
+
+    <TextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Forgot Password?"
+        android:textColor="@color/login_inactive"
+        android:textSize="12sp" />
+
+
+</RelativeLayout>

@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.messages.Message;
+
+import com.codepath.android.instudy.models.Message;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;

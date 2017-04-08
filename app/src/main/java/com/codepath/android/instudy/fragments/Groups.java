@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.GroupAdapter;
-import com.codepath.android.instudy.messages.Message;
+import com.codepath.android.instudy.models.Message;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
