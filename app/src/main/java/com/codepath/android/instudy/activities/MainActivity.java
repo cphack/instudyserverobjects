@@ -1,5 +1,6 @@
 package com.codepath.android.instudy.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,7 +18,7 @@ import com.codepath.android.instudy.fragments.CoursesStudent;
 import com.codepath.android.instudy.fragments.CoursesTeacher;
 import com.codepath.android.instudy.fragments.Groups;
 import com.codepath.android.instudy.fragments.MyProfile;
-
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -31,13 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Find the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setLogo(R.drawable.theaderowl);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
-        // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
@@ -47,14 +42,13 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-
-        nvDrawer.getMenu().getItem(0).setChecked(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, new Groups()).commit();
         setTitle(R.string.teacher);
 
 
     }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -70,47 +64,49 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
-        switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-                Log.d("DEBUG", "Got to Teacher");
-                fragmentClass = CoursesTeacher.class;
+       switch (menuItem.getItemId()) {
+            case R.id.dvLogOut:
+                logout();
                 break;
-            case R.id.nav_second_fragment:
+          /*  case R.id.nav_second_fragment:
                 Log.d("DEBUG", "Got to Students");
                 fragmentClass = CoursesStudent.class;
                 break;
             case R.id.nav_third_fragment:
                 Log.d("DEBUG", "Got to Groups");
                 fragmentClass = Groups.class;
-                break;
+                break;*/
             default:
                 Log.d("DEBUG", "Got to Profiles");
                 fragmentClass = MyProfile.class;
         }
 
-        try {
+       /* try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+       if(fragment!=null) {
+           // Insert the fragment by replacing any existing fragment
+           FragmentManager fragmentManager = getSupportFragmentManager();
+           fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
-        // Set action bar title
-        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
+           // Highlight the selected item has been done by NavigationView
+           menuItem.setChecked(true);
+           // Set action bar title
+           setTitle(menuItem.getTitle());
+           // Close the navigation drawer
+           mDrawer.closeDrawers();
+       }
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         /* // The action bar home/up action should open or close the drawer.
@@ -128,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE 1: Make sure to override the method with only a single `Bundle` argument
     // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
@@ -144,5 +141,16 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void logout(){
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if(currentUser!=null) {
+            currentUser.logOut();
+
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 }

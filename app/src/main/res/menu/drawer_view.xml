@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="User Type"
-    tools:ignore="HardcodedText">
-    <menu>
-        <group android:checkableBehavior="single">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <group android:checkableBehavior="single"
+        android:id="@+id/dgMain">
         <item
-            android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/studyowl"
-            android:title="@string/teacher" />
+            android:id="@+id/dvAddNewCourse"
+            android:icon="@drawable/add_folder"
+            android:title="@string/dvAddNewCourse" />
         <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/studyowl"
-            android:title="@string/student" />
-        </group>
-    </menu>
-</item>
-<item android:title="Actions"
-    tools:ignore="HardcodedText">
-    <menu>
-    <group android:checkableBehavior="single">
+            android:id="@+id/dvMyProfile"
+            android:icon="@drawable/user"
+            android:title="@string/dvMyProfile" />
         <item
-            android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/studyowl"
-            android:title="@string/Groups" />
+            android:id="@+id/dvCoursesTeacher"
+            android:icon="@drawable/professor"
+            android:title="@string/dvCoursesTeacher" />
         <item
-            android:id="@+id/nav_fourth_fragment"
-            android:icon="@drawable/studyowl"
-            android:title="@string/Search" />
-        </group>
-    </menu>
-</item>
+            android:id="@+id/dvCoursesStudent"
+            android:icon="@drawable/student"
+            android:title="@string/dvCoursesStudent" />
+        <item
+            android:id="@+id/dvNotifications"
+            android:icon="@drawable/notification"
+            android:title="@string/dvNotifications" />
+        <item
+            android:id="@+id/dvFriends"
+            android:icon="@drawable/meeting_with_a_friend"
+            android:title="@string/dvFriends" />
+        <item
+            android:id="@+id/dvMessages"
+            android:icon="@drawable/mail"
+            android:title="@string/dvMessages" />
+        <item
+            android:id="@+id/dvSettings"
+            android:icon="@drawable/settings"
+            android:title="@string/dvSettings" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/dgLogout">
+        <item
+            android:id="@+id/dvLogOut"
+            android:icon="@drawable/logout"
+            android:title="@string/dvLogOut" />
+    </group>
+
 </menu>

@@ -17,4 +17,19 @@
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
 
+    <string name="dvAddNewCourse">Add new course</string>
+    <string name="dvMyProfile">My profile</string>
+    <string name="dvCoursesTeacher">Courses as a teacher</string>
+    <string name="dvCoursesStudent">Courses as a student</string>
+    <string name="dvNotifications">My notifications</string>
+    <string name="dvFriends">Friends</string>
+    <string name="dvMessages">Messages</string>
+    <string name="dvSettings">Settings</string>
+
+    <string name="dvLogOut">Log out</string>
+
+
+
+
+
 </resources>

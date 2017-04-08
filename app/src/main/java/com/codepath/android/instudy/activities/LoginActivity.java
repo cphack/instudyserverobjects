@@ -15,7 +15,6 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText etLogin;
@@ -65,11 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                             // If user exist and authenticated, send user to Welcome.class
                             Intent intent = new Intent(
                                     LoginActivity.this,
-                                    CoursesActivity.class);
+                                    MainActivity.class);
                             startActivity(intent);
-                            Toast.makeText(getApplicationContext(),
-                                    "Successfully Logged in",
-                                    Toast.LENGTH_LONG).show();
                             finish();
                         } else {
                             Toast.makeText(
