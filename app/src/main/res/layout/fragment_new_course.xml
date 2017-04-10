@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etTitle"
+        android:hint="Touch to add title"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etDescription"
+        android:hint="Touch to add description"
+        android:layout_below="@+id/etTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvStartDate"
+        android:hint="Touch to add beginning of the course"
+        android:layout_below="@+id/etDescription"/>
+
+    <Button
+        android:id="@+id/btnSaveCourse"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvStartDate"
+        android:background="@drawable/action_button_round"
+        android:text="save"
+        android:textColor="@color/login_active"
+        android:textSize="8sp"/>
+</RelativeLayout>

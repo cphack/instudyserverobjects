@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <RelativeLayout
+                android:id="@+id/rlLeftCol"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Applied Machine Learning in Python"
+                    android:textColor="@color/text_accent"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tvTitle"
+                    android:layout_below="@+id/tvTitle"
+                    android:text="04 April 2017 * Campus A * 274 Aud."
+                    android:textColor="@color/text_accent"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/llFriendList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:minHeight="75dp">
+                    <!-- <fragment
+                         android:id="@+id/frgFriendsList"
+                         android:name="com.codepath.android.instudy.fragments.PeopleListHorizFragment"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@+id/tvSubTitle" />-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llFriendList"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btnOverview"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/action_button_round"
+                            android:text="overview"
+                            android:textColor="@color/login_active"
+                            android:textSize="8sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/btnApply"
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/action_button_round"
+                            android:text="Apply"
+                            android:textColor="@color/login_active"
+                            android:textSize="8sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/ivTeacher"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                     />
+
+                <TextView
+                    android:id="@+id/tvTeacherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivTeacher"
+                    android:layout_centerHorizontal="true"
+                    android:text="Maria Podlesnova"
+                    android:textColor="@color/text_not_accent"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

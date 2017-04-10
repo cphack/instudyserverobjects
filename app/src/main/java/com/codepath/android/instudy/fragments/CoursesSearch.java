@@ -1,15 +1,11 @@
 package com.codepath.android.instudy.fragments;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +19,10 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
-public class CoursesStudent extends Fragment {
+public class CoursesSearch extends Fragment implements CourseListAdapter.CourseListListener {
 
     ArrayList<Course> courses;
     CourseListAdapter aCourses;
@@ -70,13 +62,16 @@ public class CoursesStudent extends Fragment {
     private void initAdapter() {
         courses = new ArrayList<Course>();
         //construct adapter from datasource
-        aCourses = new CourseListAdapter(getActivity(), courses, "STU");
+        aCourses = new CourseListAdapter(getActivity(), courses, "SEA");
     }
 
-
     private void populateCourseList() {
+
+        List<String> users = new ArrayList<>();
+        users.add( ParseUser.getCurrentUser().getObjectId());
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
-        query.whereContains("students", ParseUser.getCurrentUser().getObjectId()) ;
+        query.whereNotContainedIn("students",users);
+
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Course>() {
             public void done(List<Course> itemList, ParseException e) {
@@ -96,5 +91,19 @@ public class CoursesStudent extends Fragment {
         });
     }
 
+    @Override
+    public void onCourseApply(Course course) {
+        List<String> students = course.getStudents();
+        if(students==null){
+            students=new ArrayList<>();
+        }
+        if(!students.contains(ParseUser.getCurrentUser().getObjectId())){
+            students.add(ParseUser.getCurrentUser().getObjectId());
+        }
+        course.saveInBackground();
+        Toast.makeText(getActivity(), "You successfully registered on this course", Toast.LENGTH_SHORT).show();
+        courses.remove(course);
+        aCourses.notifyDataSetChanged();
+    }
 }
 

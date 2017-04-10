@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
+    android:background="@drawable/app_resized"
     tools:context="com.codepath.android.instudy.activities.LoginActivity">
 
     <ImageView
@@ -50,14 +50,14 @@
         android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etLogin"
+        android:layout_below="@+id/tvSignIn"
         android:fontFamily="sans-serif"
         android:paddingTop="40dp"
         android:text="USERNAME"
-        android:textColor="@color/login_inactive"
-        android:textSize="16sp"
 
-        android:layout_below="@+id/tvSignIn"
-        android:layout_alignStart="@+id/etLogin" />
+        android:textColor="@color/login_inactive"
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/etLogin"
@@ -83,9 +83,7 @@
         android:paddingTop="20dp"
         android:text="PASSWORD"
         android:textColor="@color/login_inactive"
-        android:textSize="16sp"
-
-        />
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -100,7 +98,6 @@
         android:padding="5dip"
         android:textColor="@color/login_active"
         android:textSize="16sp" />
-
 
     <Button
         android:id="@+id/btnLogin"
@@ -132,6 +129,5 @@
         android:text="Forgot Password?"
         android:textColor="@color/login_inactive"
         android:textSize="12sp" />
-
 
 </RelativeLayout>

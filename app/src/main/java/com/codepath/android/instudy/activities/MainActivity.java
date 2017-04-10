@@ -12,11 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.Groups;
 import com.codepath.android.instudy.fragments.MyProfile;
+import com.codepath.android.instudy.fragments.TabsFragment;
+import com.codepath.android.instudy.models.Course;
 import com.parse.ParseUser;
+
+import static android.os.Build.VERSION_CODES.M;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -24,10 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
+    private TextView tvFullName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Find the toolbar view inside the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,16 +46,21 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle = setupDrawerToggle();
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
-
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        View headerView = nvDrawer.inflateHeaderView(R.layout.nav_header);
+
+        tvFullName = (TextView) headerView.findViewById(R.id.tvFullName);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new Groups()).commit();
-        setTitle(R.string.teacher);
+        fragmentManager.beginTransaction().replace(R.id.flContent, new TabsFragment()).commit();
 
-
+        if(tvFullName!=null) {
+            if (ParseUser.getCurrentUser() != null) {
+                tvFullName.setText(ParseUser.getCurrentUser().getString("FullName"));
+            }
+        }
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -58,49 +74,65 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
-       switch (menuItem.getItemId()) {
-//           case R.id.dvLogOut:
-//                logout();
-//                break;
-           case R.id.dvMyProfile:
-               Log.d("DEBUG", "Got to Profiles");
-               fragmentClass = MyProfile.class;
-               break;
-          /*  case R.id.nav_second_fragment:
-                Log.d("DEBUG", "Got to Students");
-                fragmentClass = CoursesStudent.class;
+        Intent i = null;
+        switch (menuItem.getItemId()) {
+            case R.id.dvLogOut:
+                logout();
+                i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
-            case R.id.nav_third_fragment:
+            case R.id.dvMessages:
+                i = new Intent(MainActivity.this, MessagesActivity.class);
+               break;
+            case R.id.dvAddNewCourse:
+                i = new Intent(MainActivity.this, NewCourseActivity.class);
+                break;
+
+            case R.id.dvMyProfile:
+                i = new Intent(MainActivity.this, MyProfileActivity.class);
+                break;
+
+            case R.id.dvTest:
+               runTest();
+                break;
+
+
+          /*  case R.id.nav_third_fragment:
                 Log.d("DEBUG", "Got to Groups");
                 fragmentClass = Groups.class;
                 break;*/
             default:
-                Log.d("DEBUG", "Got to Groups");
-                fragmentClass = Groups.class;
+                Log.d("DEBUG", "Got to Profiles");
+                Toast.makeText(this,String.valueOf(menuItem.getItemId()),Toast.LENGTH_SHORT).show();
+                fragmentClass = MyProfile.class;
         }
+        if(i!=null){
 
-       try {
+        startActivity(i);
+        finish();
+}
+
+       /* try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-       if(fragment!=null) {
-           // Insert the fragment by replacing any existing fragment
-           FragmentManager fragmentManager = getSupportFragmentManager();
-           fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+       /* if (fragment != null) {
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-           // Highlight the selected item has been done by NavigationView
-           menuItem.setChecked(true);
-           // Set action bar title
-           setTitle(menuItem.getTitle());
-           // Close the navigation drawer
-           mDrawer.closeDrawers();
-       }
+            // Highlight the selected item has been done by NavigationView
+            menuItem.setChecked(true);
+            // Set action bar title
+            setTitle(menuItem.getTitle());
+            // Close the navigation drawer
+            mDrawer.closeDrawers();
+        }*/
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -127,10 +159,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // `onPostCreate` called when activity start-up is complete after `onStart()`
-    // NOTE 1: Make sure to override the method with only a single `Bundle` argument
-    // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
-    // There are 2 signatures and only `onPostCreate(Bundle state)` shows the hamburger icon.
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -145,14 +173,73 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private void logout(){
+    private void logout() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        if(currentUser!=null) {
+        if (currentUser != null) {
             currentUser.logOut();
-
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(i);
-            finish();
         }
+    }
+
+    private void runTest(){
+       /* Course course = new Course();
+        course.setTitle("CSE 120 Computer Science Principles (5) NW, QSR");
+        course.setDescription("Introduces fundamental concepts of computer science and computational thinking. Includes logical reasoning, problem solving, data representation, abstraction, the creation of digital artifacts such as web pages and programs, managing complexity, operation of computers and networks, effective web searching, ethical, legal and social aspects of information technology. May not be taken for credit if credit earned in CSE 100/INFO 100.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+
+        course = new Course();
+        course.setTitle("CSE 131 Science and Art of Digital Photography (4) VLPA Hemingway");
+        course.setDescription("Covers the fundamentals of digital photography, including computational imaging; the elements of photographic composition and design; and the future of internet-enabled photography.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 142 Computer Programming I (4) NW, QSR");
+        course.setDescription("Basic programming-in-the-small abilities and concepts including procedural programming (methods, parameters, return, values), basic control structures (sequence, if/else, for loop, while loop), file processing, arrays, and an introduction to defining objects. Intended for students without prior programming experience. Offered: AWSpS.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 143 Computer Programming II (5) NW, QSR");
+        course.setDescription("Continuation of CSE 142. Concepts of data abstraction and encapsulation including stacks, queues, linked lists, binary trees, recursion, instruction to complexity and use of predefined collection classes. Prerequisite: CSE 142. Offered: AWSpS.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 154 Web Programming (5) QSR");
+        course.setDescription("Covers languages, tools, and techniques for developing interactive and dynamic web pages. Topics include page styling, design, and layout; client and server side scripting; web security; and interacting with data sources such as databases. Prerequisite: minimum grade of 2.0 in either CSE 142, CSE 143, or CSE 160.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 160 Data Programming (4) NW, QSR");
+        course.setDescription("Introduction to computer programming. Assignments solve real data manipulation tasks from science, engineering, business, and the humanities. Concepts of computational thinking, problem-solving, data analysis, Python programming, control and data abstraction, file processing, and data visualization. Intended for students without prior programming experience. No credit if CSE 143 has been taken.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 190 Current Topics in Computer Science and Engineering (1-5, max. 15)");
+        course.setDescription("View course details in MyPlan: CSE 190");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 301 CSE Internship Education (1-2, max. 12)");
+        course.setDescription("CSE Internship practicum; integration of classroom theory with on-the-job training. Periods of full-time work alternate with periods of full-time study. Open only to students who have been admitted to CSE Internship Program or by special permission of the Department. Offered credit/no credit only. Credit/no-credit only. Offered: AWSpS.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 311 Foundations of Computing I (4) QSR");
+        course.setDescription("Examines fundamentals of logic, set theory, induction, and algebraic structures with applications to computing; finite state machines; and limits of computability. Prerequisite: CSE 143; either MATH 126 or MATH 136.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();
+
+        course = new Course();
+        course.setTitle("CSE 312 Foundations of Computing II (4) QSR");
+        course.setDescription("Examines fundamentals of enumeration and discrete probability; applications of randomness to computing; polynomial-time versus NP; and NP-completeness. Prerequisite: CSE 311.");
+        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course.saveInBackground();*/
     }
 }

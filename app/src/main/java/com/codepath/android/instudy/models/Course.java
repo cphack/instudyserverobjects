@@ -50,20 +50,7 @@ public class Course extends ParseObject {
     public String getDescription() {
         return getString(DESCRIPTION_KEY);
     }
-    public ArrayList<String> getTeachers() {
-        ArrayList<String> result = new ArrayList<>();
-        JSONArray tcs = getJSONArray(TEACHERS_KEY);
-
-        for (int i = 0; i < tcs.length(); i++) {
-            try {
-                result.add((String) tcs.get(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-        return result;
-    }
+    public String getTeachers() { return getString(TEACHERS_KEY);}
     public ArrayList<String> getStudents() {
         ArrayList<String> result = new ArrayList<>();
         JSONArray sts = getJSONArray(STUDENTS_KEY);
@@ -121,6 +108,7 @@ public class Course extends ParseObject {
     public String getAssignment() {
         return getString(ASSIGNMENT_KEY);
     }
+    public String getSubTitle(){return "14 April 2017 Campus C, aud.244";}
 
 
     public void setTitle(String title) {
@@ -129,8 +117,8 @@ public class Course extends ParseObject {
     public void setDescription(String description) {
         put(DESCRIPTION_KEY, description);
     }
-    public void setTeachers(ArrayList<String> teachers) {
-        put(TEACHERS_KEY, teachers);
+    public void setTeachers(String teacher) {
+        put(TEACHERS_KEY, teacher);
     }
     public void setStudents(ArrayList<String> students) {
         put(STUDENTS_KEY, students);

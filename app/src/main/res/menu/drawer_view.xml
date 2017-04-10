@@ -35,6 +35,11 @@
             android:id="@+id/dvSettings"
             android:icon="@drawable/settings"
             android:title="@string/dvSettings" />
+
+        <item
+            android:id="@+id/dvTest"
+            android:icon="@drawable/settings"
+            android:title="Test" />
     </group>
 
     <group android:checkableBehavior="single"
