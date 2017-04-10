@@ -11,11 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:text="John Doe"
+        android:text="@string/john_doe"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:paddingLeft="5dp"></TextView>
+        android:paddingLeft="5dp"
+        tools:ignore="RtlHardcoded,RtlSymmetry"></TextView>
 
     <ImageView
         android:id="@+id/ivUser"
@@ -24,7 +25,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/theaderowl" />
+        android:src="@drawable/theaderowl"
+        tools:ignore="ContentDescription" />
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"

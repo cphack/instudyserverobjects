@@ -1,13 +1,11 @@
 package com.codepath.android.instudy.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 
 import com.codepath.android.instudy.R;
 import com.parse.LogInCallback;
@@ -60,19 +58,24 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(user, pass,
                 new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
-                        if (user != null) {
-                            // If user exist and authenticated, send user to Welcome.class
-                            Intent intent = new Intent(
-                                    LoginActivity.this,
-                                    MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "No such user exist, please signup",
-                                    Toast.LENGTH_LONG).show();
-                        }
+//                        if (user != null) {
+//                            // If user exist and authenticated, send user to Welcome.class
+//                            Intent intent = new Intent(
+//                                    LoginActivity.this,
+//                                    MainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
+//                            Toast.makeText(
+//                                    getApplicationContext(),
+//                                    "No such user exist, please signup",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+                        Intent intent = new Intent(
+                                LoginActivity.this,
+                                MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
     }

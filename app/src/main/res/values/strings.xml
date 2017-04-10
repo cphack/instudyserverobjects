@@ -27,9 +27,17 @@
     <string name="dvSettings">Settings</string>
 
     <string name="dvLogOut">Log out</string>
-
-
-
+    <string name="your_message">Your message?</string>
+    <string name="john_doe">John Doe</string>
+    <string name="your_name">Your Name</string>
+    <string name="about_you">Tag Line:</string>
+    <string name="checkschedule">CheckSchedule</string>
+    <string name="share_notes">Enter notes to share: </string>
+    <string name="from">From: UC San Diego</string>
+    <string name="proPic">Update Profile Picture</string>
+    <string name="on">On</string>
+    <string name="studentgroups">StudentGroups:</string>
+    <string name="teacher_groups">Teacher Groups:</string>
 
 
 </resources>

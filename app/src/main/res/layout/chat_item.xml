@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="42dp"
         android:layout_marginStart="10dp"
-        android:hint="Your message?"
+        android:hint="@string/your_message"
         android:gravity="center|top"
         android:lines="3"
         android:textAlignment="viewEnd"

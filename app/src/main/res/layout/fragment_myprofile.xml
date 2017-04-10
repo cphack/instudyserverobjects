@@ -1,11 +1,219 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/myProfile"
     android:background="@android:color/background_light">
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:src="@drawable/studyowl" />-->
+
+    <RelativeLayout
+        android:id="@+id/rlProfileHeader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/studyowl" />
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/login_background">
+
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivProfileImage"
+            android:layout_alignEnd="@+id/etTagLine"
+            android:layout_alignStart="@+id/etTagLine"
+            android:layout_below="@+id/etTagLine"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_text_round"
+            android:hint="@string/from"
+            android:inputType="textMultiLine"
+            android:textColor="@android:color/white"
+            tools:ignore="RtlHardcoded" />
+
+        <EditText
+            android:id="@+id/etTagLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etUserName"
+            android:layout_below="@+id/etUserName"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_text_round"
+            android:ems="10"
+            android:hint="@string/about_you"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            tools:ignore="LabelFor,RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/imgCorners"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="32dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/image_round_corner"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_alignBottom="@+id/imgCorners"
+            android:layout_alignLeft="@+id/imgCorners"
+            android:layout_alignRight="@+id/imgCorners"
+            android:layout_alignTop="@+id/imgCorners"
+            android:background="@drawable/image_round_corner"
+            android:padding="2dp"
+            android:src="@drawable/studyowl"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <EditText
+            android:id="@+id/etUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btSnapPic"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ivProfileImage"
+            android:background="@drawable/login_text_round"
+            android:ems="10"
+            android:hint="@string/your_name"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_alignStart="@+id/ivProfileImage"
+            android:background="@drawable/login_text_round"
+            android:text="@string/teacher_groups"
+            android:textColor="@android:color/white" />
+
+        <ListView
+            android:id="@+id/lvStudentGroup"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/textView"
+            android:layout_below="@+id/textView"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_text_round"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etLocation"
+            android:layout_below="@+id/etLocation"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/login_text_round"
+            android:text="@string/studentgroups"
+            android:textColor="@android:color/white" />
+
+        <ListView
+            android:id="@+id/lvTeacherGroup"
+            android:layout_width="175dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_text_round"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btSnapPic"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/ivProfileImage"
+            android:layout_toEndOf="@+id/ivProfileImage"
+            android:background="@drawable/login_button_round"
+            android:text="@string/proPic"
+            android:clickable="true"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSend"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/rlProfileHeader">
+
+
+        <ListView
+            android:id="@+id/lvChat"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/etMessage"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etShareNotes"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_text_round" />
+
+        <EditText
+            android:id="@+id/etShareNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/login_text_round"
+            android:ems="10"
+            android:hint="@string/share_notes"
+            android:inputType="textMultiLine"
+            tools:ignore="NotSibling" />
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btSend"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@+id/btSend"
+            android:background="@drawable/login_text_round"
+            android:gravity="top"
+            android:hint="@string/message_hint"
+            android:imeOptions="actionSend"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/btSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/login_button_round"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="@string/send"
+            android:textSize="18sp"
+            tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry">
+        </Button>
+
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -149,7 +149,4 @@ public class Groups extends Fragment {
         });
     }
 
-
-
-
 }

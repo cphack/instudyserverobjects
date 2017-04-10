@@ -14,8 +14,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.fragments.CoursesStudent;
-import com.codepath.android.instudy.fragments.CoursesTeacher;
 import com.codepath.android.instudy.fragments.Groups;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.parse.ParseUser;
@@ -65,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass;
        switch (menuItem.getItemId()) {
-            case R.id.dvLogOut:
-                logout();
-                break;
+//           case R.id.dvLogOut:
+//                logout();
+//                break;
+           case R.id.dvMyProfile:
+               Log.d("DEBUG", "Got to Profiles");
+               fragmentClass = MyProfile.class;
+               break;
           /*  case R.id.nav_second_fragment:
                 Log.d("DEBUG", "Got to Students");
                 fragmentClass = CoursesStudent.class;
@@ -77,15 +79,15 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Groups.class;
                 break;*/
             default:
-                Log.d("DEBUG", "Got to Profiles");
-                fragmentClass = MyProfile.class;
+                Log.d("DEBUG", "Got to Groups");
+                fragmentClass = Groups.class;
         }
 
-       /* try {
+       try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
        if(fragment!=null) {
            // Insert the fragment by replacing any existing fragment
