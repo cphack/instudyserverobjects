@@ -1,0 +1,151 @@
+======================================================================
+Group discussion for HACK 
+? What is your product pitch?
+? Start with a problem statement and follow up with a solution.
+? Focus on engaging your audience with a relatable need.
+
+	Problem:  In a fast paced learning course such as in a quarter 
+	system in University of California system, many students entering 
+	college have problems of:
+      	(a)  Meeting other students to form a study group 
+      	(b) communicate effectively using their phones AND 
+	share pictures/videos or a file.
+      
+? Who are the key stakeholders for this app?
+? Which distinct groups will be using this (i.e buyers and sellers)?
+? What will each be using this for? How do those use cases differ?
+
+	Stakeholders:
+	We envision the main stakeholders to be those that 
+	want to set up a study group, these can be professors, 
+	teaching assistants or other students
+? What are the core flows?
+? What are the key functions?
+? What screens will each user see?
+
+	See items #4 through #6 below
+
+? What will your final demo look like?
+? Describe the flow for your final demo
+? Keep in mind that within the next 2 weeks, we 
+	need to complete the core flows.
+? Focus your time on the features most important for the demo.
+
+	Items #4 through #7 (optional video/audio)
+
+? What mobile features do you leverage?
+? Make sure to leverage at least two mobile-oriented features
+? Common services include maps, location, push messaging
+? Common device SDKs include camera, photos, contacts, audio, video
+? Do you know how where to look to build the needed features within your app?
+
+	Leveraging: 
+	(a) Maps, Location and push Messaging,
+	(b) Use of camera and photo are optional if we can do it.
+	(c) Do not yet know how to access maps/location.camera/photo
+
+? How are you going to split up the work?
+? What strategy is your team using to split up the group project work?
+? How are you going to do your best to divide the work fairly?
+
+	Don’t know yet. Open to suggestions from CodePath
+
+? What are your technical concerns?
+? What technical features do you need help or resources for?
+
+	Main concern: May not be able to integrate Audio / Video streams. 
+     
+==========================================================================
+Study group formation and engagement by Teachers and Students.
+
+App Name: In-Study
+Developers: Alex C, and Hemanth K.
+
+Brief overview:
+	The main intent is to bring together a body of users 
+	on-line in the app to collaborate on any subject matter.
+
+	This app allows the users to subscribe to a number 
+	of groups available, which have either been setup , or 
+	create a new group and push an invitation to the general 
+	group membership of the availability of this service. 
+	
+	The group forms when 2 or more join a particular group.
+	
+	The users of the group interact on the app by posting 
+	questions or answers, or sharing files or pictures.
+	
+	The administrator may hand off his/her duties to other 
+	administrator/s if there is a need
+
+Types of users:
+
+1. Administrator -- creator, can be any Teacher or student with this app
+	a. Creates group and manages users.
+	b. Limits the number of people in the group
+	c. Controls geo location of group
+	d. Able to do all the items in the user-type plus above
+	e. Has control of material stored on his/her phone
+ 
+2. User --- other teachers or students that use this app
+	a. Requests to be part of this group
+	b. Uses “chat: to communicate
+	c. Able to transfer files within this group or other groups
+	d. Use camera to take picture and transfer to group
+
+Types of actions
+	1. Application will share the location - so administrator 
+	can automatically check in users in the group  or use a Q & A 
+	session with option view to make the checkin process very 
+	easy even when number of people in the group are more than 50.
+
+How it works: 
+
+USER STORY: ADMIN
+
+	1. FIRST ADMIN -> Admin screen
+
+	2. After each lecture ADMIN of the group runs survey (one template for now) 
+	?  Survey comes as a push notification
+
+	3. Admin of the group creates assignment
+	? Assignment can be saved and seen only by administrator.
+
+	4. Admin of the group runs the assignment
+	?  Assignments is shown to the group as a push notification
+
+USER STORY: USER
+
+	1. USER is able to register on self REGISTRATION SCREEN 
+	?  User registers on self registration screen
+	? Admin approves/denies membership
+	? Reply letter with confirmation (yes/no) comes to user’s email
+
+	2. Registered user is able to login on the LOGIN SCREEN
+	3. User forgets his email, enter FORGOT LOGIN screen and receives password on the registered email.
+
+	4. User enters application and gets to the MAIN SCREEN
+
+On the MAIN SCREEN there are groups.
+
+	5. User can apply to the group. 
+	? Administrator of the group accepts/denies request.
+	? User gets notification (yes/no) as a push notification
+
+	6. User can chat within the group.
+	? User gets new messages as a push notification
+
+	7. User start conference within the group, or separate users
+	? User gets new messages as a push notification
+	? Sign up just for study group or for assignment submission
+	? User can share photos and contact information, as well as GPS location
+	? Can use video/audio (optional)
+
+	8. User sees new assignment, enters it
+	?  he sees back timer on dashboards
+	?  marks it for him as “In Progress”
+	?  Administrator gets this as a push notification.
+
+	9. User completes the assignment 
+	? User marks it as “Resolved”
+	? Administrator gets this as a push notification.
