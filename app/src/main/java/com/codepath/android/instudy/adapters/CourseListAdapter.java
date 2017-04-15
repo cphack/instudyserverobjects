@@ -62,6 +62,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.userListener = listener;
     }
 
+
+
+
+
+
     private final int TEA = 0, STU = 1, SEA = 2;
 
     private List<Course> mCourses;

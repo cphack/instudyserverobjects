@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static android.R.attr.name;
+import static com.codepath.android.instudy.R.id.lvCourses;
 import static com.codepath.android.instudy.R.string.teacher;
 
 
@@ -37,16 +39,20 @@ public class UserListActivity extends AppCompatActivity {
     UserListAdapter aUsers;
     ArrayList<ParseObject> users;
     String[] userids;
+    private LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
          userids = getIntent().getStringArrayExtra("users");
-
+        linearLayoutManager = new LinearLayoutManager(this);
 
         lvUsers = (RecyclerView) findViewById(R.id.lvUsers);
 
         initAdapter();
+        lvUsers.setAdapter(aUsers);
+        lvUsers.setLayoutManager(linearLayoutManager);
 
         populateUsers();
     }

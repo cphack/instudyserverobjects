@@ -21,6 +21,8 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import static android.R.attr.type;
+
 /**
  * Created by alex_ on 4/10/2017.
  */
@@ -72,6 +74,12 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return mUsers.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return 1;
     }
 
     // inflate xml layout and return  viewHolder
