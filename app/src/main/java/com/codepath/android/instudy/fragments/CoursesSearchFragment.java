@@ -4,6 +4,7 @@ package com.codepath.android.instudy.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.activities.UserListActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
 import com.codepath.android.instudy.adapters.UserListAdapter;
@@ -23,6 +25,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class CoursesSearchFragment extends BaseCoursesFragment {
 
@@ -77,8 +81,13 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
         aCourses.setOnUserListClickListener(new CourseListAdapter.OnUserClickListListener() {
             @Override
             public void onUserListClick(ArrayList<String> userids) {
-                if (userListener != null) {
+               /* if (userListener != null) {
                     userListener.onUserListClick(userids);
+                }*/
+                //need to fix this
+                MainActivity activity = (MainActivity)getActivity();
+                if(activity!=null){
+                    activity.openUserList(userids);
                 }
             }
         });

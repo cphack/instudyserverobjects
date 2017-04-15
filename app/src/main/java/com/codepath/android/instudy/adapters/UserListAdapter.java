@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -37,8 +38,6 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
-
     // Define listener member variable
     private OnChatButtonClickListener chatButtonClickListener;
     // Define the listener interface
@@ -50,12 +49,16 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.chatButtonClickListener = listener;
     }
 
-    // List of tweets
-    private List<ParseUser> mUsers;
+
+
+
+
+
+    private List<ParseObject> mUsers;
     // Store the context for easy access
     private Context mContext;
 
-    public UserListAdapter(@NonNull Context context, @NonNull List<ParseUser> objects) {
+    public UserListAdapter(@NonNull Context context, @NonNull List<ParseObject> objects) {
         mUsers = objects;
         mContext = context;
     }
@@ -93,7 +96,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void configure_user_item(ViewHolder_User vh1, int position) {
         // Get the data model based on position
         final ViewHolder_User vh=vh1;
-        ParseUser user = mUsers.get(position);
+        ParseUser user = (ParseUser)mUsers.get(position);
         vh.tvUserName.setText(user.getString("FullName"));
         Glide.with(mContext).load(user.getString("ProfileImage")).asBitmap().centerCrop()
                 .into(new BitmapImageViewTarget(vh.ivUser) {

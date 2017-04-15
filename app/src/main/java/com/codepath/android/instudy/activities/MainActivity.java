@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private void openUserList(ArrayList<String> userids){
+    public void openUserList(ArrayList<String> userids){
         String[] users =new String[userids.size()];
         userids.toArray(users);
         Intent i  = new Intent(MainActivity.this,UserListActivity.class);

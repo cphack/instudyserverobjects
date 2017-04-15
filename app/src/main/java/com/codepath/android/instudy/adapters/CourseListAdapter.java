@@ -63,7 +63,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private final int TEA = 0, STU = 1, SEA = 2;
-    // List of tweets
+
     private List<Course> mCourses;
     // Store the context for easy access
     private Context mContext;
@@ -104,10 +104,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 View v2 = inflater.inflate(R.layout.item_my_course, parent, false);
                 viewHolder = new ViewHolder_simple(v2);
                 break;
-            /* case VID:
-                View v3 = inflater.inflate(R.layout.item_tweet_video, parent, false);
-                viewHolder = new ViewHolder_video(v3);
-                break;*/
+
             default:
                 View v3 = inflater.inflate(R.layout.item_my_course, parent, false);
                 viewHolder = new ViewHolder_simple(v3);

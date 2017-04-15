@@ -20,6 +20,7 @@ import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.activities.UserListActivity;
 import com.codepath.android.instudy.adapters.GroupAdapter;
 import com.codepath.android.instudy.adapters.PagerAdapter;
+import com.codepath.android.instudy.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.android.instudy.models.Message;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -32,16 +33,11 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-import static com.codepath.android.instudy.R.id.btSend;
-import static com.codepath.android.instudy.R.id.etMessage;
-import static com.codepath.android.instudy.R.id.lvChat;
-import static com.codepath.android.instudy.fragments.Groups.MAX_CHAT_MESSAGES_TO_SHOW;
-import static com.codepath.android.instudy.fragments.Groups.POLL_INTERVAL;
+
 
 public class MainTabsFragment extends Fragment {
     ViewPager viewPager;
-    PagerAdapter adapter;
+    SmartFragmentStatePagerAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,7 +73,8 @@ public class MainTabsFragment extends Fragment {
 
 
     private void addListeners() {
-       /* CoursesSearchFragment fragment = (CoursesSearchFragment) adapter.getRegisteredFragment(3);
+
+      /* CoursesSearchFragment fragment = (CoursesSearchFragment) adapter.getRegisteredFragment(3);
 
         fragment.setOnUserListClickListener(new BaseCoursesFragment.OnUserListClickListener() {
             @Override

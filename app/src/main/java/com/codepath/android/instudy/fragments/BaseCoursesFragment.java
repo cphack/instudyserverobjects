@@ -12,9 +12,6 @@ import java.util.List;
  */
 
 public  class BaseCoursesFragment extends Fragment {
-
-
-
     // Define listener member variable
     protected OnUserListClickListener userListClickListener;
     // Define the listener interface
