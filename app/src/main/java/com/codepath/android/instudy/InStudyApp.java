@@ -7,7 +7,6 @@ import com.codepath.android.instudy.models.Assignment;
 import com.codepath.android.instudy.models.Course;
 import com.codepath.android.instudy.models.Lection;
 import com.codepath.android.instudy.models.Message;
-import com.codepath.android.instudy.models.Profile;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.interceptors.ParseLogInterceptor;
@@ -30,7 +29,7 @@ public class InStudyApp extends Application {
         ParseObject.registerSubclass(Course.class);
         ParseObject.registerSubclass(Lection.class);
         ParseObject.registerSubclass(Assignment.class);
-        ParseObject.registerSubclass(Profile.class);
+
         // Existing initialization happens after all classes are registere
 
         // set applicationId and server based on the values in the Heroku settings.

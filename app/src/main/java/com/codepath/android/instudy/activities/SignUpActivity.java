@@ -1,8 +1,8 @@
 package com.codepath.android.instudy.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +13,6 @@ import com.codepath.android.instudy.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
-import static com.codepath.android.instudy.R.drawable.user;
-import static com.codepath.android.instudy.R.id.tvSignIn;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -64,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.setEmail(email);
         // Set custom properties
         user.put("FullName", fullName);
+        user.put("Profile","None");
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {

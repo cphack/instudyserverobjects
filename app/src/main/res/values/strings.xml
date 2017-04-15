@@ -13,7 +13,7 @@
     <string name="header">InStudy</string>
     <!-- Group chat Items -->
     <string name="message_hint">Say anything</string>
-    <string name="send">Send</string>
+    <string name="save">Save</string>
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
 
@@ -38,6 +38,10 @@
     <string name="on">On</string>
     <string name="studentgroups">StudentGroups:</string>
     <string name="teacher_groups">Teacher Groups:</string>
+
+    <string name="permission_write_storage">Write to SD?</string>
+    <string name="button_allow">Yes</string>
+    <string name="button_deny">No</string>
 
 
 </resources>

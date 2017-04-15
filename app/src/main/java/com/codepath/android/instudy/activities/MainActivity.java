@@ -10,20 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.fragments.Groups;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.codepath.android.instudy.fragments.TabsFragment;
-import com.codepath.android.instudy.models.Course;
 import com.parse.ParseUser;
-
-import static android.os.Build.VERSION_CODES.M;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -98,22 +93,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.dvTest:
                runTest();
                 break;
-
-
-          /*  case R.id.nav_third_fragment:
-                Log.d("DEBUG", "Got to Groups");
-                fragmentClass = Groups.class;
-                break;*/
             default:
-                Log.d("DEBUG", "Got to Profiles");
                 Toast.makeText(this,String.valueOf(menuItem.getItemId()),Toast.LENGTH_SHORT).show();
                 fragmentClass = MyProfile.class;
         }
         if(i!=null){
-
-        startActivity(i);
-        finish();
-}
+            startActivity(i);
+            finish();
+        }
 
        /* try {
             fragment = (Fragment) fragmentClass.newInstance();

@@ -54,7 +54,7 @@ public class Groups extends Fragment {
         View v = (View) inflater.inflate(R.layout.fragment_groups, container, false);
         // Find the text field and button
         etMessage = (EditText) v.findViewById(R.id.etMessage);
-        btSend = (Button) v.findViewById(R.id.btSend);
+        btSend = (Button) v.findViewById(R.id.btSave);
         lvChat = (ListView) v.findViewById(R.id.lvChat);
         //User Login
         if (ParseUser.getCurrentUser() != null) { // start with existing user

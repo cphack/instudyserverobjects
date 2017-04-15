@@ -7,16 +7,26 @@
     android:background="@android:color/background_light">
 
     <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:src="@drawable/studyowl" />-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/studyowl" />-->
 
     <RelativeLayout
         android:id="@+id/rlProfileHeader"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
         android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/btGalPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ivProfileImage"
+            android:layout_toEndOf="@+id/ivProfileImage"
+            android:clickable="true"
+            android:text="Gallery Pic"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/etLocation"
@@ -25,28 +35,26 @@
             android:layout_alignBottom="@+id/ivProfileImage"
             android:layout_alignEnd="@+id/etTagLine"
             android:layout_alignStart="@+id/etTagLine"
-            android:layout_below="@+id/etTagLine"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/login_text_round"
+            android:background="@drawable/rounded_shape"
             android:hint="@string/from"
             android:inputType="textMultiLine"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_accent"
             tools:ignore="RtlHardcoded" />
 
         <EditText
             android:id="@+id/etTagLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/etUserName"
-            android:layout_below="@+id/etUserName"
             android:layout_marginRight="3dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/login_text_round"
+            android:background="@drawable/rounded_shape"
             android:ems="10"
             android:hint="@string/about_you"
             android:inputType="textPersonName"
-            android:textColor="@android:color/white"
-            tools:ignore="LabelFor,RtlHardcoded" />
+            android:textColor="@color/text_accent"
+            tools:ignore="LabelFor,RtlHardcoded"
+            android:layout_above="@+id/etLocation"
+            android:layout_alignStart="@+id/etUserName"
+            android:layout_marginBottom="10dp" />
 
         <ImageView
             android:id="@+id/imgCorners"
@@ -76,17 +84,18 @@
             android:id="@+id/etUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btSnapPic"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:background="@drawable/login_text_round"
+            android:background="@drawable/rounded_shape"
             android:ems="10"
             android:hint="@string/your_name"
             android:inputType="textPersonName"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="@color/text_accent"
+            android:textSize="18sp"
+            android:layout_above="@+id/etTagLine"
+            android:layout_alignEnd="@+id/btSnapPic"
+            android:layout_marginBottom="12dp"
+            android:layout_toEndOf="@+id/imgCorners" />
 
         <TextView
             android:id="@+id/textView2"
@@ -95,9 +104,9 @@
             android:layout_alignBaseline="@+id/textView"
             android:layout_alignBottom="@+id/textView"
             android:layout_alignStart="@+id/ivProfileImage"
-            android:background="@drawable/login_text_round"
-            android:text="@string/teacher_groups"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/rounded_shape"
+            android:textColor="@color/text_accent"
+            android:text="@string/teacher_groups" />
 
         <ListView
             android:id="@+id/lvStudentGroup"
@@ -108,8 +117,7 @@
             android:layout_below="@+id/textView"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/login_text_round"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/rounded_shape" />
 
         <TextView
             android:id="@+id/textView"
@@ -119,8 +127,8 @@
             android:layout_below="@+id/etLocation"
             android:layout_marginTop="15dp"
             android:background="@drawable/login_text_round"
-            android:text="@string/studentgroups"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/text_accent"
+            android:text="@string/studentgroups" />
 
         <ListView
             android:id="@+id/lvTeacherGroup"
@@ -131,19 +139,18 @@
             android:layout_below="@+id/textView"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/login_text_round"
-            android:textColor="@android:color/white" />
+            android:background="@drawable/rounded_shape" />
 
         <Button
             android:id="@+id/btSnapPic"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_alignTop="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:background="@drawable/login_button_round"
-            android:text="@string/proPic"
+            android:layout_height="wrap_content"
             android:clickable="true"
-            tools:ignore="HardcodedText" />
+            android:text="@string/proPic"
+            tools:ignore="HardcodedText"
+            android:layout_above="@+id/etUserName"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/btGalPic" />
 
     </RelativeLayout>
 
@@ -170,7 +177,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/login_text_round" />
+            android:background="@drawable/rounded_shape" />
 
         <EditText
             android:id="@+id/etShareNotes"
@@ -180,37 +187,41 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/login_text_round"
+            android:background="@drawable/rounded_shape"
             android:ems="10"
             android:hint="@string/share_notes"
             android:inputType="textMultiLine"
+            android:textColor="@color/text_accent"
             tools:ignore="NotSibling" />
 
         <EditText
             android:id="@+id/etMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btSend"
+            android:layout_alignBottom="@+id/btSave"
             android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@+id/btSend"
-            android:background="@drawable/login_text_round"
+            android:layout_toLeftOf="@+id/btSave"
+            android:background="@drawable/rounded_shape"
             android:gravity="top"
             android:hint="@string/message_hint"
             android:imeOptions="actionSend"
-            tools:ignore="RtlHardcoded" />
+            android:textColor="@color/text_accent"
+            tools:ignore="RtlHardcoded,UnknownId" />
 
         <Button
-            android:id="@+id/btSend"
+            android:id="@+id/btSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/login_button_round"
+            android:background="@drawable/action_button_round"
             android:gravity="center"
             android:paddingRight="10dp"
-            android:text="@string/send"
+            android:text="@string/save"
             android:textSize="18sp"
+            android:clickable="true"
             tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry">
+
         </Button>
 
     </RelativeLayout>
