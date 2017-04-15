@@ -2,32 +2,42 @@ package com.codepath.android.instudy.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.MyProfile;
-import com.codepath.android.instudy.fragments.TabsFragment;
+import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.attr.name;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
     private TextView tvFullName;
-
+    private ImageView ivUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +56,21 @@ public class MainActivity extends AppCompatActivity {
         View headerView = nvDrawer.inflateHeaderView(R.layout.nav_header);
 
         tvFullName = (TextView) headerView.findViewById(R.id.tvFullName);
+        ivUser = (ImageView)  headerView.findViewById(R.id.ivUser);
+        loadUserProfile();
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new TabsFragment()).commit();
 
-        if(tvFullName!=null) {
-            if (ParseUser.getCurrentUser() != null) {
-                tvFullName.setText(ParseUser.getCurrentUser().getString("FullName"));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        MainTabsFragment fragment = new MainTabsFragment();
+
+        fragment.setOnUserListClickListener(new MainTabsFragment.OnUserListClickListener() {
+            @Override
+            public void onUserListClick(ArrayList<String> userids) {
+                openUserList(userids);
             }
-        }
+        });
+        fragmentManager.beginTransaction().replace(R.id.flContent,fragment).commit();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -90,9 +105,15 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
                 break;
 
-            case R.id.dvTest:
+           /* case R.id.dvTest:
                runTest();
-                break;
+                break;*/
+
+
+          /*  case R.id.nav_third_fragment:
+                Log.d("DEBUG", "Got to Groups");
+                fragmentClass = Groups.class;
+                break;*/
             default:
                 Toast.makeText(this,String.valueOf(menuItem.getItemId()),Toast.LENGTH_SHORT).show();
                 fragmentClass = MyProfile.class;
@@ -160,6 +181,68 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
+    private void openUserList(ArrayList<String> userids){
+        String[] users =new String[userids.size()];
+        userids.toArray(users);
+        Intent i  = new Intent(MainActivity.this,UserListActivity.class);
+        i.putExtra("users",users);
+        startActivity(i);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void openTeacherFragment(){
+
+    }
+
+    private void openCourseDetails(){
+
+    }
+
+    private void loadUserProfile(){
+        if (ParseUser.getCurrentUser() != null) {
+            ParseUser user =ParseUser.getCurrentUser();
+            String fullName = user.getString("FullName");
+            String profileImage = user.getString("ProfileImage");
+            if (tvFullName != null) {
+                if (ParseUser.getCurrentUser() != null) {
+                    tvFullName.setText(fullName);
+                }
+            }
+
+            if (ivUser != null) {
+                {
+                    Glide.with(this).load(profileImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(ivUser) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            ivUser.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
     private void logout() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -168,6 +251,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void runTest(){
+        ParseUser user = ParseUser.getCurrentUser();
+        user.put("ProfileImage","http://i.imgur.com/DGTOSfL.png");
+        user.saveInBackground();
        /* Course course = new Course();
         course.setTitle("CSE 120 Computer Science Principles (5) NW, QSR");
         course.setDescription("Introduces fundamental concepts of computer science and computational thinking. Includes logical reasoning, problem solving, data representation, abstraction, the creation of digital artifacts such as web pages and programs, managing complexity, operation of computers and networks, effective web searching, ethical, legal and social aspects of information technology. May not be taken for credit if credit earned in CSE 100/INFO 100.");
@@ -229,4 +315,8 @@ public class MainActivity extends AppCompatActivity {
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();*/
     }
+
+
+
+
 }

@@ -30,13 +30,23 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CoursesTeacher extends Fragment {
+public class CoursesStudentFragment extends BaseCoursesFragment {
 
     ArrayList<Course> courses;
     CourseListAdapter aCourses;
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
+
+    public static CoursesStudentFragment newInstance(int page, String title) {
+        CoursesStudentFragment fragment = new CoursesStudentFragment();
+     /*   Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentFirst.setArguments(args);*/
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,14 +80,13 @@ public class CoursesTeacher extends Fragment {
     private void initAdapter() {
         courses = new ArrayList<Course>();
         //construct adapter from datasource
-        aCourses = new CourseListAdapter(getActivity(), courses,"TEA");
+        aCourses = new CourseListAdapter(getActivity(), courses, "STU");
     }
 
 
     private void populateCourseList() {
-
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
-        query.whereEqualTo("teachers", ParseUser.getCurrentUser().getObjectId());
+        query.whereContains("students", ParseUser.getCurrentUser().getObjectId()) ;
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Course>() {
             public void done(List<Course> itemList, ParseException e) {
@@ -98,3 +107,4 @@ public class CoursesTeacher extends Fragment {
     }
 
 }
+

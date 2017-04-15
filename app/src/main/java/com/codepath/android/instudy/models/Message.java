@@ -9,14 +9,14 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+import static com.codepath.android.instudy.models.Chat.RECIPIENTS_KEY;
 
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
     public static final String USER_ID_KEY = "userId";
     public static final String BODY_KEY = "body";
-    public static final String RECIPIENTS_KEY = "recipients";
+    public static final String CHAT_KEY = "chatid";
     public static final String DATE_KEY = "date";
 
     public String getUserId() {
@@ -35,24 +35,14 @@ public class Message extends ParseObject {
         put(BODY_KEY, body);
     }
 
-    public ArrayList<String> getRecipients() {
-        ArrayList<String> result = new ArrayList<>();
-        JSONArray recipients = getJSONArray(RECIPIENTS_KEY);
-
-        for (int i = 0; i < recipients.length(); i++) {
-            try {
-                result.add((String) recipients.get(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-        return result;
+    public void setChatId(String chatid) {
+        put(CHAT_KEY, chatid);
     }
 
-    public void setRecipients(ArrayList<String> recipients) {
-        put(RECIPIENTS_KEY, recipients);
+    public String getChatId() {
+        return getString(CHAT_KEY);
     }
+
 
     public Date getDate() {
         return getDate(DATE_KEY);

@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.UserListActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
+import com.codepath.android.instudy.adapters.UserListAdapter;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,13 +24,22 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoursesSearch extends Fragment implements CourseListAdapter.CourseListListener {
+public class CoursesSearchFragment extends BaseCoursesFragment {
 
     ArrayList<Course> courses;
     CourseListAdapter aCourses;
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
+
+    public static CoursesSearchFragment newInstance(int page, String title) {
+        CoursesSearchFragment fragment = new CoursesSearchFragment();
+     /*   Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentFirst.setArguments(args);*/
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,14 +74,22 @@ public class CoursesSearch extends Fragment implements CourseListAdapter.CourseL
         courses = new ArrayList<Course>();
         //construct adapter from datasource
         aCourses = new CourseListAdapter(getActivity(), courses, "SEA");
+        aCourses.setOnUserListClickListener(new CourseListAdapter.OnUserClickListListener() {
+            @Override
+            public void onUserListClick(ArrayList<String> userids) {
+                if (userListener != null) {
+                    userListener.onUserListClick(userids);
+                }
+            }
+        });
     }
 
     private void populateCourseList() {
 
         List<String> users = new ArrayList<>();
-        users.add( ParseUser.getCurrentUser().getObjectId());
+        users.add(ParseUser.getCurrentUser().getObjectId());
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
-        query.whereNotContainedIn("students",users);
+        query.whereNotContainedIn("students", users);
 
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Course>() {
@@ -85,25 +104,23 @@ public class CoursesSearch extends Fragment implements CourseListAdapter.CourseL
                     aCourses.notifyItemRangeInserted(curSize, itemList.size());
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
     }
 
-    @Override
-    public void onCourseApply(Course course) {
-        List<String> students = course.getStudents();
-        if(students==null){
-            students=new ArrayList<>();
-        }
-        if(!students.contains(ParseUser.getCurrentUser().getObjectId())){
-            students.add(ParseUser.getCurrentUser().getObjectId());
-        }
-        course.saveInBackground();
-        Toast.makeText(getActivity(), "You successfully registered on this course", Toast.LENGTH_SHORT).show();
-        courses.remove(course);
-        aCourses.notifyDataSetChanged();
+
+    // Define listener member variable
+    private OnUserClickListListener userListener;
+
+    // Define the listener interface
+    public interface OnUserClickListListener {
+        void onUserListClick(ArrayList<String> userids);
+    }
+
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnUserListClickListener(OnUserClickListListener listener) {
+        this.userListener = listener;
     }
 }
 

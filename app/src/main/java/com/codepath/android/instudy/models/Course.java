@@ -54,13 +54,14 @@ public class Course extends ParseObject {
     public ArrayList<String> getStudents() {
         ArrayList<String> result = new ArrayList<>();
         JSONArray sts = getJSONArray(STUDENTS_KEY);
-
-        for (int i = 0; i < sts.length(); i++) {
-            try {
-                result.add((String) sts.get(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
+        if(sts!=null) {
+            for (int i = 0; i < sts.length(); i++) {
+                try {
+                    result.add((String) sts.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    continue;
+                }
             }
         }
         return result;

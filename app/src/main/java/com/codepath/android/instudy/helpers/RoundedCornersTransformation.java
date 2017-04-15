@@ -1,4 +1,4 @@
-package com.codepath.android.instudy;
+package com.codepath.android.instudy.helpers;
 
 import android.content.Context;
 import android.graphics.Bitmap;

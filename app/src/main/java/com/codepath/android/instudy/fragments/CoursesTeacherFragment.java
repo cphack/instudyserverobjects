@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CoursesStudent extends Fragment {
+public class CoursesTeacherFragment extends Fragment {
 
     ArrayList<Course> courses;
     CourseListAdapter aCourses;
@@ -70,13 +70,13 @@ public class CoursesStudent extends Fragment {
     private void initAdapter() {
         courses = new ArrayList<Course>();
         //construct adapter from datasource
-        aCourses = new CourseListAdapter(getActivity(), courses, "STU");
+        aCourses = new CourseListAdapter(getActivity(), courses,"TEA");
     }
 
-
     private void populateCourseList() {
+
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
-        query.whereContains("students", ParseUser.getCurrentUser().getObjectId()) ;
+        query.whereEqualTo("teachers", ParseUser.getCurrentUser().getObjectId());
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Course>() {
             public void done(List<Course> itemList, ParseException e) {
@@ -96,5 +96,14 @@ public class CoursesStudent extends Fragment {
         });
     }
 
-}
+    // newInstance constructor for creating fragment with arguments
+    public static CoursesTeacherFragment newInstance(int page, String title) {
+        CoursesTeacherFragment fragment = new CoursesTeacherFragment();
+     /*   Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentFirst.setArguments(args);*/
+        return fragment;
+    }
 
+}

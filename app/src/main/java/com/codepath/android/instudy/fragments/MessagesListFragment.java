@@ -18,4 +18,14 @@ public class MessagesListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages_list, container, false);
     }
+
+    // newInstance constructor for creating fragment with arguments
+    public static MessagesListFragment newInstance(int page, String title) {
+        MessagesListFragment fragment = new MessagesListFragment();
+      /*  Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragment.setArguments(args);*/
+        return fragment;
+    }
 }

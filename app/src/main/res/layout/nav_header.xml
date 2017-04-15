@@ -5,6 +5,9 @@
     android:layout_height="100dp"
     android:background="@color/login_active"
     android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
     >
     <TextView
         android:id="@+id/tvFullName"
@@ -20,20 +23,22 @@
 
     <ImageView
         android:id="@+id/ivUser"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:scaleType="fitCenter"
         android:src="@drawable/theaderowl"
-        tools:ignore="ContentDescription" />
+
+        />
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_below="@+id/ivUser"
         android:layout_centerHorizontal="true"
-        android:background="@color/toolbar_light_grey" />
+        android:background="@color/toolbar_light_grey"
+        android:layout_marginTop="7dp"/>
 
 
 </RelativeLayout>

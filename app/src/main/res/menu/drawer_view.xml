@@ -36,10 +36,10 @@
             android:icon="@drawable/settings"
             android:title="@string/dvSettings" />
 
-        <item
+       <!-- <item
             android:id="@+id/dvTest"
             android:icon="@drawable/settings"
-            android:title="Test" />
+            android:title="Test" />-->
     </group>
 
     <group android:checkableBehavior="single"

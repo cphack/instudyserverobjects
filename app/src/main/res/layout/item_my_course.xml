@@ -51,12 +51,6 @@
                     android:layout_height="wrap_content"
                     android:minHeight="75dp"
                     android:orientation="vertical">
-               <!-- <fragment
-                    android:id="@+id/frgFriendsList"
-                    android:name="com.codepath.android.instudy.fragments.PeopleListHorizFragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSubTitle" />-->
 
                 </LinearLayout>
                 <LinearLayout
