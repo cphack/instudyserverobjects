@@ -17,7 +17,7 @@ public class Message extends ParseObject {
     public static final String USER_ID_KEY = "userId";
     public static final String BODY_KEY = "body";
     public static final String CHAT_KEY = "chatid";
-    public static final String DATE_KEY = "date";
+
 
     public String getUserId() {
         return getString(USER_ID_KEY);
@@ -41,15 +41,6 @@ public class Message extends ParseObject {
 
     public String getChatId() {
         return getString(CHAT_KEY);
-    }
-
-
-    public Date getDate() {
-        return getDate(DATE_KEY);
-    }
-
-    public void setDate(Date date) {
-        put(DATE_KEY, date);
     }
 
 }

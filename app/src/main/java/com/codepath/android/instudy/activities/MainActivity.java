@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
             case R.id.dvMessages:
-                i = new Intent(MainActivity.this, MessagesActivity.class);
+                i = new Intent(MainActivity.this, ChatActivity.class);
                break;
             case R.id.dvAddNewCourse:
                 i = new Intent(MainActivity.this, NewCourseActivity.class);

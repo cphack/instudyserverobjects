@@ -32,15 +32,20 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".activities.MessagesActivity"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity
             android:name=".activities.NewCourseActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MyProfileActivity">
         </activity>
         <activity android:name=".activities.UserListActivity">
         </activity>
+        <activity android:name=".activities.UserProfileActivity">
+        </activity>
+
+        <activity android:name=".activities.ChatActivity">
+        </activity>
+        <activity android:name=".activities.ChatListActivity">
+        </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"

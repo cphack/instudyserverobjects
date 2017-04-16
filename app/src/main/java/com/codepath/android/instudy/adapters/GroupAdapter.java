@@ -30,7 +30,7 @@ public class GroupAdapter extends ArrayAdapter<Message> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.chat_item, parent, false);
+                    inflate(R.layout.item_message, parent, false);
             final ViewHolder holder = new ViewHolder();
             holder.imageOther = (ImageView)convertView.findViewById(R.id.ivProfileOther);
             holder.imageMe = (ImageView)convertView.findViewById(R.id.ivProfileMe);
