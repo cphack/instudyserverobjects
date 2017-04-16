@@ -1,6 +1,4 @@
 package com.codepath.android.instudy.fragments;
-
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,29 +27,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 public class CoursesStudentFragment extends BaseCoursesFragment {
-
-    ArrayList<Course> courses;
-    CourseListAdapter aCourses;
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
-
     public static CoursesStudentFragment newInstance(int page, String title) {
         CoursesStudentFragment fragment = new CoursesStudentFragment();
-     /*   Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragmentFirst.setArguments(args);*/
         return fragment;
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_coursesteacher, container, false);
         findControls(v);
         initControls();
@@ -83,8 +69,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
         aCourses = new CourseListAdapter(getActivity(), courses, "STU");
     }
 
-
-    private void populateCourseList() {
+    public void populateCourseList() {
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         query.whereContains("students", ParseUser.getCurrentUser().getObjectId()) ;
         // Execute the find asynchronously

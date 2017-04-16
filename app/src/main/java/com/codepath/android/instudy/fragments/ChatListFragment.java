@@ -98,17 +98,21 @@ public class ChatListFragment extends Fragment {
             public void done(List<Chat> itemList, ParseException e) {
                 if (e == null) {
                     // Access the array of results here
-                    int curSize = aChats.getItemCount();
-                    chats.addAll(itemList);
-                    // replace this line with wherever you get new records
 
-                    //notify adapter to reflect changes
-                    aChats.notifyItemRangeInserted(curSize, itemList.size());
+                    chats.addAll(itemList);
+                    aChats.notifyDataSetChanged();
+
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public void refreshChats(){
+        chats.clear();
+        aChats.notifyDataSetChanged();
+        populateChatsList();
     }
 }
 

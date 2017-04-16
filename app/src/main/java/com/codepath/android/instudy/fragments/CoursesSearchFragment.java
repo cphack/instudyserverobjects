@@ -1,6 +1,5 @@
 package com.codepath.android.instudy.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,9 +28,6 @@ import java.util.List;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class CoursesSearchFragment extends BaseCoursesFragment {
-
-    ArrayList<Course> courses;
-    CourseListAdapter aCourses;
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
@@ -85,15 +81,15 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
                     userListener.onUserListClick(userids);
                 }*/
                 //need to fix this
-                MainActivity activity = (MainActivity)getActivity();
-                if(activity!=null){
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
                     activity.openUserList(userids);
                 }
             }
         });
     }
 
-    private void populateCourseList() {
+    public void populateCourseList() {
 
         List<String> users = new ArrayList<>();
         users.add(ParseUser.getCurrentUser().getObjectId());
@@ -117,7 +113,6 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
             }
         });
     }
-
 
     // Define listener member variable
     private OnUserClickListListener userListener;
