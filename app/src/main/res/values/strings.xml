@@ -42,6 +42,11 @@
     <string name="permission_write_storage">Write to SD?</string>
     <string name="button_allow">Yes</string>
     <string name="button_deny">No</string>
+    <string name="location">Location</string>
+    <string name="name">Name</string>
+    <string name="notice">Notice</string>
+    <string name="tag_line">Tag Line</string>
+    <string name="timeline">TimeLine</string>
 
 
 </resources>
