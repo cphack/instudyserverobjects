@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Groups.class;
                 break;*/
             default:
-                Toast.makeText(this,String.valueOf(menuItem.getItemId()),Toast.LENGTH_SHORT).show();
+
                 fragmentClass = MyProfile.class;
         }
         if(i!=null){
@@ -190,23 +190,6 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("users",users);
         startActivity(i);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

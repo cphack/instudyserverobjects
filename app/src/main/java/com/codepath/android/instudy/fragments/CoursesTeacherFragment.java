@@ -74,7 +74,6 @@ public class CoursesTeacherFragment extends Fragment {
     }
 
     private void populateCourseList() {
-
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         query.whereEqualTo("teachers", ParseUser.getCurrentUser().getObjectId());
         // Execute the find asynchronously
@@ -99,10 +98,6 @@ public class CoursesTeacherFragment extends Fragment {
     // newInstance constructor for creating fragment with arguments
     public static CoursesTeacherFragment newInstance(int page, String title) {
         CoursesTeacherFragment fragment = new CoursesTeacherFragment();
-     /*   Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragmentFirst.setArguments(args);*/
         return fragment;
     }
 

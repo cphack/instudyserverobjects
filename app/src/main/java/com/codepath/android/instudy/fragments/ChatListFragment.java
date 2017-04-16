@@ -1,5 +1,6 @@
 package com.codepath.android.instudy.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.ChatActivity;
 import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.activities.UserListActivity;
 import com.codepath.android.instudy.adapters.ChatListAdapter;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
 import com.codepath.android.instudy.adapters.UserListAdapter;
+import com.codepath.android.instudy.helpers.ItemClickSupport;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
@@ -67,6 +70,16 @@ public class ChatListFragment extends Fragment {
     private void initControls() {        //connect adapter with recyclerView
         lvChats.setAdapter(aChats);
         lvChats.setLayoutManager(linearLayoutManager);
+
+        ItemClickSupport.addTo(lvChats).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Intent i = new Intent(getActivity(), ChatActivity.class);
+                Chat chat = chats.get(position);
+                i.putExtra("chatid", chat.getObjectId());
+                startActivity(i);
+            }
+        });
     }
 
     private void initAdapter() {

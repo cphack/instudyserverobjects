@@ -48,7 +48,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private CourseListListener listener;
 
-
     // Define listener member variable
     private OnUserClickListListener userListener;
 
@@ -106,13 +105,13 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 viewHolder = new ViewHolder_sea(v1);
                 break;
             case TEA:
-                View v2 = inflater.inflate(R.layout.item_my_course, parent, false);
-                viewHolder = new ViewHolder_simple(v2);
+                View v2 = inflater.inflate(R.layout.item_course_teacher, parent, false);
+                viewHolder = new ViewHolder_tea(v2);
                 break;
 
-            default:
-                View v3 = inflater.inflate(R.layout.item_my_course, parent, false);
-                viewHolder = new ViewHolder_simple(v3);
+            case STU:
+                View v3 = inflater.inflate(R.layout.item_course_student, parent, false);
+                viewHolder = new ViewHolder_stu(v3);
                 break;
         }
 
@@ -140,17 +139,16 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         switch (viewHolder.getItemViewType()) {
             case TEA:
-                ViewHolder_simple vh1 = (ViewHolder_simple) viewHolder;
-                configureViewHolder_simple(vh1, position);
+                ViewHolder_tea vh1 = (ViewHolder_tea) viewHolder;
+                configureViewHolder_tea(vh1, position);
                 break;
             case SEA:
                 ViewHolder_sea vh2 = (ViewHolder_sea) viewHolder;
                 configureViewHolder_sea(vh2, position);
                 break;
-
-            default:
-                ViewHolder_simple vh = (ViewHolder_simple) viewHolder;
-                configureViewHolder_simple(vh, position);
+            case STU:
+                ViewHolder_stu vh = (ViewHolder_stu) viewHolder;
+                configureViewHolder_stu(vh, position);
                 break;
         }
 
@@ -162,7 +160,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         fetchCommon(vh, course);
     }
 
-    private void configureViewHolder_sea(ViewHolder_sea vh, int position) {
+    private void configureViewHolder_sea(final ViewHolder_sea vh, int position) {
         // Get the data model based on position
         final ViewHolder_sea vh1 = vh;
         final Course course = mCourses.get(position);
@@ -176,7 +174,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() < 1) {
-                        Toast.makeText(mContext, courseName, Toast.LENGTH_LONG).show();
+
                         return;
                     }
                     ParseUser teacher = (ParseUser) objects.get(0);
@@ -213,7 +211,69 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         });
     }
-    //populate main fields
+
+    private void configureViewHolder_tea(final ViewHolder_tea vh, int position) {
+        // Get the data model based on position
+        final Course course = mCourses.get(position);
+        fetchCommon(vh, course);
+
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
+        query1.whereContainedIn("objectId", course.getStudents());
+        query1.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                vh.populateUserList(objects, mContext);
+            }
+        });
+
+        vh.setUserListIds(course.getStudents());
+    }
+
+    private void configureViewHolder_stu(final ViewHolder_stu vh, int position) {
+        // Get the data model based on position
+        final Course course = mCourses.get(position);
+        fetchCommon(vh, course);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        String teacher = course.getTeachers();
+        final String courseName = course.getTitle();
+        query.whereEqualTo("objectId", teacher);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() < 1) {
+
+                        return;
+                    }
+                    ParseUser teacher = (ParseUser) objects.get(0);
+                    vh.tvTeacherName.setText(teacher.getString("FullName"));
+                    String profileImage = teacher.getString("ProfileImage");
+
+                    Glide.with(mContext).load(profileImage).asBitmap().centerCrop().into(new BitmapImageViewTarget(vh.ivTeacherImage) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            vh.ivTeacherImage.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+                }
+            }
+        });
+
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
+        query1.whereContainedIn("objectId", course.getStudents());
+        query1.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                vh.populateUserList(objects, mContext);
+            }
+        });
+
+        vh.setUserListIds(course.getStudents());
+
+    }
 
     public void fetchCommon(ViewHolder_simple viewHolder, Course course) {
 
@@ -315,7 +375,195 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     loadImage(users.get(i), ctrls.get(i), context);
                 }
                 if (count > 5) {
-                    ivMoreIcon.setVisibility(View.INVISIBLE);
+                    ivMoreIcon.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        private void loadImage(ParseObject user, ImageView ivView, Context context) {
+            String imagePath = user.getString("ProfileImage");
+            ivView.setVisibility(View.VISIBLE);
+            Glide.with(context).load(imagePath)
+                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
+                    .placeholder(R.drawable.default_user_white)
+                    .into(ivView);
+        }
+    }
+
+    public class ViewHolder_tea extends ViewHolder_simple {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+
+        ImageView ivUser2;
+        ImageView ivUser1;
+        ImageView ivUser3;
+        ImageView ivUser4;
+        ImageView ivUser5;
+        ImageView ivUser6;
+        ImageView ivUser7;
+        ImageView ivMoreIcon;
+        TextView tvMessage;
+        LinearLayout llUsers;
+        ArrayList<String> userIds;
+
+        public void setUserListIds(ArrayList<String> userids) {
+            this.userIds = userids;
+        }
+
+        //Define constructor wichi accept entire row and find sub views
+        public ViewHolder_tea(final View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            userIds = new ArrayList<>();
+            ivUser1 = (ImageView) itemView.findViewById(R.id.ivPerson1);
+            ivUser2 = (ImageView) itemView.findViewById(R.id.ivPerson2);
+            ivUser3 = (ImageView) itemView.findViewById(R.id.ivPerson3);
+            ivUser4 = (ImageView) itemView.findViewById(R.id.ivPerson4);
+            ivUser5 = (ImageView) itemView.findViewById(R.id.ivPerson5);
+            ivUser6 = (ImageView) itemView.findViewById(R.id.ivPerson6);
+            ivUser7 = (ImageView) itemView.findViewById(R.id.ivPerson7);
+            ivMoreIcon = (ImageView) itemView.findViewById(R.id.ivMore);
+            tvMessage = (TextView) itemView.findViewById(R.id.tvMessage);
+            llUsers = (LinearLayout) itemView.findViewById(R.id.llUsers);
+            llUsers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onUserListClick(userIds);
+                        }
+                    }
+                }
+            });
+        }
+
+        public void populateUserList(List<ParseObject> users, Context context) {
+            ArrayList<ImageView> ctrls = new ArrayList<>();
+            ivUser1.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser1);
+            ivUser2.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser2);
+            ivUser3.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser3);
+            ivUser4.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser4);
+            ivUser5.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser5);
+            ivUser6.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser6);
+            ivUser7.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser7);
+            ivMoreIcon.setVisibility(View.INVISIBLE);
+
+            tvMessage.setText("No students registered yet.");
+
+            if (users.size() == 1) {
+                tvMessage.setText("1 student attends this course.");
+                loadImage(users.get(0), ivUser1, context);
+            } else if (users.size() > 1) {
+                int count = users.size() > 7 ? 6 : users.size();
+                tvMessage.setText(String.format("%s students attend this course", count));
+                for (int i = 0; i < count; i++) {
+                    loadImage(users.get(i), ctrls.get(i), context);
+                }
+                if (count > 7) {
+                    ivMoreIcon.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+        private void loadImage(ParseObject user, ImageView ivView, Context context) {
+            String imagePath = user.getString("ProfileImage");
+            ivView.setVisibility(View.VISIBLE);
+            Glide.with(context).load(imagePath)
+                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
+                    .placeholder(R.drawable.default_user_white)
+                    .into(ivView);
+        }
+    }
+
+    public class ViewHolder_stu extends ViewHolder_simple {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+
+        public TextView tvTeacherName;
+        public ImageView ivTeacherImage;
+        public Button btnApply;
+        ImageView ivUser2;
+        ImageView ivUser1;
+        ImageView ivUser3;
+        ImageView ivUser4;
+        ImageView ivUser5;
+        ImageView ivMoreIcon;
+        TextView tvMessage;
+        LinearLayout llUsers;
+        ArrayList<String> userIds;
+
+        public void setUserListIds(ArrayList<String> userids) {
+            this.userIds = userids;
+        }
+
+        //Define constructor wichi accept entire row and find sub views
+        public ViewHolder_stu(final View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            userIds = new ArrayList<>();
+            tvTeacherName = (TextView) itemView.findViewById(R.id.tvTeacherName);
+            ivTeacherImage = (ImageView) itemView.findViewById(R.id.ivTeacher);
+            btnApply = (Button) itemView.findViewById(R.id.btnApply);
+            ivUser1 = (ImageView) itemView.findViewById(R.id.ivPerson1);
+            ivUser2 = (ImageView) itemView.findViewById(R.id.ivPerson2);
+            ivUser3 = (ImageView) itemView.findViewById(R.id.ivPerson3);
+            ivUser4 = (ImageView) itemView.findViewById(R.id.ivPerson4);
+            ivUser5 = (ImageView) itemView.findViewById(R.id.ivPerson5);
+            ivMoreIcon = (ImageView) itemView.findViewById(R.id.ivMore);
+            tvMessage = (TextView) itemView.findViewById(R.id.tvMessage);
+            llUsers = (LinearLayout) itemView.findViewById(R.id.llUsers);
+            llUsers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onUserListClick(userIds);
+                        }
+                    }
+                }
+            });
+        }
+
+        public void populateUserList(List<ParseObject> users, Context context) {
+            ArrayList<ImageView> ctrls = new ArrayList<>();
+            ivUser1.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser1);
+            ivUser2.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser2);
+            ivUser3.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser3);
+            ivUser4.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser4);
+            ivUser5.setVisibility(View.INVISIBLE);
+            ctrls.add(ivUser5);
+            ivMoreIcon.setVisibility(View.INVISIBLE);
+
+            tvMessage.setText("This is new course!You are the first one to register for the course!");
+
+            if (users.size() == 1) {
+                tvMessage.setText("1 friend will attend this course.");
+                loadImage(users.get(0), ivUser1, context);
+            } else if (users.size() > 1) {
+                int count = users.size() > 5 ? 4 : users.size();
+                tvMessage.setText(String.format("%s friends will attend this course", count));
+                for (int i = 0; i < count; i++) {
+                    loadImage(users.get(i), ctrls.get(i), context);
+                }
+                if (count > 5) {
+                    ivMoreIcon.setVisibility(View.VISIBLE);
                 }
             }
         }

@@ -76,12 +76,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // Inflate the custom layout
         switch (viewType) {
             case GROUP:
-                View v1 = inflater.inflate(R.layout.item_chat_single, parent, false);
-                viewHolder = new ViewHolder_single(v1);
+                View v1 = inflater.inflate(R.layout.item_chat_group, parent, false);
+                viewHolder = new ViewHolder_group(v1);
                 break;
             case SINGLE:
-                View v3 = inflater.inflate(R.layout.item_chat_group, parent, false);
-                viewHolder = new ViewHolder_group(v3);
+                View v3 = inflater.inflate(R.layout.item_chat_single, parent, false);
+                viewHolder = new ViewHolder_single(v3);
                 break;
         }
 
