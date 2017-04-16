@@ -19,23 +19,7 @@ public class ChatListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
     }
 
-    private void logout(){
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if(currentUser!=null) {
-            currentUser.logOut();
 
-            Intent i = new Intent(ChatListActivity.this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
-    }
 }

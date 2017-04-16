@@ -32,9 +32,6 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".activities.MessagesActivity"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity
             android:name=".activities.NewCourseActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MyProfileActivity">

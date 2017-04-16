@@ -8,39 +8,26 @@ import android.view.View;
 import android.widget.Button;
 
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.adapters.ChatListAdapter;
+import com.codepath.android.instudy.adapters.ChatMessageAdapter;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Message;
 import com.parse.GetCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static android.R.id.message;
 
 public class ChatActivity extends AppCompatActivity {
     static final String TAG = ChatActivity.class.getSimpleName();
@@ -54,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     Button btSend;
     ListView lvChat;
     ArrayList<Message> mMessages;
-    ChatListAdapter mAdapter;
+    ChatMessageAdapter mAdapter;
     //track first load
     boolean mFirstLoad;
 
@@ -97,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
         lvChat.setTranscriptMode(1); // scroll to the bottom when a new data shows up
         mFirstLoad = true;
         final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatListAdapter(ChatActivity.this, userId, mMessages);
+        mAdapter = new ChatMessageAdapter(ChatActivity.this, userId, mMessages);
         lvChat.setAdapter(mAdapter);
         // When send button is clicked, create message object on Parse
 
@@ -135,7 +122,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-
     // Query messages from Parse so we can load them into the chat adapter
 
     void refreshMessages() {
@@ -143,11 +129,9 @@ public class ChatActivity extends AppCompatActivity {
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-
+        query.whereEqualTo(Message.CHAT_KEY,this.chatId);
         // get the latest 500 messages, order will show up newest to oldest of this group
         query.orderByDescending("createdAt");
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {

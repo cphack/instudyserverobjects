@@ -8,7 +8,7 @@ import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.CoursesSearchFragment;
 import com.codepath.android.instudy.fragments.CoursesStudentFragment;
 import com.codepath.android.instudy.fragments.CoursesTeacherFragment;
-import com.codepath.android.instudy.fragments.MessagesListFragment;
+import com.codepath.android.instudy.fragments.ChatListFragment;
 
 
 public class PagerAdapter extends SmartFragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
@@ -33,7 +33,7 @@ public class PagerAdapter extends SmartFragmentStatePagerAdapter implements Page
             case 0: // Fragment # 0 - This will show FirstFragment
                 return CoursesTeacherFragment.newInstance(0, "Page # 1");
             case 1: // Fragment # 0 - This will show FirstFragment different title
-                return MessagesListFragment.newInstance(1, "Page # 2");
+                return ChatListFragment.newInstance(1, "Page # 2");
             case 2: // Fragment # 1 - This will show SecondFragment
                 return CoursesStudentFragment.newInstance(2, "Page # 3");
             case 3: // Fragment # 1 - This will show SecondFragment

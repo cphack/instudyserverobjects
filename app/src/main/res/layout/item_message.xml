@@ -9,6 +9,13 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@mipmap/ic_launcher" />
+    <ImageView
+        android:id="@+id/ivProfileMe"
+        android:contentDescription="@string/profile_me"
+        android:layout_marginStart="-64dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@mipmap/ic_launcher" />
     <TextView
         android:textSize="18sp"
         android:id="@+id/tvBody"
@@ -18,11 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="64dp">
     </TextView>
-    <ImageView
-        android:id="@+id/ivProfileMe"
-        android:contentDescription="@string/profile_me"
-        android:layout_marginStart="-64dp"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@mipmap/ic_launcher" />
+
 </LinearLayout>

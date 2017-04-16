@@ -9,16 +9,12 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.codepath.android.instudy.models.Message.BODY_KEY;
-
-
-
 @ParseClassName("Chat")
 public class Chat extends ParseObject {
 
     public static final String RECIPIENTS_KEY = "recipients";
-    public static final String LAST_MESSAGE_DATE_KEY = "date";
-    public static final String MESSAGES_KEY = "messages";
+    public static final String LAST_MESSAGE_DATE_KEY = "lastDate";
+    public static final String LAST_MESSAGE_ID = "lastMessageId";
 
     public ArrayList<String> getRecipients() {
         ArrayList<String> result = new ArrayList<>();
@@ -40,8 +36,6 @@ public class Chat extends ParseObject {
         put(RECIPIENTS_KEY, recipients);
     }
 
-
-
     public Date getLastDate() {
         return getDate(LAST_MESSAGE_DATE_KEY);
     }
@@ -50,4 +44,11 @@ public class Chat extends ParseObject {
         put(LAST_MESSAGE_DATE_KEY, date);
     }
 
+    public String getLastMessageId() {
+        return getString(LAST_MESSAGE_ID);
+    }
+
+    public void setLastMessageId(String msgId) {
+        put(LAST_MESSAGE_ID, msgId);
+    }
 }
