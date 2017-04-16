@@ -19,18 +19,20 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingLeft="5dp"
-        tools:ignore="RtlHardcoded,RtlSymmetry"></TextView>
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+
+    </TextView>
 
     <ImageView
         android:id="@+id/ivUser"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/theaderowl"
 
-        />
+        android:src="@drawable/theaderowl" />
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"

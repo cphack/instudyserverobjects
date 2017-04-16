@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,14 +23,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.fragments.MyProfile;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
+import com.codepath.android.instudy.fragments.MyProfile;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.name;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -57,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         tvFullName = (TextView) headerView.findViewById(R.id.tvFullName);
         ivUser = (ImageView)  headerView.findViewById(R.id.ivUser);
+        Log.d("DEBUG","Going to LoadUserProfile");
         loadUserProfile();
+        Log.d("DEBUG","Done LoadUserProfile");
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         fragment.setOnUserListClickListener(new MainTabsFragment.OnUserListClickListener() {
             @Override
             public void onUserListClick(ArrayList<String> userids) {
+                Log.d("DEBUG","Trigg onUserListClick Listener");
                 openUserList(userids);
             }
         });
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openUserList(ArrayList<String> userids){
         String[] users =new String[userids.size()];
+        Log.d("DEBUG","OpenUsers number : "+users.length);
         userids.toArray(users);
         Intent i  = new Intent(MainActivity.this,UserListActivity.class);
         i.putExtra("users",users);
@@ -221,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             ParseUser user =ParseUser.getCurrentUser();
             String fullName = user.getString("FullName");
             String profileImage = user.getString("ProfileImage");
+            Log.d("DEBUG","LoadUserProfile user "+fullName+" ProfImg "+profileImage);
             if (tvFullName != null) {
                 if (ParseUser.getCurrentUser() != null) {
                     tvFullName.setText(fullName);

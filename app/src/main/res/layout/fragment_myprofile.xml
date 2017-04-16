@@ -12,34 +12,67 @@
     <!--android:layout_centerInParent="true"-->
     <!--android:src="@drawable/studyowl" />-->
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="17dp"
+        android:text="Tag Line"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="15dp"
+        android:text="Location"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="277dp"
+        android:text="Name"
+        android:textSize="18sp" />
+
     <RelativeLayout
         android:id="@+id/rlProfileHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_alignParentStart="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <Button
             android:id="@+id/btGalPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivProfileImage"
-            android:layout_toEndOf="@+id/ivProfileImage"
             android:clickable="true"
-            android:text="Gallery Pic"
-            tools:ignore="HardcodedText" />
+            android:text="Gallery"
+            tools:ignore="HardcodedText"
+            android:layout_alignBaseline="@+id/btSave"
+            android:layout_alignBottom="@+id/btSave"
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/etLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ivProfileImage"
-            android:layout_alignEnd="@+id/etTagLine"
-            android:layout_alignStart="@+id/etTagLine"
             android:background="@drawable/rounded_shape"
             android:hint="@string/from"
             android:inputType="textMultiLine"
             android:textColor="@color/text_accent"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:layout_marginTop="19dp"
+            android:layout_below="@+id/etUserName"
+            android:layout_alignStart="@+id/etUserName" />
 
         <EditText
             android:id="@+id/etTagLine"
@@ -52,9 +85,9 @@
             android:inputType="textPersonName"
             android:textColor="@color/text_accent"
             tools:ignore="LabelFor,RtlHardcoded"
-            android:layout_above="@+id/etLocation"
-            android:layout_alignStart="@+id/etUserName"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@+id/etLocation"
+            android:layout_alignStart="@+id/etLocation"
+            android:layout_marginTop="16dp" />
 
         <ImageView
             android:id="@+id/imgCorners"
@@ -71,14 +104,12 @@
             android:id="@+id/ivProfileImage"
             android:layout_width="175dp"
             android:layout_height="175dp"
-            android:layout_alignBottom="@+id/imgCorners"
-            android:layout_alignLeft="@+id/imgCorners"
-            android:layout_alignRight="@+id/imgCorners"
-            android:layout_alignTop="@+id/imgCorners"
             android:background="@drawable/image_round_corner"
             android:padding="2dp"
             android:src="@drawable/studyowl"
-            tools:ignore="ContentDescription,RtlHardcoded" />
+            tools:ignore="ContentDescription,RtlHardcoded"
+            android:layout_alignTop="@+id/imgCorners"
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/etUserName"
@@ -92,101 +123,29 @@
             android:inputType="textPersonName"
             android:textColor="@color/text_accent"
             android:textSize="18sp"
-            android:layout_above="@+id/etTagLine"
-            android:layout_alignEnd="@+id/btSnapPic"
-            android:layout_marginBottom="12dp"
-            android:layout_toEndOf="@+id/imgCorners" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView"
-            android:layout_alignBottom="@+id/textView"
-            android:layout_alignStart="@+id/ivProfileImage"
-            android:background="@drawable/rounded_shape"
-            android:textColor="@color/text_accent"
-            android:text="@string/teacher_groups" />
-
-        <ListView
-            android:id="@+id/lvStudentGroup"
-            android:layout_width="175dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/textView"
-            android:layout_below="@+id/textView"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_shape" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/etLocation"
-            android:layout_below="@+id/etLocation"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/login_text_round"
-            android:textColor="@color/text_accent"
-            android:text="@string/studentgroups" />
-
-        <ListView
-            android:id="@+id/lvTeacherGroup"
-            android:layout_width="175dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_below="@+id/textView"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_shape" />
+            android:layout_below="@+id/btGalPic"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp" />
 
         <Button
             android:id="@+id/btSnapPic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:clickable="true"
             android:text="@string/proPic"
             tools:ignore="HardcodedText"
-            android:layout_above="@+id/etUserName"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/btGalPic" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlSend"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="5dp"
-        android:layout_below="@+id/rlProfileHeader">
-
-
-        <ListView
-            android:id="@+id/lvChat"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/etMessage"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/etShareNotes"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/rounded_shape" />
+            android:layout_alignTop="@+id/btGalPic"
+            android:layout_toStartOf="@+id/ivProfileImage"
+            android:layout_alignBottom="@+id/btGalPic" />
 
         <EditText
             android:id="@+id/etShareNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
+            android:layout_alignStart="@+id/etTagLine"
+            android:layout_below="@+id/etTagLine"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/rounded_shape"
             android:ems="10"
             android:hint="@string/share_notes"
@@ -194,36 +153,42 @@
             android:textColor="@color/text_accent"
             tools:ignore="NotSibling" />
 
-        <EditText
-            android:id="@+id/etMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btSave"
-            android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@+id/btSave"
-            android:background="@drawable/rounded_shape"
-            android:gravity="top"
-            android:hint="@string/message_hint"
-            android:imeOptions="actionSend"
-            android:textColor="@color/text_accent"
-            tools:ignore="RtlHardcoded,UnknownId" />
-
         <Button
             android:id="@+id/btSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:background="@drawable/action_button_round"
+            android:clickable="true"
             android:gravity="center"
             android:paddingRight="10dp"
             android:text="@string/save"
             android:textSize="18sp"
-            android:clickable="true"
-            tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry">
+            tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry"
+            android:layout_below="@+id/ivProfileImage"
+            android:layout_alignParentEnd="true">
 
         </Button>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="17dp"
+        android:text="Tag Line"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="Notice to Groups"
+        android:textSize="18sp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
 </RelativeLayout>

@@ -27,8 +27,6 @@ import android.widget.Toast;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.models.Message;
-import com.codepath.android.instudy.models.StudentGroups;
-import com.codepath.android.instudy.models.TeacherGroups;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -66,15 +64,10 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     public String Location = "New York City";
     public String ShareNotes = " I may not be able to attend";
 
-    ListView lvStudentsGroup;
-    ArrayList<StudentGroups> mStudentGroups;
-    ListView lvTeacherGroup;
-    ArrayList<TeacherGroups> mTeacherGroups;
     ListView lvChat;
     ArrayList<Message> mMessages;
     private ParseUser me;
     ImageView profileImg;
-    public String photoFileName = "myProfilePic";
     public String parseProfileImageName = "myParseImagePic";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private static final int SELECT_PHOTO = 100;
@@ -93,8 +86,6 @@ public class MyProfile extends Fragment implements View.OnClickListener {
         btSnapPic = (Button) v.findViewById(R.id.btSnapPic);
         btGalPic = (Button) v.findViewById(R.id.btGalPic);
         btSave = (Button) v.findViewById(R.id.btSave);
-        lvStudentsGroup = (ListView) v.findViewById(R.id.lvStudentGroup);
-        lvTeacherGroup = (ListView) v.findViewById(R.id.lvTeacherGroup);
         profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
         me =  ParseUser.getCurrentUser();
         mMessages = new ArrayList<Message>();
@@ -157,6 +148,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                         bitmapScaled.compress(Bitmap.CompressFormat.PNG, 40, bytes);
                         // Create a new file for the resized bitmap
                         String pPName = String.valueOf(selectedImage).replace("jpg","png");
+                        Log.d("DEBUG","Photo cpature saved file "+pPName);
                         Uri resizedUri = Uri.parse(pPName);
                         File resizedFile = new File(resizedUri.getPath());
                         resizedFile.createNewFile();
@@ -164,6 +156,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                         // Write the bytes of the bitmap to file
                         fos.write(bytes.toByteArray());
                         fos.close();
+                        fos.flush();
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Failed to load", Toast.LENGTH_SHORT)
                                 .show();
@@ -183,6 +176,56 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                     String picturePath = cursor.getString(columnIndex);
                     cursor.close();
                     profileImg.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                    File photo = new File(picturePath);
+                    if ( !photo.exists() ) { // if no photo exists then set default picture
+                        photo = new File("android.resource://com.codepath.android.instudy/drawable/theaderowl");
+                    }
+                    Log.d("DEBUG","photo file is "+photo.toString());
+                    String fP4BMap = String.format("%s/%s.png", getExternalStorageDirectory(), parseProfileImageName);
+                    byte[] selpic = picturePath.getBytes();
+                    Log.d("DEBUG","Photo from gallery saved in file "+fP4BMap);
+                    File galFile = new File(fP4BMap);
+                    try {
+                        galFile.createNewFile();
+                        FileOutputStream fos = new FileOutputStream(galFile);
+                        // Write the bytes of the bitmap to file
+                        fos.write(selpic);
+                        fos.close();
+                        fos.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ByteArrayOutputStream strem = new ByteArrayOutputStream();
+                    Bitmap btmap;
+                    try {
+                        btmap = BitmapFactory.decodeFile(fP4BMap);
+                        btmap.compress(Bitmap.CompressFormat.PNG, 50, strem);
+                    } catch(OutOfMemoryError e) {
+                        try{
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inSampleSize = 2;
+                            options.inJustDecodeBounds = true;
+                            btmap = BitmapFactory.decodeFile(fP4BMap, options);
+                            btmap.compress(Bitmap.CompressFormat.PNG, 100, strem);
+
+                        }catch (Exception eo) {
+                        }
+                    }
+                    byte[] image = strem.toByteArray();
+                    Uri cUri = Uri.fromFile(photo);
+                    Picasso.with(getContext())
+                            .load(cUri)
+                            .fit()
+                            .centerInside()
+                            .placeholder(studyowl)
+                            .error(theaderowl)
+                            .transform(new RoundedCornersTransformation(30, 30))
+                            .into(profileImg);
+                    ParseFile pfile  = new ParseFile("myprofilepic.png",image);
+                    pfile.saveInBackground();
+                    me.put("ImageName","myprofilepic.png");
+                    me.put("ImageFile",pfile);
+                    me.saveInBackground();
                 }
                 break;
 
@@ -195,7 +238,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
         Log.d("DEBUG", "Found this user: "+myName);
         String myProfile = me.getString("Profile");
         if(myProfile != "None") {
-            getUserProfileFromParseAndUpdate();
+                getUserProfileFromParseAndUpdate();
         }
     }
     /** Check if this device has a camera */
@@ -226,7 +269,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
             if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
                 File path = new File(Environment.getExternalStorageDirectory(),"../../../SDCARD/DCIM");
                 Log.d("DEBUG"," photo path is "+path.toString());
-                File photo = new File( path ,photoFileName+".png"); //+System.currentTimeMillis()
+                File photo = new File( path ,parseProfileImageName+".png"); //+System.currentTimeMillis()
                 try {
                     photo.createNewFile();
                     Log.d("DEBUG","Attempted to create photo file");
@@ -247,7 +290,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                 Log.d("DEBUG","Resolve Activity returned null");
             }
         } else {
-            File photo = new File(getExternalStorageDirectory(), photoFileName+".png");
+            File photo = new File(getExternalStorageDirectory(), parseProfileImageName+".png");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -268,77 +311,120 @@ public class MyProfile extends Fragment implements View.OnClickListener {
         value = (String) me.getString("ShareNotes");
         if (value != null ) {etShareNotes.setText(value);} else {etShareNotes.setText("None");}
         ParseFile phFile = (ParseFile) me.get("ImageFile");
-        phFile.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if( e == null ) {
-                    // Photo picture avail
-                    File photo = new File(getExternalStorageDirectory(), parseProfileImageName+".png");
-                    FileOutputStream ph = null;
-                    try {
-                        ph = new FileOutputStream(photo);
-                        ph.write(data);
-                        ph.close();
-                    } catch (IOException e1) {
-                        Log.d("DEBUG","Failed to get ph stream photo file");
-                        e1.printStackTrace();
+        if(phFile != null ) {
+            phFile.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        // Photo picture avail
+                        File photo = new File(getExternalStorageDirectory(), parseProfileImageName + ".png");
+                        FileOutputStream ph = null;
+                        try {
+                            ph = new FileOutputStream(photo);
+                            ph.write(data);
+                            ph.close();
+                            ph.flush();
+                        } catch (IOException e1) {
+                            Log.d("DEBUG", "Failed to get ph stream photo file");
+                            e1.printStackTrace();
+                        }
+                    } else {
+                        Log.d("DEBUG", "Failed to get photo file");
                     }
-                } else {
-                    Log.d("DEBUG","Failed to get photo file");
+                    File parsephoto = new File(getExternalStorageDirectory(), parseProfileImageName + ".png");
+                    Uri uri;
+                    uri = Uri.fromFile(parsephoto); // photo
+                    if (uri == null) { // set default picture
+                        uri = Uri.parse("android.resource://com.codepath.android.instudy/drawable/theaderowl");
+                    }
+                    Picasso.with(getContext())
+                            .load(uri)
+                            .fit()
+                            .centerInside()
+                            .placeholder(studyowl)
+                            .error(theaderowl)
+                            .transform(new RoundedCornersTransformation(30, 30))
+                            .into(profileImg);
                 }
-                File parsephoto = new File(getExternalStorageDirectory(),  parseProfileImageName+".png");
-                Uri uri;
-                uri = Uri.fromFile(parsephoto); // photo
-                if ( uri == null ) { // set default picture
-                    uri = Uri.parse("android.resource://com.codepath.android.instudy/drawable/theaderowl");
-                }
-                Picasso.with(getContext())
-                        .load(uri)
-                        .fit()
-                        .centerInside()
-                        .placeholder(studyowl)
-                        .error(theaderowl)
-                        .transform(new RoundedCornersTransformation(30, 30))
-                        .into(profileImg);
+            });
+        } else {
+            Toast.makeText(getContext(),"No Profile Picture stored ", Toast.LENGTH_SHORT).show();
+            // Make dummy profile picture and store in on disk
+            File photo = new File(getExternalStorageDirectory(), parseProfileImageName + ".png");
+            File dummyProfile = new File("android.resource://com.codepath.android.instudy/drawable/theaderowl.png");
+            byte[] dummydata = dummyProfile.toString().getBytes();
+            FileOutputStream ph = null;
+            try {
+                ph = new FileOutputStream(photo);
+                ph.write(dummydata);
+                ph.close();
+                ph.flush();
+            } catch (IOException e1) {
+                Log.d("DEBUG", "Failed to store dummy profile pics photo file");
+                e1.printStackTrace();
             }
-        });
-
+        }
     }
 
     public void UserProfileUpdate() {
         TagLine = etTagline.getText().toString();
         Location = etLocation.getText().toString();
         ShareNotes = etShareNotes.getText().toString();
-         // Before exiting, push profile back to Parse DB
-        if(TagLine == null) { TagLine = "None";}
-        if(Location == null) { Location = "None";}
-        if(ShareNotes == null) { ShareNotes = "None";}
-        me.put("TagLine",TagLine);
-        me.put("Location",Location);
-        me.put("ShareNotes",ShareNotes);
-        me.put("Profile","Updated"); // set flag so next time we do not save unless specifically save is clicked
-        File photo = new File(getExternalStorageDirectory(),  photoFileName+".png");
-        if ( !photo.exists() ) { // if no photo exists then set default picture
+        // Before exiting, push profile back to Parse DB
+        if (TagLine == null) {
+            TagLine = "None";
+        }
+        if (Location == null) {
+            Location = "None";
+        }
+        if (ShareNotes == null) {
+            ShareNotes = "None";
+        }
+        me.put("TagLine", TagLine);
+        me.put("Location", Location);
+        me.put("ShareNotes", ShareNotes);
+        me.put("Profile", "Updated"); // set flag so next time we do not save unless specifically save is clicked
+        //File p1 = new File(getExternalStorageDirectory(), photoFileName+".png");
+        File photo = new File(getExternalStorageDirectory(), parseProfileImageName + ".png");
+        if (!photo.exists()) { // if no photo exists then set default picture
             photo = new File("android.resource://com.codepath.android.instudy/drawable/theaderowl");
         }
-        String fPath4BMap = String.format("%s/%s.png", getExternalStorageDirectory(), photoFileName);
-        Bitmap bitmap = BitmapFactory.decodeFile(fPath4BMap);
+        Log.d("DEBUG", "Photo is now " + photo.toString());
+        String fPath4BMap = String.format("%s/%s.png", getExternalStorageDirectory(), parseProfileImageName);
+
+        Log.d("DEBUG", "fpath is " + fPath4BMap);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+        Bitmap bitmap;
+        try {
+            bitmap = BitmapFactory.decodeFile(fPath4BMap);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+        } catch (OutOfMemoryError e) {
+            try {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                options.inJustDecodeBounds = true;
+                bitmap = BitmapFactory.decodeFile(fPath4BMap, options);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            } catch (Exception eo) {
+            }
+        }
         byte[] image = stream.toByteArray();
+        ;
         Uri cUri = Uri.fromFile(photo);
+
         Picasso.with(getContext())
-                .load(cUri)
-                .fit()
-                .centerInside()
-                .placeholder(studyowl)
-                .error(theaderowl)
-                .transform(new RoundedCornersTransformation(30, 30))
-                .into(profileImg);
-        ParseFile pfile  = new ParseFile("myprofilepic.png",image);
+                    .load(cUri)
+                    .fit()
+                    .centerInside()
+                    .placeholder(studyowl)
+                    .error(theaderowl)
+                    .transform(new RoundedCornersTransformation(30, 30))
+                    .into(profileImg);
+        ParseFile pfile = new ParseFile("myprofilepic.png", image);
         pfile.saveInBackground();
-        me.put("ImageName","myprofilepic.png");
-        me.put("ImageFile",pfile);
+        me.put("ImageName", "myprofilepic.png");
+        me.put("ImageFile", pfile);
         me.saveInBackground();
 
     }
