@@ -56,7 +56,6 @@ public class MainTabsFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 refreshFragmentScreen(position);
-                /*Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -69,14 +68,29 @@ public class MainTabsFragment extends Fragment {
 
     void refreshFragmentScreen(int screen) {
         switch(screen){
+            case 0:
+                CoursesTeacherFragment fragment1 = (CoursesTeacherFragment) adapter.getRegisteredFragment(screen);
+                if(fragment1!=null){
+                fragment1.populateCourseList();}
+                break;
+
             case 1:
                 ChatListFragment fragment = (ChatListFragment) adapter.getRegisteredFragment(1);
-                fragment.populateChatsList();
+                if(fragment!=null){
+                fragment.populateChatsList();}
                 break;
-           default:
-               BaseCoursesFragment courseFragment = (BaseCoursesFragment) adapter.getRegisteredFragment(screen);
-               courseFragment.refreshCourses();
-               break;
+            case 2:
+                CoursesStudentFragment fragment2= (CoursesStudentFragment) adapter.getRegisteredFragment(screen);
+                if(fragment2!=null){
+                fragment2.populateCourseList();}
+                break;
+
+            case 3:
+                CoursesSearchFragment fragment3= (CoursesSearchFragment) adapter.getRegisteredFragment(screen);
+                if(fragment3!=null){
+                fragment3.populateCourseList();}
+                break;
+
         }
     }
 

@@ -15,6 +15,8 @@ public class Chat extends ParseObject {
     public static final String RECIPIENTS_KEY = "recipients";
     public static final String LAST_MESSAGE_DATE_KEY = "lastDate";
     public static final String LAST_MESSAGE_ID = "lastMessageId";
+    public static final String CHAT_NAME_KEY = "chatName";
+
 
     public ArrayList<String> getRecipients() {
         ArrayList<String> result = new ArrayList<>();
@@ -51,4 +53,15 @@ public class Chat extends ParseObject {
     public void setLastMessageId(String msgId) {
         put(LAST_MESSAGE_ID, msgId);
     }
+
+    public String getChatName() {
+        return getString(CHAT_NAME_KEY);
+    }
+
+    public void setChatName(String name) {
+        put(CHAT_NAME_KEY, name);
+    }
+
+
 }
+

@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.UserListAdapter;
 import com.codepath.android.instudy.models.Chat;
+import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -33,7 +36,10 @@ public class UserListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
-        userids = getIntent().getStringArrayExtra("users");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         linearLayoutManager = new LinearLayoutManager(this);
 
         lvUsers = (RecyclerView) findViewById(R.id.lvUsers);
@@ -42,8 +48,44 @@ public class UserListActivity extends AppCompatActivity {
         lvUsers.setAdapter(aUsers);
         lvUsers.setLayoutManager(linearLayoutManager);
 
-        populateUsers();
+        userids = getIntent().getStringArrayExtra("users");
+
+        if(userids==null){
+
+            ParseQuery<Course> query = new ParseQuery<Course>("Course");
+            query.whereContains("students", ParseUser.getCurrentUser().getObjectId());
+
+            query.findInBackground(new FindCallback<Course>() {
+                public void done(List<Course> itemList, ParseException e) {
+                    if (e == null) {
+                        ArrayList<String> users = new  ArrayList();
+                       for(Course c:itemList){
+                           ArrayList<String> students = c.getStudents();
+                           for(String student : students){
+                               if(student.equals(ParseUser.getCurrentUser().getObjectId())){
+                                   continue;
+                               }
+                               if(!users.contains(student)){
+                                   users.add(student);
+                               }
+                           }
+                       }
+                       userids = users.toArray(new String[users.size()]);
+                        populateUsers();
+                    } else {
+                        Toast.makeText(UserListActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }else{
+            populateUsers();
+        }
+
+
+
     }
+
+
 
 
     private void initAdapter() {
@@ -90,12 +132,7 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     private void openChat(final String userid) {
-        //check if i don't have already chats with this user
 
-        //if there is chat where recepients only i and this person - open this chat
-        //otherrwise create new chat
-
-        //open ChatActivity
         ArrayList<String> recipients = new ArrayList<>();
         recipients.add(userid);
         recipients.add(ParseUser.getCurrentUser().getObjectId());

@@ -32,8 +32,5 @@ public abstract  class BaseCoursesFragment extends Fragment {
 
     public abstract  void populateCourseList();
 
-    public void refreshCourses(){
-        courses.clear();
-        populateCourseList();
-    }
+
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,67 +20,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.R.attr.name;
+import static com.codepath.android.instudy.R.id.lvUsers;
 
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    RecyclerView lvUsers;
-    UserListAdapter aUsers;
-    ArrayList<ParseObject> users;
-    String[] userids;
-    private LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
-         userids = getIntent().getStringArrayExtra("users");
-        linearLayoutManager = new LinearLayoutManager(this);
+        setContentView(R.layout.activity_user_profile);
 
-        lvUsers = (RecyclerView) findViewById(R.id.lvUsers);
-
-        initAdapter();
-        lvUsers.setAdapter(aUsers);
-        lvUsers.setLayoutManager(linearLayoutManager);
-
-        populateUsers();
-    }
-
-
-    private void initAdapter() {
-        users = new ArrayList<ParseObject>();
-        //construct adapter from datasource
-        aUsers = new UserListAdapter(this, users);
-        aUsers.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // String name = users.get(position).name;
-                Toast.makeText(UserProfileActivity.this, "item was clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        aUsers.setOnChatButtonClickListener(new UserListAdapter.OnChatButtonClickListener() {
-            @Override
-            public void onChatButtonClick(View view, int position) {
-                // String name = users.get(position).name;
-                Toast.makeText(UserProfileActivity.this, name + "button was clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    //TODO:move to fragment
-    private void populateUsers() {
-        if(userids.length==0)return;
-        List<String> userIdList = new ArrayList<String>(Arrays.asList(userids));
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.whereContainedIn("objectId", userIdList);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    users.addAll(objects);
-                    aUsers.notifyDataSetChanged();
-                }
-            }
-        });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

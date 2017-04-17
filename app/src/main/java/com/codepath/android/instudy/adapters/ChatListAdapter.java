@@ -90,13 +90,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case GROUP:
-//                ViewHolder_group vh = (ViewHolder_group) viewHolder;
-//                configureViewHolder_group(vh, position);
+               ViewHolder_group vh = (ViewHolder_group) viewHolder;
+                configureViewHolder_group(vh, position);
                 break;
 
             case SINGLE:
-//                ViewHolder_single vh1 = (ViewHolder_single) viewHolder;
-//                configureViewHolder_single(vh1, position);
+                ViewHolder_single vh1 = (ViewHolder_single) viewHolder;
+                configureViewHolder_single(vh1, position);
                 break;
         }
     }

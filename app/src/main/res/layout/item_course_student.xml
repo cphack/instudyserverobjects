@@ -135,12 +135,12 @@
                         android:layout_weight="1">
 
                         <Button
-                            android:id="@+id/btnOverview"
+                            android:id="@+id/btnLections"
                             android:layout_width="100dp"
                             android:layout_height="20dp"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/action_button_round"
-                            android:text="overview"
+                            android:text="lections"
                             android:textColor="@color/login_active"
                             android:textSize="8sp" />
                     </RelativeLayout>
@@ -149,14 +149,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
-
                         <Button
-                            android:id="@+id/btnApply"
+                            android:id="@+id/btnGroupChat"
                             android:layout_width="100dp"
                             android:layout_height="20dp"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/action_button_round"
-                            android:text="Apply"
+                            android:text="group chat"
                             android:textColor="@color/login_active"
                             android:textSize="8sp" />
                     </RelativeLayout>

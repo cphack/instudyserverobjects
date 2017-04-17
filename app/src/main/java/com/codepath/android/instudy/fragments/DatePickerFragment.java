@@ -19,14 +19,22 @@ import static com.codepath.android.instudy.R.id.tvStartDate;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
+    Boolean isStartDate;
     Calendar cStartDate;
 
-   /* public DatePickerFragment() {
-        listener = null;
-    }*/
+    public static DatePickerFragment newInstance(boolean isStartDate) {
+        DatePickerFragment frag = new DatePickerFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isstartdate", isStartDate);
+        frag.setArguments(args);
+        return frag;
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        isStartDate= getArguments().getBoolean("isstartdate");
+
         // Use the current time as the default values for the picker
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -49,36 +57,23 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         cStartDate.set(Calendar.MONTH, monthOfYear);
         cStartDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         sendBackResult(cStartDate.getTime());
-        //((NewCourseFragment)this.getParentFragment()).onSetDate(cStartDate.getTime());
-
-
-        /*SimpleDateFormat formater = new SimpleDateFormat("MMM-dd-yyyy");
-        isStartDateSet=true;
-        tvStartDate.setText(formater.format(cStartDate.getTime()));*/
-       /* if (listener != null) {
-            listener.onSetDate(cStartDate.getTime());
-        }*/
     }
 
 
    public interface DatePickerFragmentListener {
-        // These methods are the different events and
-        // need to pass relevant arguments related to the event triggered
-        public void onSetDate(Date date);
+        public void onSetStartDate(Date date);
+       public void onSetEndDate(Date date);
     }
-
-    /*// Assign the listener implementing events interface that will receive the events
-    public void setDatePickerFragmentListener(DatePickerFragmentListener listener) {
-        this.listener = listener;
-    }*/
-
-   // private DatePickerFragmentListener listener;
-
     // Call this method to send the data back to the parent fragment
     public void sendBackResult(Date date) {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         DatePickerFragmentListener listener = (DatePickerFragmentListener) getTargetFragment();
-        listener.onSetDate(date);
+
+        if(isStartDate){
+        listener.onSetStartDate(date);
+        }else{
+            listener.onSetEndDate(date);
+        }
         dismiss();
     }
 

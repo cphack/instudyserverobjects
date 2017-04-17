@@ -14,12 +14,17 @@ import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static android.R.id.message;
 
 public class CoursesSearchFragment extends BaseCoursesFragment {
 
@@ -71,15 +76,71 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
         aCourses.setOnUserListClickListener(new CourseListAdapter.OnUserClickListListener() {
             @Override
             public void onUserListClick(ArrayList<String> userids) {
-               /* if (userListener != null) {
-                    userListener.onUserListClick(userids);
-                }*/
-                //need to fix this
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
                     activity.openUserList(userids);
                 }
             }
+
+            @Override
+            public void onCourseSearchOverviewClick(String courseid) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openCourseOverview(courseid);
+                }
+            }
+
+            @Override
+            public void onCourseSearchApplyClick(String courseid) {
+
+                // Specify which class to query
+                ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
+                // Specify the object id
+                query.getInBackground(courseid, new GetCallback<Course>() {
+                    public void done(Course item, ParseException e) {
+                        if (e == null) {
+                            // Access data using the `get` methods for the object
+                            ArrayList students = item.getStudents();
+                            if(!students.contains(ParseUser.getCurrentUser().getObjectId())){
+                                students.add(ParseUser.getCurrentUser().getObjectId());
+                                item.setStudents(students);
+
+                                item.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            populateCourseList();
+                                            Toast.makeText(getActivity(), "You have successfully registered for this course. Thank you!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onCourseStudentChatClick(String courseid){
+
+            }
+
+            @Override
+            public void onCourseStudentLectionsClick(String courseid) {            }
+            @Override
+            public void onCourseStudentSubmitClick(String courseid) {            }
+            @Override
+            public void onCourseTeacherLectionsClick(String courseid) {            }
+            @Override
+            public void onCourseTeacherManageClick(String courseid) {            }
+            @Override
+            public void onCourseTeacherNotificationClick(String courseid) {            }
         });
     }
 
@@ -94,13 +155,10 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
         query.findInBackground(new FindCallback<Course>() {
             public void done(List<Course> itemList, ParseException e) {
                 if (e == null) {
-                    // Access the array of results here
-                    int curSize = aCourses.getItemCount();
+                    courses.clear();
                     courses.addAll(itemList);
-                    // replace this line with wherever you get new records
-
-                    //notify adapter to reflect changes
-                    aCourses.notifyItemRangeInserted(curSize, itemList.size());
+                    lvCourses.getRecycledViewPool().clear();
+                    aCourses.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -108,17 +166,6 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
         });
     }
 
-    // Define listener member variable
-    private OnUserClickListListener userListener;
 
-    // Define the listener interface
-    public interface OnUserClickListListener {
-        void onUserListClick(ArrayList<String> userids);
-    }
-
-    // Define the method that allows the parent activity or fragment to define the listener
-    public void setOnUserListClickListener(OnUserClickListListener listener) {
-        this.userListener = listener;
-    }
 }
 

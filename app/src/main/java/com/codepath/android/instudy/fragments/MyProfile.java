@@ -13,7 +13,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +24,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.models.Message;
@@ -49,21 +56,21 @@ import static com.codepath.android.instudy.R.drawable.studyowl;
 import static com.codepath.android.instudy.R.drawable.theaderowl;
 
 @RuntimePermissions
-public class MyProfile extends Fragment implements View.OnClickListener {
+public class MyProfile extends Fragment implements View.OnClickListener, EditStatusFragment.EditNameDialogListener {
 
-    static final int MAX_TEACHERS_GROUPS_TO_SHOW = 2;
-    static final int MAX_STUDENT_GROUPS_TO_SHOW = 2;
-    EditText etUserName;
+    TextView etUserName;
     EditText etTagline;
     EditText etLocation;
-    EditText etShareNotes;
+    TextView etShareNotes;
     Button btSnapPic;
     Button btSave;
     Button btGalPic;
+    ImageView ivGallery;
+    ImageView ivCamera;
     public String TagLine = "Tag Line";
     public String Location = "New York City";
     public String ShareNotes = " I may not be able to attend";
-
+    LinearLayout llStatusLine;
     ListView lvChat;
     ArrayList<Message> mMessages;
     private ParseUser me;
@@ -78,22 +85,30 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
         View v = (View) inflater.inflate(R.layout.fragment_myprofile, container, false);
         lvChat = (ListView) v.findViewById(R.id.lvChat);
-        etUserName = (EditText) v.findViewById(R.id.etUserName);
-        etTagline = (EditText) v.findViewById(R.id.etTagLine);
-        etLocation = (EditText) v.findViewById(R.id.etLocation);
-        etShareNotes = (EditText) v.findViewById(R.id.etShareNotes);
-        btSnapPic = (Button) v.findViewById(R.id.btSnapPic);
-        btGalPic = (Button) v.findViewById(R.id.btGalPic);
+        etUserName = (TextView) v.findViewById(R.id.tvFullName);
+       /* etTagline = (EditText) v.findViewById(R.id.etTagLine);
+        etLocation = (EditText) v.findViewById(R.id.etLocation);*/
+        etShareNotes = (TextView) v.findViewById(R.id.tvStatusLine);
+        /*btSnapPic = (Button) v.findViewById(R.id.btSnapPic);*/
+/*        btGalPic = (Button) v.findViewById(R.id.btGalPic);*/
+        ivGallery=(ImageView)v.findViewById(R.id.ivGallery);
+        ivCamera=(ImageView)v.findViewById(R.id.ivCamera);
         btSave = (Button) v.findViewById(R.id.btSave);
+        llStatusLine=(LinearLayout) v.findViewById(R.id.llStatusLine);
         profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
         me =  ParseUser.getCurrentUser();
         mMessages = new ArrayList<Message>();
-        btSnapPic.setOnClickListener(this);
+        ivCamera.setOnClickListener(this);
         btSave.setOnClickListener(this);
-        btGalPic.setOnClickListener(this);
+        ivGallery.setOnClickListener(this);
+
+        llStatusLine.setOnClickListener(this);
         // Set profile values
         SetProfile(v);
         return v;
@@ -101,30 +116,21 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.btSnapPic:
+            case R.id.ivCamera:
                 takePhoto();
                 break;
-            case R.id.btGalPic:
+            case R.id.ivGallery:
                 galleryPicker(v);
                 break;
             case R.id.btSave:
                 UserProfileUpdate();
-                DoneSaveBackToActivity();
+                getActivity().finish();
+                break;
+            case R.id.llStatusLine:
+                showEditDialog();
                 break;
         }
     }
-    // All data items saved on line in Parse
-    // No need to pass any stuff back to calling activity
-    // So get the main activity as an intent and return to it.
-    public void DoneSaveBackToActivity() {
-        Intent i = null;
-        i = new Intent(getActivity(), MainActivity.class);
-        if(i!=null){
-            getActivity().finish();
-            startActivity(i);
-        }
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -161,15 +167,26 @@ public class MyProfile extends Fragment implements View.OnClickListener {
                         fos.write(bytes.toByteArray());
                         fos.close();
                         fos.flush();
+                        Glide.with(getContext()).load(resizedUri).asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImg) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                profileImg.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
 
-                        Picasso.with(getContext())
+
+                        /*Picasso.with(getContext())
                             .load(resizedUri)
                             .fit()
                             .centerInside()
                             .placeholder(studyowl)
                             .error(theaderowl)
                             .transform(new RoundedCornersTransformation(30, 30))
-                            .into(profileImg);
+                            .into(profileImg);*/
+
                         byte[] image = bytes.toByteArray();
                         ParseFile pfile = new ParseFile("myprofilepic.png", image);
                         pfile.saveInBackground();
@@ -309,10 +326,10 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     private void getUserProfileFromParseAndUpdate() {
         String value = (String) me.getString("FullName");
         if (value != null ) { etUserName.setText(value); } else {etUserName.setText("None");}
-        value = (String) me.getString("TagLine");
+        /*value = (String) me.getString("TagLine");
         if (value != null ) { etTagline.setText(value);} else {etTagline.setText("None");}
         value = (String) me.getString("Location");
-        if (value != null ) {etLocation.setText(value);} else {etLocation.setText("None");}
+        if (value != null ) {etLocation.setText(value);} else {etLocation.setText("None");}*/
         value = (String) me.getString("ShareNotes");
         if (value != null ) {etShareNotes.setText(value);} else {etShareNotes.setText("None");}
         ParseFile phFile = (ParseFile) me.get("ImageFile");
@@ -373,7 +390,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
     }
 
     public void UserProfileUpdate() {
-        TagLine = etTagline.getText().toString();
+       /* TagLine = etTagline.getText().toString();
         Location = etLocation.getText().toString();
         ShareNotes = etShareNotes.getText().toString();
         // Before exiting, push profile back to Parse DB
@@ -390,7 +407,7 @@ public class MyProfile extends Fragment implements View.OnClickListener {
         me.put("Location", Location);
         me.put("ShareNotes", ShareNotes);
         me.put("Profile", "Updated"); // set flag so next time we do not save unless specifically save is clicked
-        me.saveInBackground();
+        me.saveInBackground();*/
         File photo = new File(getExternalStorageDirectory(), myParseGetPic + ".png");
         if(photo.exists()) {
             boolean delFile = photo.delete();
@@ -409,5 +426,16 @@ public class MyProfile extends Fragment implements View.OnClickListener {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+    }
+
+    private void showEditDialog() {
+        FragmentManager fm = getFragmentManager();
+        EditStatusFragment editNameDialogFragment = EditStatusFragment.newInstance("Some status");
+        editNameDialogFragment.show(fm, "fragment_edit_status");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(getActivity(), "Hi, " + inputText, Toast.LENGTH_SHORT).show();
     }
 }

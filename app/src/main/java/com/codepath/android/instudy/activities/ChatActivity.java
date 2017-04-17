@@ -3,6 +3,7 @@ package com.codepath.android.instudy.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,8 @@ public class ChatActivity extends AppCompatActivity {
     ChatMessageAdapter mAdapter;
     //track first load
     boolean mFirstLoad;
+    Toolbar toolbar;
+
 
     // Create a handler which can run code periodically
     static final int POLL_INTERVAL = 1000; // milliseconds
@@ -61,8 +64,13 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //check if this belongs to existing chatid
         Intent parentIntent = getIntent();
+
         if (parentIntent.hasExtra("chatid")) {
             chatId = parentIntent.getStringExtra("chatid");
         } else {
@@ -73,7 +81,6 @@ public class ChatActivity extends AppCompatActivity {
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
     }
 
-    // Setup button event handler which posts the entered message to Parse
     void setupMessagePosting() {
         // Find the text field and button
         etMessage = (EditText) findViewById(R.id.etText);
@@ -122,8 +129,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    // Query messages from Parse so we can load them into the chat adapter
-
     void refreshMessages() {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
@@ -156,10 +161,15 @@ public class ChatActivity extends AppCompatActivity {
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         // Specify the object id
         query.getInBackground(chatId, new GetCallback<Chat>() {
-            public void done(Chat item, ParseException e) {
+            public void done(Chat chat, ParseException e) {
                 if (e == null) {
-                    item.setLastDate(new Date());
-                    item.saveInBackground();
+                    chat.setLastDate(new Date());
+                    ArrayList<String> recipients = chat.getRecipients();
+                    if(!recipients.contains(ParseUser.getCurrentUser().getObjectId())){
+                        recipients.add(ParseUser.getCurrentUser().getObjectId());
+                        chat.setRecipients(recipients);
+                    }
+                    chat.saveInBackground();
                 }
             }
         });

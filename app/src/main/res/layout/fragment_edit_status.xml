@@ -1,0 +1,52 @@
+<!-- fragment_edit_name.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="7dp">
+
+    <TextView
+        android:id="@+id/tvStatusUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="CHANGE STATUS"
+        android:textColor="@color/text_not_accent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etStatusUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="3dp"
+        android:text="This course was designed for reference librarians and readers who need health statistics.
+The course emphasizes improved research library service based on an appreciation of the sources, limits and uses of health statistics.
+"
+        android:textColor="@color/text_accent"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:background="@drawable/text_field_round"
+        android:imeOptions="actionDone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/action_button_round"
+            android:text="update"
+            android:textColor="@color/login_active"
+            android:textSize="8sp"
+
+            />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

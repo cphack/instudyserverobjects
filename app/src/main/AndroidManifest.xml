@@ -34,21 +34,26 @@
         <activity
             android:name=".activities.NewCourseActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.MyProfileActivity">
+        <activity
+            android:name=".activities.OverviewCourseActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.MyProfileActivity"
+            android:parentActivityName=".activities.MainActivity" >
         </activity>
-        <activity android:name=".activities.CoursesStudentActivity">
+        <activity android:name=".activities.UserListActivity"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
-        <activity android:name=".activities.UserListActivity">
-        </activity>
-        <activity android:name=".activities.UserProfileActivity">
+        <activity android:name=".activities.UserProfileActivity"
+            android:parentActivityName=".activities.UserListActivity">
         </activity>
 
-        <activity android:name=".activities.ChatActivity">
-        </activity>
+
         <activity android:name=".activities.ChatListActivity"
             android:parentActivityName=".activities.LoginActivity">
         </activity>
-
+        <activity android:name=".activities.ChatActivity"
+            android:parentActivityName=".activities.ChatListActivity">
+        </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"

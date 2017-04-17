@@ -44,6 +44,14 @@ public class Course extends ParseObject {
     public static final String LECTION_KEY = "lection";
     public static final String ASSIGNMENT_KEY = "assignement";
 
+    public static final String CHAT_KEY = "assignement";
+
+
+
+public String getChatId(){return getString(CHAT_KEY);}
+    public void setChatId(String chatId) {
+        put(CHAT_KEY, chatId);
+    }
     public String getTitle() {
         return getString(TITLE_KEY);
     }

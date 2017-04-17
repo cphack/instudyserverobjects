@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
@@ -33,6 +34,12 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
+
+
+    public static CoursesTeacherFragment newInstance(int page, String title) {
+        CoursesTeacherFragment fragment = new CoursesTeacherFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +74,61 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
         courses = new ArrayList<Course>();
         //construct adapter from datasource
         aCourses = new CourseListAdapter(getActivity(), courses, "TEA");
+        aCourses.setOnUserListClickListener(new CourseListAdapter.OnUserClickListListener() {
+            @Override
+            public void onUserListClick(ArrayList<String> userids) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openUserList(userids);
+                }
+            }
+
+
+            @Override
+            public void onCourseStudentChatClick(String courseid){
+
+            }
+            @Override
+            public void onCourseSearchOverviewClick(String courseid) {}
+            @Override
+            public void onCourseSearchApplyClick(String courseid) {}
+
+            @Override
+            public void onCourseStudentLectionsClick(String courseid){}
+            @Override
+            public void onCourseStudentSubmitClick(String courseid){}
+
+
+            @Override
+            public void onCourseTeacherLectionsClick(String courseid) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openLectionsOverview(courseid);
+                }
+            }
+
+            @Override
+            public void onCourseTeacherManageClick(String courseid) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openManageCourse(courseid);
+                }
+            }
+
+            @Override
+            public void onCourseTeacherNotificationClick(String courseid) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openSendNotification(courseid);
+                }
+            }
+        });
     }
+
+
+
+
+
 
     public void populateCourseList() {
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
@@ -77,25 +138,15 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
             public void done(List<Course> itemList, ParseException e) {
                 if (e == null) {
                     // Access the array of results here
-                    int curSize = aCourses.getItemCount();
+                    courses.clear();
                     courses.addAll(itemList);
-                    // replace this line with wherever you get new records
-
-                    //notify adapter to reflect changes
-                    aCourses.notifyItemRangeInserted(curSize, itemList.size());
+                    lvCourses.getRecycledViewPool().clear();
+                    aCourses.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
-    }
-
-
-
-    // newInstance constructor for creating fragment with arguments
-    public static CoursesTeacherFragment newInstance(int page, String title) {
-        CoursesTeacherFragment fragment = new CoursesTeacherFragment();
-        return fragment;
     }
 }

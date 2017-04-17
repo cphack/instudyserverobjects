@@ -26,9 +26,13 @@ import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.ChatListFragment;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
+import com.codepath.android.instudy.models.Course;
+import com.parse.GetCallback;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -56,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         tvFullName = (TextView) headerView.findViewById(R.id.tvFullName);
         ivUser = (ImageView)  headerView.findViewById(R.id.ivUser);
-        Log.d("DEBUG","Going to LoadUserProfile");
+
         loadUserProfile();
-        Log.d("DEBUG","Done LoadUserProfile");
+
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         fragment.setOnUserListClickListener(new MainTabsFragment.OnUserListClickListener() {
             @Override
             public void onUserListClick(ArrayList<String> userids) {
-                Log.d("DEBUG","Trigg onUserListClick Listener");
                 openUserList(userids);
             }
         });
@@ -107,14 +110,11 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
                 break;
 
-            case R.id.dvCoursesStudent:
-                i = new Intent(MainActivity.this, CoursesStudentActivity.class);
+
+
+            case R.id.dvFriends:
+                i = new Intent(MainActivity.this, UserListActivity.class);
                 break;
-
-           /* case R.id.dvTest:
-               runTest();
-                break;*/
-
 
           /*  case R.id.nav_third_fragment:
                 Log.d("DEBUG", "Got to Groups");
@@ -126,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if(i!=null){
             startActivity(i);
-            finish();
+            mDrawer.closeDrawers();
+
         }
 
        /* try {
@@ -189,21 +190,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openUserList(ArrayList<String> userids){
         String[] users =new String[userids.size()];
-        Log.d("DEBUG","OpenUsers number : "+users.length);
         userids.toArray(users);
         Intent i  = new Intent(MainActivity.this,UserListActivity.class);
         i.putExtra("users",users);
         startActivity(i);
-    }
-
-
-
-    private void openTeacherFragment(){
-
-    }
-
-    private void openCourseDetails(){
-
     }
 
     private void loadUserProfile(){
@@ -306,6 +296,24 @@ public class MainActivity extends AppCompatActivity {
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();*/
     }
+
+    public void openLectionsOverview(String courseId){}
+    public void openManageCourse(String courseId){}
+    public void openSendNotification(String courseId){}
+
+    public void openCourseOverview(String courseid) {
+        Intent i = new Intent(MainActivity.this,OverviewCourseActivity.class);
+        i.putExtra("courseid",courseid);
+        startActivity(i);
+    }
+    public void     openCourseChatActivity(String chatid) {
+
+        Intent i = new Intent(MainActivity.this,ChatActivity.class);
+        i.putExtra("chatid",chatid);
+        startActivity(i);
+    }
+
+
 
 
 
