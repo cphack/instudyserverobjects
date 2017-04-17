@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         View headerView = nvDrawer.inflateHeaderView(R.layout.nav_header);
 
         tvFullName = (TextView) headerView.findViewById(R.id.tvFullName);
-        ivUser = (ImageView)  headerView.findViewById(R.id.ivUser);
+        ivUser = (ImageView) headerView.findViewById(R.id.ivUser);
 
         loadUserProfile();
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 openUserList(userids);
             }
         });
-        fragmentManager.beginTransaction().replace(R.id.flContent,fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
-            case R.id.dvMessages:
+            /*case R.id.dvMessages:
                 i = new Intent(MainActivity.this, ChatActivity.class);
-               break;
+                break;*/
             case R.id.dvAddNewCourse:
                 i = new Intent(MainActivity.this, NewCourseActivity.class);
                 break;
@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.dvMyProfile:
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
                 break;
-
 
 
             case R.id.dvFriends:
@@ -121,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Groups.class;
                 break;*/
             default:
-                Toast.makeText(this,String.valueOf(menuItem.getItemId()),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, String.valueOf(menuItem.getItemId()), Toast.LENGTH_SHORT).show();
                 fragmentClass = MyProfile.class;
         }
-        if(i!=null){
+        if (i != null) {
             startActivity(i);
             mDrawer.closeDrawers();
 
@@ -188,20 +187,20 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    public void openUserList(ArrayList<String> userids){
-        String[] users =new String[userids.size()];
+    public void openUserList(ArrayList<String> userids) {
+        String[] users = new String[userids.size()];
         userids.toArray(users);
-        Intent i  = new Intent(MainActivity.this,UserListActivity.class);
-        i.putExtra("users",users);
+        Intent i = new Intent(MainActivity.this, UserListActivity.class);
+        i.putExtra("users", users);
         startActivity(i);
     }
 
-    private void loadUserProfile(){
+    private void loadUserProfile() {
         if (ParseUser.getCurrentUser() != null) {
-            ParseUser user =ParseUser.getCurrentUser();
+            ParseUser user = ParseUser.getCurrentUser();
             String fullName = user.getString("FullName");
             String profileImage = user.getString("ProfileImage");
-            Log.d("DEBUG","LoadUserProfile user "+fullName+" ProfImg "+profileImage);
+            Log.d("DEBUG", "LoadUserProfile user " + fullName + " ProfImg " + profileImage);
             if (tvFullName != null) {
                 if (ParseUser.getCurrentUser() != null) {
                     tvFullName.setText(fullName);
@@ -231,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void runTest(){
+    private void runTest() {
         ParseUser user = ParseUser.getCurrentUser();
-        user.put("ProfileImage","http://i.imgur.com/DGTOSfL.png");
+        user.put("ProfileImage", "http://i.imgur.com/DGTOSfL.png");
         user.saveInBackground();
        /* Course course = new Course();
         course.setTitle("CSE 120 Computer Science Principles (5) NW, QSR");
@@ -297,25 +296,38 @@ public class MainActivity extends AppCompatActivity {
         course.saveInBackground();*/
     }
 
-    public void openLectionsOverview(String courseId){}
-    public void openManageCourse(String courseId){}
-    public void openSendNotification(String courseId){}
+    public void openLectionsOverview(String courseId) {
+        Intent i = new Intent(MainActivity.this, LectionsListActivity.class);
+        i.putExtra("courseid", courseId);
+        startActivity(i);
+    }
+
+    public void openManageCourse(String courseId) {
+    }
+
+    public void openSendNotification(String courseId) {
+    }
 
     public void openCourseOverview(String courseid) {
-        Intent i = new Intent(MainActivity.this,OverviewCourseActivity.class);
-        i.putExtra("courseid",courseid);
-        startActivity(i);
-    }
-    public void     openCourseChatActivity(String chatid) {
-
-        Intent i = new Intent(MainActivity.this,ChatActivity.class);
-        i.putExtra("chatid",chatid);
+        Intent i = new Intent(MainActivity.this, OverviewCourseActivity.class);
+        i.putExtra("courseid", courseid);
         startActivity(i);
     }
 
+    public void openCourseChatActivity(String chatid) {
+
+        Intent i = new Intent(MainActivity.this, ChatActivity.class);
+        i.putExtra("chatid", chatid);
+        startActivity(i);
+    }
 
 
+    public void openLectionList(String courseid) {
 
+        Intent i = new Intent(MainActivity.this, LectionsListActivity.class);
+        i.putExtra("courseid", courseid);
+        startActivity(i);
+    }
 
 
 }

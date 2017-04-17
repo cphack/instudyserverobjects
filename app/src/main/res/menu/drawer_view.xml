@@ -20,10 +20,10 @@
             android:id="@+id/dvFriends"
             android:icon="@drawable/meeting_with_a_friend"
             android:title="@string/dvFriends" />
-        <item
+       <!-- <item
             android:id="@+id/dvMessages"
             android:icon="@drawable/mail"
-            android:title="@string/dvMessages" />
+            android:title="@string/dvMessages" />-->
         <item
             android:id="@+id/dvSettings"
             android:icon="@drawable/settings"

@@ -47,6 +47,15 @@
             android:parentActivityName=".activities.UserListActivity">
         </activity>
 
+        <activity android:name=".activities.LectionActivity"
+            android:parentActivityName=".activities.LectionsListActivity">
+        </activity>
+
+
+        <activity android:name=".activities.LectionsListActivity"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+
 
         <activity android:name=".activities.ChatListActivity"
             android:parentActivityName=".activities.LoginActivity">

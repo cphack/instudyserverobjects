@@ -506,7 +506,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
-            btnManage.setOnClickListener(new View.OnClickListener() {
+            btnNotifications.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (userListener != null) {
@@ -576,7 +576,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public TextView tvTeacherName;
         public ImageView ivTeacherImage;
-        public Button btnLections;
+        Button btnLections;
         Button btnGroupChat;
         ImageView ivUser2;
         ImageView ivUser1;
@@ -610,6 +610,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ivMoreIcon = (ImageView) itemView.findViewById(R.id.ivMore);
             tvMessage = (TextView) itemView.findViewById(R.id.tvMessage);
             llUsers = (LinearLayout) itemView.findViewById(R.id.llUsers);
+
             llUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -620,31 +621,32 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }
                     }
 
-                    btnLections.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (userListener != null) {
-                                int position = getAdapterPosition();
-                                Course course = mCourses.get(position);
-                                if (position != RecyclerView.NO_POSITION) {
-                                    userListener.onCourseStudentLectionsClick(course.getObjectId());
-                                }
-                            }
-                        }
-                    });
 
-                    btnGroupChat.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (userListener != null) {
-                                int position = getAdapterPosition();
-                                Course course = mCourses.get(position);
-                                if (position != RecyclerView.NO_POSITION) {
-                                    userListener.onCourseStudentChatClick(course.getObjectId());
-                                }
-                            }
+                }
+            });
+            btnLections.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        Course course = mCourses.get(position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onCourseStudentLectionsClick(course.getObjectId());
                         }
-                    });
+                    }
+                }
+            });
+
+            btnGroupChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        Course course = mCourses.get(position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onCourseStudentChatClick(course.getObjectId());
+                        }
+                    }
                 }
             });
 

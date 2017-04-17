@@ -73,12 +73,30 @@ public class ChatActivity extends AppCompatActivity {
 
         if (parentIntent.hasExtra("chatid")) {
             chatId = parentIntent.getStringExtra("chatid");
+            populateData(chatId);
         } else {
 
             userId = parentIntent.getStringExtra("userid");
         }
         setupMessagePosting();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
+    }
+
+
+    private void populateData(String chatId){
+        ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
+        // Specify the object id
+        query.getInBackground(chatId, new GetCallback<Chat>() {
+            public void done(Chat chat, ParseException e) {
+                if (e == null) {
+                   if(chat.getChatName()!=null){
+                       toolbar.setTitle(chat.getChatName());
+                   }else if(chat.getRecipients().size()==2){
+                       //TODO get 2nd user and get his fullname to display on toolbar
+                   }
+                }
+            }
+        });
     }
 
     void setupMessagePosting() {

@@ -130,7 +130,10 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
 
             @Override
             public void onCourseStudentLectionsClick(String courseid) {
-                //TODO implement
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openLectionList(courseid);
+                }
             }
 
             @Override

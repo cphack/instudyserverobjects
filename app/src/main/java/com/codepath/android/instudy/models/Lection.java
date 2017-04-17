@@ -47,6 +47,9 @@ public class Lection extends ParseObject {
     public String getTitle() {
         return getString(TITLE_KEY);
     }
+    public void setTitle(String  title) {
+        put(TITLE_KEY,title);
+    }
 
     public ArrayList<String> getTopics() {
         ArrayList<String> result = new ArrayList<>();
@@ -66,7 +69,6 @@ public class Lection extends ParseObject {
     public String getLocation() {
         return getString(LOCATION_KEY);
     }
-
 
     public void setCourseId(String courseId) {
         put(COURSE_ID_KEY, courseId);

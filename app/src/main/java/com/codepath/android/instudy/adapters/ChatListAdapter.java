@@ -106,7 +106,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Chat chat = mChats.get(position);
         ArrayList<String> users = chat.getRecipients();
 
-        vh.tvGroupNum.setText(String.format("%s members"));
+        vh.tvGroupNum.setText(String.format("%s members",users.size()));
 
         ParseQuery<Message> query = ParseQuery.getQuery("Message");
         query.getInBackground(chat.getLastMessageId(), new GetCallback<Message>() {
