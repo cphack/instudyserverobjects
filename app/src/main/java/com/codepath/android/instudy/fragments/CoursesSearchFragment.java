@@ -3,8 +3,6 @@ package com.codepath.android.instudy.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +12,7 @@ import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.activities.MainActivity;
-import com.codepath.android.instudy.activities.UserListActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
-import com.codepath.android.instudy.adapters.UserListAdapter;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -25,8 +21,6 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class CoursesSearchFragment extends BaseCoursesFragment {
 

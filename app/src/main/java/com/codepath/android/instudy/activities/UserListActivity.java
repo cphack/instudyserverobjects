@@ -1,19 +1,12 @@
 package com.codepath.android.instudy.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.UserListAdapter;
 import com.codepath.android.instudy.models.Chat;
@@ -23,16 +16,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-
-import static android.R.attr.name;
-import static com.codepath.android.instudy.R.id.lvCourses;
-import static com.codepath.android.instudy.R.id.start;
-import static com.codepath.android.instudy.R.string.teacher;
 
 
 public class UserListActivity extends AppCompatActivity {

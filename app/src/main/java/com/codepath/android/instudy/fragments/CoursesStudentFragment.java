@@ -1,21 +1,19 @@
 package com.codepath.android.instudy.fragments;
 
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
@@ -23,11 +21,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class CoursesStudentFragment extends BaseCoursesFragment {
@@ -37,6 +31,8 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
+
+    private FloatingActionButton fabReturn;
 
     public static CoursesStudentFragment newInstance(int page, String title) {
         CoursesStudentFragment fragment = new CoursesStudentFragment();
@@ -52,7 +48,18 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_coursesteacher, container, false);
+        View v = inflater.inflate(R.layout.fragment_coursesstudent, container, false);
+        fabReturn = (FloatingActionButton) v.findViewById(R.id.fabReturn);
+        fabReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = null;
+                i = new Intent(getContext(), MainActivity.class);
+                if(i!=null){
+                    getContext().startActivity(i);
+                };
+            }
+        });
         findControls(v);
         initControls();
         return v;
@@ -64,6 +71,8 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
         super.onCreate(savedInstanceState);
         initAdapter();
         populateCourseList();
+
+
     }
 
     private void findControls(View v) {
@@ -95,7 +104,6 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
                     int curSize = aCourses.getItemCount();
                     courses.addAll(itemList);
                     // replace this line with wherever you get new records
-
                     //notify adapter to reflect changes
                     aCourses.notifyItemRangeInserted(curSize, itemList.size());
                 } else {

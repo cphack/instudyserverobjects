@@ -2,41 +2,27 @@ package com.codepath.android.instudy.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.util.Util;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Message;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -104,13 +90,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case GROUP:
-                ViewHolder_group vh = (ViewHolder_group) viewHolder;
-                configureViewHolder_group(vh, position);
+//                ViewHolder_group vh = (ViewHolder_group) viewHolder;
+//                configureViewHolder_group(vh, position);
                 break;
 
             case SINGLE:
-                ViewHolder_single vh1 = (ViewHolder_single) viewHolder;
-                configureViewHolder_single(vh1, position);
+//                ViewHolder_single vh1 = (ViewHolder_single) viewHolder;
+//                configureViewHolder_single(vh1, position);
                 break;
         }
     }

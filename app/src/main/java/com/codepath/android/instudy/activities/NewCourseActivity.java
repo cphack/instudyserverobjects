@@ -1,8 +1,9 @@
 package com.codepath.android.instudy.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.NewCourseFragment;

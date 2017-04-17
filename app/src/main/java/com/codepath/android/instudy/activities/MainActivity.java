@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
                 break;
 
+            case R.id.dvCoursesStudent:
+                i = new Intent(MainActivity.this, CoursesStudentActivity.class);
+                break;
+
            /* case R.id.dvTest:
                runTest();
                 break;*/

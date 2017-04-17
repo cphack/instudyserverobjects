@@ -36,6 +36,8 @@
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MyProfileActivity">
         </activity>
+        <activity android:name=".activities.CoursesStudentActivity">
+        </activity>
         <activity android:name=".activities.UserListActivity">
         </activity>
         <activity android:name=".activities.UserProfileActivity">

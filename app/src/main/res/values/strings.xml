@@ -47,6 +47,12 @@
     <string name="notice">Notice</string>
     <string name="tag_line">Tag Line</string>
     <string name="timeline">TimeLine</string>
+    <string name="_04_april_2017_campus_a_274_aud">04 April 2017 * Campus A * 274 Aud.</string>
+    <string name="applied_machine_learning_in_python">Applied Machine Learning in Python</string>
+    <string name="apply">Apply</string>
+    <string name="maria_podlesnova">Maria Podlesnova</string>
+    <string name="overview">overview</string>
+    <string name="this_is_simple_text_bla_bla_lba">this is simple text bla bla lba</string>
 
 
 </resources>
