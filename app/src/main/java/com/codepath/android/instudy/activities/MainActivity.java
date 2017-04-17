@@ -24,8 +24,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.ChatListFragment;
+import com.codepath.android.instudy.fragments.EditLectionFragment;
+import com.codepath.android.instudy.fragments.LectionListFragment;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
+import com.codepath.android.instudy.fragments.SendTeacherNotificationFragment;
 import com.codepath.android.instudy.models.Course;
 import com.parse.GetCallback;
 import com.parse.ParseQuery;
@@ -34,7 +37,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SendTeacherNotificationFragment.SendNotificationListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -306,6 +309,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSendNotification(String courseId) {
+            FragmentManager fm = getSupportFragmentManager();
+            SendTeacherNotificationFragment fragment= SendTeacherNotificationFragment.newInstance(courseId);
+            fragment.show(fm, "fragment_send_notification");
     }
 
     public void openCourseOverview(String courseid) {
@@ -325,6 +331,23 @@ public class MainActivity extends AppCompatActivity {
     public void openLectionList(String courseid) {
 
         Intent i = new Intent(MainActivity.this, LectionsListActivity.class);
+        i.putExtra("courseid", courseid);
+        startActivity(i);
+    }
+
+    @Override
+    public void onFinishEditDialog(String message,String courseid){
+
+        /*
+        TODO get Course by courseid
+        send message to all users which attends course
+        create message in main group chat
+        * */
+    }
+
+
+    public void openAssignmentsList(String courseid){
+        Intent i = new Intent(MainActivity.this, AssignmentListActivity.class);
         i.putExtra("courseid", courseid);
         startActivity(i);
     }

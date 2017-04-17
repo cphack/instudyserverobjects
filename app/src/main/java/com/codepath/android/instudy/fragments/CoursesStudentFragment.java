@@ -140,6 +140,8 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             public void onCourseStudentSubmitClick(String courseid) {
                 //TODO implement
             }
+            @Override
+            public void onCourseTeacherAssignmentsClick(String courseid) {}
 
 
             @Override

@@ -2,6 +2,7 @@ package com.codepath.android.instudy.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -28,10 +29,13 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.codepath.android.instudy.R.drawable.user;
+import static com.codepath.android.instudy.R.id.btnAssignments;
 import static com.codepath.android.instudy.R.id.btnLections;
 import static com.codepath.android.instudy.R.id.btnManage;
 import static com.codepath.android.instudy.R.id.tvMessage;
@@ -52,6 +56,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         void onCourseTeacherLectionsClick(String courseid);
 
+        void onCourseTeacherAssignmentsClick(String courseid);
+
         void onCourseTeacherManageClick(String courseid);
 
         void onCourseTeacherNotificationClick(String courseid);
@@ -65,6 +71,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onCourseStudentSubmitClick(String courseid);
 
         void onCourseStudentChatClick(String courseid);
+
+
     }
 
     // Define the method that allows the parent activity or fragment to define the listener
@@ -279,6 +287,9 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         students.remove(curUserId);
         vh.setUserListIds(students);
 
+
+        String endDate ="2017-4-30";
+        vh.countDownStart(endDate);
     }
 
 
@@ -443,6 +454,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Button btnLections;
         Button btnManage;
         Button btnNotifications;
+        Button btnAssignments;
 
         public void setUserListIds(ArrayList<String> userids) {
             this.userIds = userids;
@@ -477,6 +489,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
 
             btnLections = (Button) itemView.findViewById(R.id.btnLections);
+            btnAssignments = (Button) itemView.findViewById(R.id.btnAssignments);
             btnManage = (Button) itemView.findViewById(R.id.btnManage);
             btnNotifications = (Button) itemView.findViewById(R.id.btnNotify);
 
@@ -514,6 +527,19 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         Course course = mCourses.get(position);
                         if (position != RecyclerView.NO_POSITION) {
                             userListener.onCourseTeacherNotificationClick(course.getObjectId());
+                        }
+                    }
+                }
+            });
+
+            btnAssignments.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        Course course = mCourses.get(position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onCourseTeacherAssignmentsClick(course.getObjectId());
                         }
                     }
                 }
@@ -588,6 +614,12 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         LinearLayout llUsers;
         ArrayList<String> userIds;
 
+        public TextView tvDayStu, tvHourStu, tvMinuteStu;
+        public Handler handler;
+        public Runnable runnable;
+        public LinearLayout llCtr;
+        Button btnAssignSubmit;
+
         public void setUserListIds(ArrayList<String> userids) {
             this.userIds = userids;
         }
@@ -602,6 +634,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ivTeacherImage = (ImageView) itemView.findViewById(R.id.ivTeacher);
             btnLections = (Button) itemView.findViewById(R.id.btnLections);
             btnGroupChat = (Button) itemView.findViewById(R.id.btnGroupChat);
+
+            btnAssignSubmit = (Button) itemView.findViewById(R.id.btnAssignSubmit);
             ivUser1 = (ImageView) itemView.findViewById(R.id.ivPerson1);
             ivUser2 = (ImageView) itemView.findViewById(R.id.ivPerson2);
             ivUser3 = (ImageView) itemView.findViewById(R.id.ivPerson3);
@@ -610,6 +644,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ivMoreIcon = (ImageView) itemView.findViewById(R.id.ivMore);
             tvMessage = (TextView) itemView.findViewById(R.id.tvMessage);
             llUsers = (LinearLayout) itemView.findViewById(R.id.llUsers);
+
+            tvDayStu = (TextView) itemView.findViewById(R.id.txtTimerDayStu);
+            tvHourStu = (TextView) itemView.findViewById(R.id.txtTimerHourStu);
+            tvMinuteStu = (TextView) itemView.findViewById(R.id.txtTimerMinuteStu);
+            llCtr = (LinearLayout) itemView.findViewById(R.id.ll1Stu);
 
             llUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -691,6 +730,43 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
                     .placeholder(R.drawable.default_user_white)
                     .into(ivView);
+        }
+
+        public void countDownStart(final String endDate) {
+            handler = new Handler();
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    handler.postDelayed(this, 1000);
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        // Here Set your Event Date
+                        Date eventDate = dateFormat.parse(endDate);
+                        Date currentDate = new Date();
+                        if (!currentDate.after(eventDate)) {
+                            long diff = eventDate.getTime()
+                                    - currentDate.getTime();
+                            long days = diff / (24 * 60 * 60 * 1000);
+                            diff -= days * (24 * 60 * 60 * 1000);
+                            long hours = diff / (60 * 60 * 1000);
+                            diff -= hours * (60 * 60 * 1000);
+                            long minutes = diff / (60 * 1000);
+                            tvDayStu.setText("" + String.format("%02d", days));
+                            tvHourStu.setText("" + String.format("%02d", hours));
+                            tvMinuteStu.setText("" + String.format("%02d", minutes));
+                        } else {
+                            llCtr.setVisibility(View.GONE);
+                            btnAssignSubmit.setVisibility(View.GONE);
+                            handler.removeCallbacks(runnable);
+                            // handler.removeMessages(0);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            handler.postDelayed(runnable, 0);
         }
     }
 }

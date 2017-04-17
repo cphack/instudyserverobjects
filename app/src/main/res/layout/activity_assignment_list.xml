@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.android.instudy.activities.LectionsListActivity">
+    tools:context="com.codepath.android.instudy.activities.AssignmentListActivity">
 
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.codepath.android.instudy.fragments.LectionListFragment"
+        android:name="com.codepath.android.instudy.fragments.AssignmentListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"

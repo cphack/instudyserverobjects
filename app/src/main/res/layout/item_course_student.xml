@@ -14,6 +14,14 @@
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,44 +130,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/llFriendList"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btnLections"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_centerHorizontal="true"
-                            android:background="@drawable/action_button_round"
-                            android:text="lections"
-                            android:textColor="@color/login_active"
-                            android:textSize="8sp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-                        <Button
-                            android:id="@+id/btnGroupChat"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_centerHorizontal="true"
-                            android:background="@drawable/action_button_round"
-                            android:text="group chat"
-                            android:textColor="@color/login_active"
-                            android:textSize="8sp" />
-                    </RelativeLayout>
-                </LinearLayout>
 
             </RelativeLayout>
 
@@ -184,8 +155,191 @@
                     android:text="Maria Podlesnova"
                     android:textColor="@color/text_not_accent"
                     android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvTL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tvTeacherName"
+                    android:layout_below="@+id/tvTeacherName"
+                    android:layout_marginTop="12dp"
+                    android:text="Time Left:"
+                    android:textColor="#000"
+                    android:textSize="10sp" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll1Stu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/tvTL"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/cardview_light_background"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.20"
+                        android:background="@color/cardview_light_background"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtTimerDayStu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="00"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/txt_TimerDay"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_weight="1.33"
+                            android:gravity="center_horizontal"
+                            android:text="d"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1.71"
+                        android:background="@color/cardview_light_background"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtTimerHourStu"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="00"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/txt_TimerHour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:gravity="center_horizontal"
+                            android:text="h"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/cardview_light_background"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtTimerMinuteStu"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="00"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/txt_TimerMinute"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="m"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#000"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
             </RelativeLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llFriendList"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/btnLections"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/action_button_round"
+                        android:text="lections"
+                        android:textColor="@color/login_active"
+                        android:textSize="8sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnGroupChat"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/action_button_round"
+                        android:text="group chat"
+                        android:textColor="@color/login_active"
+                        android:textSize="8sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <Button
+                        android:id="@+id/btnAssignSubmit"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/action_button_round"
+                        android:text="submit"
+                        android:textColor="@color/login_active"
+                        android:textSize="8sp" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

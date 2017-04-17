@@ -7,22 +7,12 @@ import com.parse.ParseObject;
 
 import java.util.Date;
 
-/*
-
-
-courseid
-startdate
-duedate
-link
- */
-
-
 @ParseClassName("Assignment")
 public class Assignment extends ParseObject {
     public static final String COURSE_ID_KEY = "courseId";
     public static final String START_DATE_KEY = "startDate";
     public static final String DUE_DATE_KEY = "dueDate";
-    public static final String LINK_KEY = "link";
+    public static final String TITLE_KEY = "link";
 
     public String getCourseId() {
         return getString(COURSE_ID_KEY);
@@ -36,8 +26,8 @@ public class Assignment extends ParseObject {
         return getDate(DUE_DATE_KEY);
     }
 
-    public String getLink() {
-        return getString(LINK_KEY);
+    public String getTitle() {
+        return getString(TITLE_KEY);
     }
 
 
@@ -53,7 +43,7 @@ public class Assignment extends ParseObject {
         put(DUE_DATE_KEY, dueDate);
     }
 
-    public void setLink(String link) {
-        put(LINK_KEY, link);
+    public void setTitle(String link) {
+        put(TITLE_KEY, link);
     }
 }

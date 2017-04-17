@@ -132,6 +132,8 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
             }
 
             @Override
+            public void onCourseTeacherAssignmentsClick(String courseid) {}
+            @Override
             public void onCourseStudentLectionsClick(String courseid) {            }
             @Override
             public void onCourseStudentSubmitClick(String courseid) {            }

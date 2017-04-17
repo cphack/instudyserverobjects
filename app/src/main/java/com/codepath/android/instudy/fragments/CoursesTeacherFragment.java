@@ -108,6 +108,14 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
             }
 
             @Override
+            public void onCourseTeacherAssignmentsClick(String courseid) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.openAssignmentsList(courseid);
+                }
+            }
+
+            @Override
             public void onCourseTeacherManageClick(String courseid) {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {

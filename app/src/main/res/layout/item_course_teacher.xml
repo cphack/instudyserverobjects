@@ -128,16 +128,15 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llFriendList"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="4">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
-
                     <Button
                         android:id="@+id/btnLections"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/action_button_round"
@@ -152,8 +151,24 @@
                     android:layout_weight="1">
 
                     <Button
+                        android:id="@+id/btnAssignments"
+                        android:layout_width="75dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/action_button_round"
+                        android:text="assignments"
+                        android:textColor="@color/login_active"
+                        android:textSize="8sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
                         android:id="@+id/btnManage"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/action_button_round"
@@ -169,7 +184,7 @@
 
                     <Button
                         android:id="@+id/btnNotify"
-                        android:layout_width="100dp"
+                        android:layout_width="75dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/action_button_round"

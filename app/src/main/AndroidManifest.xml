@@ -56,6 +56,15 @@
             android:parentActivityName=".activities.MainActivity">
         </activity>
 
+        <activity android:name=".activities.AssignmentActivity"
+            android:parentActivityName=".activities.AssignmentListActivity">
+        </activity>
+
+
+        <activity android:name=".activities.AssignmentListActivity"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+
 
         <activity android:name=".activities.ChatListActivity"
             android:parentActivityName=".activities.LoginActivity">

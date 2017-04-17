@@ -1,43 +1,31 @@
 package com.codepath.android.instudy.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.models.Chat;
+import com.codepath.android.instudy.models.Assignment;
 import com.codepath.android.instudy.models.Lection;
-import com.codepath.android.instudy.models.Message;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
 //Taking the tweets object and turning them into views displayed in the list;
-public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AssignmentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Lection> mLections;
+    private List<Assignment> mAssignments;
     // Store the context for easy access
     private Context mContext;
 
-    public LectionListAdapter(@NonNull Context context, @NonNull List<Lection> objects) {
-        mLections= objects;
+    public AssignmentListAdapter(@NonNull Context context, @NonNull List<Assignment> objects) {
+        mAssignments= objects;
         mContext = context;
     }
 
@@ -49,7 +37,7 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
-        return mLections.size();
+        return mAssignments.size();
     }
 
     // inflate xml layout and return  viewHolder
@@ -58,22 +46,22 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         RecyclerView.ViewHolder viewHolder = null;
-        View v1 = inflater.inflate(R.layout.item_lection, parent, false);
-        return new ItemLection(v1);
+        View v1 = inflater.inflate(R.layout.item_assignment, parent, false);
+        return new ItemAssignment(v1);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        ItemLection vh = (ItemLection) viewHolder;
+        ItemAssignment vh = (ItemAssignment) viewHolder;
         configureItem(vh, position);
     }
 
-    private void configureItem(final ItemLection vh, int position) {
+    private void configureItem(final ItemAssignment vh, int position) {
 
-        Lection l = mLections.get(position);
+        Assignment l = mAssignments.get(position);
 
-        vh.tvLectionName.setText(l.getTitle());
-        vh.tvLocation.setText(l.getLocation());
+        vh.tvAssignmentName.setText(l.getTitle());
+      //  vh.tvLocation.setText(l.getLocation());
 
         DateFormat datef = new SimpleDateFormat("MMM-dd");
         DateFormat timef = new SimpleDateFormat(" HH:mm");
@@ -81,23 +69,23 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         vh.tvTime.setText(timef.format(l.getStartDate()));
     }
 
-    public  class ItemLection extends  RecyclerView.ViewHolder {
+    public  class ItemAssignment extends  RecyclerView.ViewHolder {
 
         public TextView tvDate;
         public TextView tvTime;
-        public TextView tvLectionName;
-        public TextView tvLocation;
+        public TextView tvAssignmentName;
+        public TextView tvDetails;
 
         //Define constructor wichi accept entire row and find sub views
-        public ItemLection(View itemView) {
+        public ItemAssignment(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
 
             tvDate=(TextView) itemView.findViewById(R.id.tvDate);
             tvTime=(TextView) itemView.findViewById(R.id.tvTime);
-            tvLectionName=(TextView) itemView.findViewById(R.id.tvLectionName);
-            tvLocation=(TextView) itemView.findViewById(R.id.tvLocation);
+            tvAssignmentName=(TextView) itemView.findViewById(R.id.tvAssignmentName);
+            tvDetails=(TextView) itemView.findViewById(R.id.tvDetails);
         }
     }
 

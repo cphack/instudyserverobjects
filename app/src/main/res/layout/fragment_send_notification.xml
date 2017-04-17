@@ -1,0 +1,50 @@
+<!-- fragment_edit_name.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="7dp">
+
+    <TextView
+        android:id="@+id/tvStatusUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="ENTER MESSAGE"
+        android:textColor="@color/text_not_accent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="3dp"
+        android:text="The next lection will be postponed for 30 min"
+        android:textColor="@color/text_accent"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:background="@drawable/text_field_round"
+        android:imeOptions="actionDone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/action_button_round"
+            android:text="send"
+            android:textColor="@color/login_active"
+            android:textSize="8sp"
+
+            />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
