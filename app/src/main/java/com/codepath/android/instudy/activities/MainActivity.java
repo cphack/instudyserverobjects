@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.fragments.ChatListFragment;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.parse.ParseUser;
@@ -194,23 +195,6 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("users",users);
         startActivity(i);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -64,10 +64,10 @@ public class ChatActivity extends AppCompatActivity {
         //check if this belongs to existing chatid
         Intent parentIntent = getIntent();
         if (parentIntent.hasExtra("chatid")) {
-            chatId = parentIntent.getStringExtra("in_reply_to");
+            chatId = parentIntent.getStringExtra("chatid");
         } else {
 
-            userId = parentIntent.getStringExtra("username");
+            userId = parentIntent.getStringExtra("userid");
         }
         setupMessagePosting();
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
@@ -83,8 +83,7 @@ public class ChatActivity extends AppCompatActivity {
         mMessages = new ArrayList<>();
         lvChat.setTranscriptMode(1); // scroll to the bottom when a new data shows up
         mFirstLoad = true;
-        final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new ChatMessageAdapter(ChatActivity.this, userId, mMessages);
+        mAdapter = new ChatMessageAdapter(ChatActivity.this, ParseUser.getCurrentUser().getObjectId(), mMessages);
         lvChat.setAdapter(mAdapter);
         // When send button is clicked, create message object on Parse
 
@@ -97,7 +96,7 @@ public class ChatActivity extends AppCompatActivity {
                 message.setBody(data);
                 message.setUserId(ParseUser.getCurrentUser().getObjectId());
 
-                if (!TextUtils.isEmpty(chatId)) {
+                if (TextUtils.isEmpty(chatId)) {
                     chat = new Chat();
                     ArrayList<String> recipients = new ArrayList<String>();
                     recipients.add(ParseUser.getCurrentUser().getObjectId());
@@ -110,6 +109,7 @@ public class ChatActivity extends AppCompatActivity {
                         public void done(ParseException e) {
                             if (e == null) {
                                 message.setChatId(chat.getObjectId());
+                                chatId=chat.getObjectId();
                                 message.saveInBackground();
                             }
                         }
@@ -117,7 +117,7 @@ public class ChatActivity extends AppCompatActivity {
                 } else {
                     saveMessageWithChat(message);
                 }
-
+                etMessage.setText(null);
             }
         });
     }
@@ -151,6 +151,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void saveMessageWithChat(Message message) {
+        message.setChatId(chatId);
         message.saveInBackground();
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         // Specify the object id
@@ -163,7 +164,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         message.setUserId(ParseUser.getCurrentUser().getObjectId());
-        etMessage.setText(null);
+
     }
 
 }

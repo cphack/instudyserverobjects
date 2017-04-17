@@ -33,11 +33,10 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class MainTabsFragment extends Fragment {
     ViewPager viewPager;
     SmartFragmentStatePagerAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +55,8 @@ public class MainTabsFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                refreshFragmentScreen(position);
+                /*Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -64,47 +64,32 @@ public class MainTabsFragment extends Fragment {
 
             }
         });
-
-        addListeners();
-
         return v;
     }
 
-
-
-    private void addListeners() {
-
-      /* CoursesSearchFragment fragment = (CoursesSearchFragment) adapter.getRegisteredFragment(3);
-
-        fragment.setOnUserListClickListener(new BaseCoursesFragment.OnUserListClickListener() {
-            @Override
-            public void onUserListClick(ArrayList<String> userids) {
-                //call activity  //after that change all
-            }
-        });*/
+    void refreshFragmentScreen(int screen) {
+        switch(screen){
+            case 1:
+                ChatListFragment fragment = (ChatListFragment) adapter.getRegisteredFragment(1);
+                fragment.populateChatsList();
+                break;
+           default:
+               BaseCoursesFragment courseFragment = (BaseCoursesFragment) adapter.getRegisteredFragment(screen);
+               courseFragment.refreshCourses();
+               break;
+        }
     }
 
     // Define listener member variable
     private OnUserListClickListener listener;
+
     // Define the listener interface
     public interface OnUserListClickListener {
         void onUserListClick(ArrayList<String> userids);
     }
+
     // Define the method that allows the parent activity or fragment to define the listener
     public void setOnUserListClickListener(OnUserListClickListener listener) {
         this.listener = listener;
     }
 }
-
-
-  /* adapter.setOnUserListClickListener(new PagerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(itemView, position);
-                    }
-                }
-            }
-        });*/

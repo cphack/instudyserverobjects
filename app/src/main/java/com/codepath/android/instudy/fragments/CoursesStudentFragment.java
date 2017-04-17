@@ -1,12 +1,15 @@
 package com.codepath.android.instudy.fragments;
+import android.content.SharedPreferences;
 
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,11 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class CoursesStudentFragment extends BaseCoursesFragment {
@@ -42,8 +49,6 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
         fragmentFirst.setArguments(args);*/
         return fragment;
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,8 +97,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
         aCourses = new CourseListAdapter(getActivity(), courses, "STU");
     }
 
-
-    private void populateCourseList() {
+    public void populateCourseList() {
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         query.whereContains("students", ParseUser.getCurrentUser().getObjectId()) ;
         // Execute the find asynchronously

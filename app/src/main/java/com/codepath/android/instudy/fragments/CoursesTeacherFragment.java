@@ -1,6 +1,5 @@
 package com.codepath.android.instudy.fragments;
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,10 +29,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CoursesTeacherFragment extends Fragment {
-
-    ArrayList<Course> courses;
-    CourseListAdapter aCourses;
+public class CoursesTeacherFragment extends BaseCoursesFragment {
 
     private RecyclerView lvCourses;
     private LinearLayoutManager linearLayoutManager;
@@ -70,11 +66,10 @@ public class CoursesTeacherFragment extends Fragment {
     private void initAdapter() {
         courses = new ArrayList<Course>();
         //construct adapter from datasource
-        aCourses = new CourseListAdapter(getActivity(), courses,"TEA");
+        aCourses = new CourseListAdapter(getActivity(), courses, "TEA");
     }
 
-    private void populateCourseList() {
-
+    public void populateCourseList() {
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         query.whereEqualTo("teachers", ParseUser.getCurrentUser().getObjectId());
         // Execute the find asynchronously
@@ -96,14 +91,11 @@ public class CoursesTeacherFragment extends Fragment {
         });
     }
 
+
+
     // newInstance constructor for creating fragment with arguments
     public static CoursesTeacherFragment newInstance(int page, String title) {
         CoursesTeacherFragment fragment = new CoursesTeacherFragment();
-     /*   Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragmentFirst.setArguments(args);*/
         return fragment;
     }
-
 }

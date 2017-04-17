@@ -45,7 +45,8 @@
 
         <activity android:name=".activities.ChatActivity">
         </activity>
-        <activity android:name=".activities.ChatListActivity">
+        <activity android:name=".activities.ChatListActivity"
+            android:parentActivityName=".activities.LoginActivity">
         </activity>
 
         <provider
