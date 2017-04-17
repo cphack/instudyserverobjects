@@ -12,14 +12,6 @@
             android:icon="@drawable/user"
             android:title="@string/dvMyProfile" />
         <item
-            android:id="@+id/dvCoursesTeacher"
-            android:icon="@drawable/professor"
-            android:title="@string/dvCoursesTeacher" />
-        <item
-            android:id="@+id/dvCoursesStudent"
-            android:icon="@drawable/student"
-            android:title="@string/dvCoursesStudent" />
-        <item
             android:id="@+id/dvNotifications"
             android:icon="@drawable/notification"
             android:title="@string/dvNotifications" />

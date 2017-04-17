@@ -71,7 +71,7 @@ public class MainTabsFragment extends Fragment {
         switch(screen){
             case 1:
                 ChatListFragment fragment = (ChatListFragment) adapter.getRegisteredFragment(1);
-                fragment.refreshChats();
+                fragment.populateChatsList();
                 break;
            default:
                BaseCoursesFragment courseFragment = (BaseCoursesFragment) adapter.getRegisteredFragment(screen);

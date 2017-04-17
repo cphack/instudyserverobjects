@@ -88,7 +88,7 @@ public class ChatListFragment extends Fragment {
         aChats = new ChatListAdapter(getActivity(), chats);
     }
 
-    private void populateChatsList() {
+    public void populateChatsList() {
 
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         query.whereContains("recipients", ParseUser.getCurrentUser().getObjectId());
@@ -97,8 +97,7 @@ public class ChatListFragment extends Fragment {
         query.findInBackground(new FindCallback<Chat>() {
             public void done(List<Chat> itemList, ParseException e) {
                 if (e == null) {
-                    // Access the array of results here
-
+                    chats.clear();
                     chats.addAll(itemList);
                     aChats.notifyDataSetChanged();
 
@@ -109,10 +108,6 @@ public class ChatListFragment extends Fragment {
         });
     }
 
-    public void refreshChats(){
-        chats.clear();
-        aChats.notifyDataSetChanged();
-        populateChatsList();
-    }
+
 }
 

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.fragments.ChatListFragment;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.parse.ParseUser;
@@ -95,15 +96,16 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
-            case R.id.dvMessages:
-                i = new Intent(MainActivity.this, ChatActivity.class);
-               break;
             case R.id.dvAddNewCourse:
                 i = new Intent(MainActivity.this, NewCourseActivity.class);
                 break;
 
             case R.id.dvMyProfile:
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
+                break;
+
+            case R.id.dvMessages :
+                i = new Intent(MainActivity.this, ChatListActivity.class);
                 break;
 
            /* case R.id.dvTest:
