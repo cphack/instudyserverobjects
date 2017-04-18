@@ -3,6 +3,11 @@ Just a test code for parse create objects on heroku, includes a chat window
 
 One of the following links should show up on git ReadMe ...
 
+This is 4/17 Status:
+
+<a href="http://imgur.com/i3yHr0G"><img src="http://i.imgur.com/i3yHr0G.gif" title="source: imgur.com" /></a>
+
+
 This is 4/10 status:
 
  <a href="http://imgur.com/Yufjmk9"><img src="http://i.imgur.com/Yufjmk9.gif" title="source: imgur.com" /></a>
