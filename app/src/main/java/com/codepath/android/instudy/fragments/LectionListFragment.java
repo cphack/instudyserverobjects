@@ -1,13 +1,11 @@
 package com.codepath.android.instudy.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.activities.ChatActivity;
-import com.codepath.android.instudy.activities.LectionActivity;
-import com.codepath.android.instudy.adapters.ChatListAdapter;
 import com.codepath.android.instudy.adapters.LectionListAdapter;
 import com.codepath.android.instudy.helpers.ItemClickSupport;
-import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Course;
 import com.codepath.android.instudy.models.Lection;
 import com.parse.FindCallback;
@@ -29,22 +23,15 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.codepath.android.instudy.R.id.etDate;
-import static com.codepath.android.instudy.R.id.etLectionName;
-import static com.codepath.android.instudy.R.id.etOverview;
-import static com.codepath.android.instudy.R.id.etTime;
-import static com.codepath.android.instudy.R.id.lvChats;
 
 public class LectionListFragment extends Fragment implements EditLectionFragment.EditLectionDialogListener {
     ArrayList<Lection> lections;
     LectionListAdapter aLections;
     private RecyclerView lvLections;
+
     Button btnAddLection;
     private LinearLayoutManager linearLayoutManager;
     String courseId;

@@ -1,37 +1,18 @@
 package com.codepath.android.instudy.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.activities.UserListActivity;
-import com.codepath.android.instudy.adapters.GroupAdapter;
 import com.codepath.android.instudy.adapters.PagerAdapter;
 import com.codepath.android.instudy.adapters.SmartFragmentStatePagerAdapter;
-import com.codepath.android.instudy.models.Message;
-import com.parse.FindCallback;
-import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainTabsFragment extends Fragment {
     ViewPager viewPager;

@@ -23,19 +23,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.fragments.ChatListFragment;
-import com.codepath.android.instudy.fragments.EditLectionFragment;
-import com.codepath.android.instudy.fragments.LectionListFragment;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.codepath.android.instudy.fragments.SendTeacherNotificationFragment;
-import com.codepath.android.instudy.models.Course;
-import com.parse.GetCallback;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements SendTeacherNotificationFragment.SendNotificationListener {
     private DrawerLayout mDrawer;
@@ -321,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
     public void openCourseChatActivity(String chatid) {
-
         Intent i = new Intent(MainActivity.this, ChatActivity.class);
         i.putExtra("chatid", chatid);
         startActivity(i);

@@ -14,16 +14,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.helpers.RoundedCornersTransformation;
-
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -33,12 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.codepath.android.instudy.R.drawable.user;
-import static com.codepath.android.instudy.R.id.btnAssignments;
-import static com.codepath.android.instudy.R.id.btnLections;
-import static com.codepath.android.instudy.R.id.btnManage;
-import static com.codepath.android.instudy.R.id.tvMessage;
 
 /**
  * Created by alex_ on 4/10/2017.
@@ -689,6 +680,18 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
+            btnAssignSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userListener != null) {
+                        int position = getAdapterPosition();
+                        Course course = mCourses.get(position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            userListener.onCourseStudentSubmitClick(course.getObjectId());
+                        }
+                    }
+                }
+            });
 
         }
 
