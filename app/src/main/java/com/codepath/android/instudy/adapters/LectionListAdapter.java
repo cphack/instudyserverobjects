@@ -1,31 +1,17 @@
 package com.codepath.android.instudy.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Lection;
-import com.codepath.android.instudy.models.Message;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,10 +61,13 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         vh.tvLectionName.setText(l.getTitle());
         vh.tvLocation.setText(l.getLocation());
 
-        DateFormat datef = new SimpleDateFormat("MMM-dd");
-        DateFormat timef = new SimpleDateFormat(" HH:mm");
-        vh.tvDate.setText(datef.format(l.getStartDate()));
-        vh.tvTime.setText(timef.format(l.getStartDate()));
+//        DateFormat datef = new SimpleDateFormat("MMM-dd");
+////        DateFormat timef = new SimpleDateFormat(" HH:mm");
+//        vh.tvDate.setText(datef.format(l.getStartDate()));
+//        vh.tvTime.setText(timef.format(l.getStartDate()));
+        Log.d("DEBUG","Adapter sD "+l.getStartDate()+" sT "+l.getStartTime());
+        vh.tvDate.setText(l.getStartDate());
+        vh.tvTime.setText(l.getStartTime());
     }
 
     public  class ItemLection extends  RecyclerView.ViewHolder {

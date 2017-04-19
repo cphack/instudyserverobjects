@@ -2,11 +2,9 @@ package com.codepath.android.instudy.fragments;
 
 
 import android.annotation.SuppressLint;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +20,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 // ...
 
 public class EditLectionFragment extends DialogFragment  {
@@ -87,12 +82,11 @@ public class EditLectionFragment extends DialogFragment  {
             public void onClick(View v) {
                 EditLectionDialogListener listener = (EditLectionDialogListener) getTargetFragment();
                //TODO implement data taken from controls
-                Date startDate = new Date();
-                String date_time_value = etDate.getText()+" "+etTime+":00 00";
-                startDate = ConvertToDate(date_time_value);
+                String startDate = String.valueOf(etDate.getText());
+                String StartTime = String.valueOf(etTime.getText());
                 listener.onFinishEditDialog(etLectionName.getText().toString(),
                         etOverview.getText().toString(),
-                        startDate,lectionId);
+                        startDate,StartTime,lectionId);
                 dismiss();
             }
         });
@@ -111,10 +105,6 @@ public class EditLectionFragment extends DialogFragment  {
 
                     etLectionName.setText(l.getTitle());
                     etOverview.setText(l.getLocation());
-                    DateFormat datef = new SimpleDateFormat("MMM-dd");
-                    DateFormat timef = new SimpleDateFormat(" HH:mm");
-                    //etDate.setText(datef.format(l.getStartDate()));
-                    //etTime.setText(timef.format(l.getStartDate()));
                     Calendar cal = Calendar.getInstance();
                     cYear = cal.get(Calendar.YEAR);
                     MyOnDateChangeListener onDateChangeListener = new MyOnDateChangeListener();
@@ -138,7 +128,7 @@ public class EditLectionFragment extends DialogFragment  {
     }
 
     public interface EditLectionDialogListener {
-        void onFinishEditDialog(String title, String overview, Date startDate, String lectionid);
+        void onFinishEditDialog(String title, String overview, String startDate, String startTime, String lectionid);
     }
 
 
@@ -151,28 +141,9 @@ public class EditLectionFragment extends DialogFragment  {
             if(year < cYear) {
                 year=cYear;
             }
-            etDate.setText(mon+"/"+day+"/"+year);
+            etDate.setText(mon+"-"+day);
         }
     }
 
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
-            new TimePickerDialog.OnTimeSetListener() {
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    mHour = hourOfDay;
-                    mMinute = minute;
-                    String HH_mm = (String.valueOf(mHour)+":"+String.valueOf(mMinute));
-                    etTime.setText(HH_mm);
-                }
-            };
 
-    private Date ConvertToDate(String dateString){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
-        Date convertedDate = new Date();
-            try {
-                convertedDate = dateFormat.parse(dateString);
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-        return convertedDate;
-    }
 }

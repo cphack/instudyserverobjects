@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LectionListFragment extends Fragment implements EditLectionFragment.EditLectionDialogListener {
@@ -142,7 +142,7 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
     }
 
     @Override
-    public void onFinishEditDialog(final String title, final String overview, final Date startDate, String lectionId) {
+    public void onFinishEditDialog(final String title, final String overview, final String startDate, final String startTime,String lectionId) {
 
         Lection lection;
         if(lectionId.equals("0")){
@@ -151,8 +151,11 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
             lection.setLocation(overview);
             lection.setTitle(title);
             lection.setStartDate(startDate);
+            lection.setStartDate(startTime);
             lection.saveInBackground();
+            Log.d("DEBUG","Lection 0, StartDate "+startDate);
         }else{
+            Log.d("DEBUG","Lection Not Z StartDate "+startDate+" STime "+startTime);
 
             ParseQuery<Lection> query = ParseQuery.getQuery(Lection.class);
             // Specify the object id
@@ -163,6 +166,7 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
                         l.setLocation(overview);
                         l.setTitle(title);
                         l.setStartDate(startDate);
+                        l.setStartTime(startTime);
                         l.saveInBackground();
 
                     } else {

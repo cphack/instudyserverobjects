@@ -5,10 +5,8 @@ import com.parse.ParseObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -35,13 +33,18 @@ public class Lection extends ParseObject {
     public static final String TOPICS_KEY = "topics";
     public static final String LOCATION_KEY = "location";
     public static final String START_DATE_KEY = "startDate";
+    public static final String START_TIME_KEY = "starTime";
 
     public String getCourseId() {
         return getString(COURSE_ID_KEY);
     }
 
-    public Date getStartDate() {
-        return getDate(START_DATE_KEY);
+    public String getStartDate() {
+        return getString(START_DATE_KEY);
+    }
+
+    public String getStartTime() {
+        return getString(START_TIME_KEY);
     }
 
     public String getTitle() {
@@ -74,8 +77,14 @@ public class Lection extends ParseObject {
         put(COURSE_ID_KEY, courseId);
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
+        if(startDate == null) { startDate="00-00"; }
         put(START_DATE_KEY, startDate);
+    }
+
+    public void setStartTime(String startTime) {
+        if(startTime == null) {startTime = "00:00";}
+        put(START_TIME_KEY, startTime);
     }
 
     public void setLocation(String location) {
@@ -85,4 +94,6 @@ public class Lection extends ParseObject {
     public void setTopics(ArrayList<String> topics) {
         put(TOPICS_KEY, topics);
     }
+
+
 }
