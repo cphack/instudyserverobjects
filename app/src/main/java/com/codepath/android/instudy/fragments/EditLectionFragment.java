@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,10 @@ public class EditLectionFragment extends DialogFragment  {
     int mMinute;
     private int cYear;
     String lectionId="0";
+    String newLectionName;
+    String newOverview;
+    String newDate;
+    String newTime;
 
     public EditLectionFragment() {
     }
@@ -71,6 +76,8 @@ public class EditLectionFragment extends DialogFragment  {
             populateFields();
         }else
         {
+            Log.d("DEBUG", "First entry of new Lection");
+            getNewLection();
             btnUpdate.setText("add lection");
         }
         // Show soft keyboard automatically and request focus to field
@@ -88,6 +95,39 @@ public class EditLectionFragment extends DialogFragment  {
                         etOverview.getText().toString(),
                         startDate,StartTime,lectionId);
                 dismiss();
+                Log.d("DEBUG", "Exiting butUpdate On click listener Lection");
+            }
+        });
+    }
+
+    private void getNewLection() {
+        etLectionName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newLectionName = String.valueOf(etLectionName.getText());
+            }
+        });
+        etLectionName.setText(newLectionName);
+        etOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newOverview = String.valueOf(etOverview.getText());
+            }
+        });
+        etOverview.setText(newOverview);
+        Calendar cal = Calendar.getInstance();
+        cYear = cal.get(Calendar.YEAR);
+        MyOnDateChangeListener onDateChangeListener = new MyOnDateChangeListener();
+        dPStart.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH), onDateChangeListener);
+        tPStart.clearFocus();
+        tPStart.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                int hour = hourOfDay;
+                int min = minute;
+                String HH_MM= String.valueOf(hour)+":"+ String.valueOf(min);
+                etTime.setText(HH_MM);
             }
         });
     }
@@ -102,7 +142,6 @@ public class EditLectionFragment extends DialogFragment  {
             @SuppressLint("NewApi")
             public void done(Lection l, ParseException e) {
                 if (e == null) {
-
                     etLectionName.setText(l.getTitle());
                     etOverview.setText(l.getLocation());
                     Calendar cal = Calendar.getInstance();
@@ -130,7 +169,6 @@ public class EditLectionFragment extends DialogFragment  {
     public interface EditLectionDialogListener {
         void onFinishEditDialog(String title, String overview, String startDate, String startTime, String lectionid);
     }
-
 
     // Get date picker's status change and reflect into due date set
     // Make sure that we check for date in the past and not allow a past date

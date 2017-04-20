@@ -125,7 +125,6 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
                     if (course.getTeachers().equals(ParseUser.getCurrentUser().getObjectId())) {
                         btnAddLection.setVisibility(View.VISIBLE);
                     }
-
                 } else {
                     // something went wrong
                 }
@@ -143,8 +142,8 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
 
     @Override
     public void onFinishEditDialog(final String title, final String overview, final String startDate, final String startTime,String lectionId) {
-
         Lection lection;
+        Log.d("DEBUG","Returned from frag with T: "+title+" O: "+overview+" sD: "+startDate+" sT: "+startTime+" lId: "+lectionId);
         if(lectionId.equals("0")){
             lection = new Lection();
             lection.setCourseId(courseId);
@@ -153,7 +152,6 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
             lection.setStartDate(startDate);
             lection.setStartDate(startTime);
             lection.saveInBackground();
-            Log.d("DEBUG","Lection 0, StartDate "+startDate);
         }else{
             Log.d("DEBUG","Lection Not Z StartDate "+startDate+" STime "+startTime);
 
