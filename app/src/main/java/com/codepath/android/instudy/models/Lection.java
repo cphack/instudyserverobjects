@@ -32,8 +32,8 @@ public class Lection extends ParseObject {
     public static final String TITLE_KEY = "title";
     public static final String TOPICS_KEY = "topics";
     public static final String LOCATION_KEY = "location";
-    public static final String START_DATE_KEY = "startDate";
-    public static final String START_TIME_KEY = "starTime";
+    public static final String START_DATE_KEY = "stDate";
+    public static final String START_TIME_KEY = "stTime";
 
     public String getCourseId() {
         return getString(COURSE_ID_KEY);

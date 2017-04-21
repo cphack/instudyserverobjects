@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,14 +75,14 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Lection lection = lections.get(position);
-                showEditLectionDialog(lection.getObjectId());
+                showEditLectionDialog(position, lection.getObjectId());
             }
         });
 
         btnAddLection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditLectionDialog("0");
+                showEditLectionDialog(0,"0");
             }
         });
     }
@@ -133,28 +132,27 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
     }
 
 
-    private void showEditLectionDialog(String lectionId) {
+    private void showEditLectionDialog(int position, String lectionId) {
         FragmentManager fm = getFragmentManager();
-        EditLectionFragment editLectionDialogFragment = EditLectionFragment.newInstance(lectionId);
+        EditLectionFragment editLectionDialogFragment = EditLectionFragment.newInstance(position, lectionId);
         editLectionDialogFragment.setTargetFragment(LectionListFragment.this, 300);
         editLectionDialogFragment.show(fm, "fragment_edit_lection");
     }
 
     @Override
-    public void onFinishEditDialog(final String title, final String overview, final String startDate, final String startTime,String lectionId) {
+    public void onFinishEditDialog(final int position, final String title, final String overview, final String startDate, final String startTime,String lectionId) {
         Lection lection;
-        Log.d("DEBUG","Returned from frag with T: "+title+" O: "+overview+" sD: "+startDate+" sT: "+startTime+" lId: "+lectionId);
         if(lectionId.equals("0")){
             lection = new Lection();
             lection.setCourseId(courseId);
             lection.setLocation(overview);
             lection.setTitle(title);
             lection.setStartDate(startDate);
-            lection.setStartDate(startTime);
+            lection.setStartTime(startTime);
             lection.saveInBackground();
+            aLections.addLection(0,lection);
+            aLections.notifyDataSetChanged();
         }else{
-            Log.d("DEBUG","Lection Not Z StartDate "+startDate+" STime "+startTime);
-
             ParseQuery<Lection> query = ParseQuery.getQuery(Lection.class);
             // Specify the object id
             query.getInBackground(lectionId, new GetCallback<Lection>() {
@@ -166,13 +164,17 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
                         l.setStartDate(startDate);
                         l.setStartTime(startTime);
                         l.saveInBackground();
-
+                        aLections.addLection(position,l);
+                        aLections.notifyDataSetChanged();
                     } else {
                         // something went wrong
                     }
                 }
             });
+
         }
+
+
     }
 }
 

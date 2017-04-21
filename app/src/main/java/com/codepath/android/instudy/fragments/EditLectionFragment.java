@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +21,8 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 // ...
 
@@ -40,14 +42,16 @@ public class EditLectionFragment extends DialogFragment  {
     String newOverview;
     String newDate;
     String newTime;
+    int position;
 
     public EditLectionFragment() {
     }
 
-    public static EditLectionFragment newInstance(String lectionId) {
+    public static EditLectionFragment newInstance(int position, String lectionId) {
         EditLectionFragment frag = new EditLectionFragment();
         Bundle args = new Bundle();
         args.putString("lectionid", lectionId);
+        args.putInt("position",position);
         frag.setArguments(args);
         return frag;
     }
@@ -72,11 +76,11 @@ public class EditLectionFragment extends DialogFragment  {
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
 
         lectionId = getArguments().getString("lectionid","0");
+        final int pos = getArguments().getInt("position");
         if(!lectionId.equals("0")){
             populateFields();
         }else
         {
-            Log.d("DEBUG", "First entry of new Lection");
             getNewLection();
             btnUpdate.setText("add lection");
         }
@@ -90,33 +94,38 @@ public class EditLectionFragment extends DialogFragment  {
                 EditLectionDialogListener listener = (EditLectionDialogListener) getTargetFragment();
                //TODO implement data taken from controls
                 String startDate = String.valueOf(etDate.getText());
-                String StartTime = String.valueOf(etTime.getText());
-                listener.onFinishEditDialog(etLectionName.getText().toString(),
+                String startTime = String.valueOf(etTime.getText());
+                listener.onFinishEditDialog(pos,etLectionName.getText().toString(),
                         etOverview.getText().toString(),
-                        startDate,StartTime,lectionId);
+                        startDate,startTime,lectionId);
                 dismiss();
-                Log.d("DEBUG", "Exiting butUpdate On click listener Lection");
             }
         });
     }
 
     private void getNewLection() {
+        final NumberFormat formatter = new DecimalFormat("00");
         etLectionName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newLectionName = String.valueOf(etLectionName.getText());
             }
         });
-        etLectionName.setText(newLectionName);
+        //etLectionName.setText(newLectionName);
         etOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newOverview = String.valueOf(etOverview.getText());
             }
         });
-        etOverview.setText(newOverview);
+        //etOverview.setText(newOverview);
         Calendar cal = Calendar.getInstance();
         cYear = cal.get(Calendar.YEAR);
+        String MM_DD = formatter.format(cal.get(Calendar.MONTH)+1)+"-"+formatter.format(cal.get(Calendar.DAY_OF_MONTH));
+        etDate.setText(MM_DD);
+        Time now = new Time();
+        String hh_mm= formatter.format(now.hour)+":"+ formatter.format(now.minute);
+        etTime.setText(hh_mm);
         MyOnDateChangeListener onDateChangeListener = new MyOnDateChangeListener();
         dPStart.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH), onDateChangeListener);
@@ -124,9 +133,9 @@ public class EditLectionFragment extends DialogFragment  {
         tPStart.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                int hour = hourOfDay;
-                int min = minute;
-                String HH_MM= String.valueOf(hour)+":"+ String.valueOf(min);
+                mHour = hourOfDay;
+                mMinute = minute;
+                String HH_MM= formatter.format(mHour)+":"+ formatter.format(mMinute);
                 etTime.setText(HH_MM);
             }
         });
@@ -134,6 +143,7 @@ public class EditLectionFragment extends DialogFragment  {
 
     private void populateFields()
     {
+        final NumberFormat formatter = new DecimalFormat("00");
         // Specify which class to query
         ParseQuery<Lection> query = ParseQuery.getQuery(Lection.class);
         // Specify the object id
@@ -144,8 +154,23 @@ public class EditLectionFragment extends DialogFragment  {
                 if (e == null) {
                     etLectionName.setText(l.getTitle());
                     etOverview.setText(l.getLocation());
+                    etDate.setText(l.getStartDate());
+                    etTime.setText(l.getStartTime());
                     Calendar cal = Calendar.getInstance();
                     cYear = cal.get(Calendar.YEAR);
+                    if(l.getStartDate()!=null ) {
+                        etDate.setText(l.getStartDate());
+                    } else {
+                        String MM_DD = formatter.format(cal.get(Calendar.MONTH)+1)+"-"+formatter.format(cal.get(Calendar.DAY_OF_MONTH));
+                        etDate.setText(MM_DD);
+                    }
+                    if(l.getStartTime()!=null ) {
+                        etTime.setText(l.getStartTime());
+                    } else {
+                        Time now = new Time();
+                        String hh_mm= formatter.format(now.hour)+":"+ formatter.format(now.minute);
+                        etTime.setText(hh_mm);
+                    }
                     MyOnDateChangeListener onDateChangeListener = new MyOnDateChangeListener();
                     dPStart.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
                             cal.get(Calendar.DAY_OF_MONTH), onDateChangeListener);
@@ -153,9 +178,9 @@ public class EditLectionFragment extends DialogFragment  {
                     tPStart.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
                         @Override
                         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                            int hour = hourOfDay;
-                            int min = minute;
-                            String HH_MM= String.valueOf(hour)+":"+ String.valueOf(min);
+                            mHour = hourOfDay;
+                            mMinute = minute;
+                            String HH_MM= formatter.format(mHour)+":"+ formatter.format(mMinute);
                             etTime.setText(HH_MM);
                         }
                     });
@@ -167,7 +192,7 @@ public class EditLectionFragment extends DialogFragment  {
     }
 
     public interface EditLectionDialogListener {
-        void onFinishEditDialog(String title, String overview, String startDate, String startTime, String lectionid);
+        void onFinishEditDialog(int position, String title, String overview, String startDate, String startTime, String lectionid);
     }
 
     // Get date picker's status change and reflect into due date set

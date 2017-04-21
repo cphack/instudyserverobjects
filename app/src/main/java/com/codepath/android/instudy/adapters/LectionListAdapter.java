@@ -38,6 +38,15 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mLections.size();
     }
 
+    public void addLection(int position, Lection l) {
+        Log.d("DEBUG","Adapter pos: "+position);
+        if(mLections.size() == 0 ) { // only if there are no lections
+            mLections.add(position, l);
+        } else { // even if position 0, but lecion exists first delete then add
+            mLections.remove(position);
+            mLections.add(position, l);
+        }
+    }
     // inflate xml layout and return  viewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
