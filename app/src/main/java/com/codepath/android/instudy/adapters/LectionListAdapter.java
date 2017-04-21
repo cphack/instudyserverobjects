@@ -3,7 +3,6 @@ package com.codepath.android.instudy.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +38,7 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void addLection(int position, Lection l) {
-        Log.d("DEBUG","Adapter pos: "+position);
-        if(mLections.size() == 0 ) { // only if there are no lections
+        if(position == 0 ) { // only if there are no lections
             mLections.add(position, l);
         } else { // even if position 0, but lecion exists first delete then add
             mLections.remove(position);
@@ -70,11 +68,6 @@ public class LectionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         vh.tvLectionName.setText(l.getTitle());
         vh.tvLocation.setText(l.getLocation());
 
-//        DateFormat datef = new SimpleDateFormat("MMM-dd");
-////        DateFormat timef = new SimpleDateFormat(" HH:mm");
-//        vh.tvDate.setText(datef.format(l.getStartDate()));
-//        vh.tvTime.setText(timef.format(l.getStartDate()));
-        Log.d("DEBUG","Adapter sD "+l.getStartDate()+" sT "+l.getStartTime());
         vh.tvDate.setText(l.getStartDate());
         vh.tvTime.setText(l.getStartTime());
     }

@@ -39,14 +39,12 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
         Bundle args = new Bundle();
         args.putString("courseid", courseid);
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_lection_list, container, false);
         findControls(v);
         initControls();
@@ -70,7 +68,6 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
     private void initControls() {        //connect adapter with recyclerView
         lvLections.setAdapter(aLections);
         lvLections.setLayoutManager(linearLayoutManager);
-
         ItemClickSupport.addTo(lvLections).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
@@ -82,7 +79,12 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
         btnAddLection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditLectionDialog(0,"0");
+                int pos = aLections.getItemCount();
+                if( pos == 0) {
+                    showEditLectionDialog(0, "0");
+                } else {
+                    showEditLectionDialog(pos, null);
+                }
             }
         });
     }
@@ -106,7 +108,6 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
                     lections.clear();
                     lections.addAll(itemList);
                     aLections.notifyDataSetChanged();
-
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -152,7 +153,17 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
             lection.saveInBackground();
             aLections.addLection(0,lection);
             aLections.notifyDataSetChanged();
-        }else{
+        } else if (lectionId == null ) {
+            lection = new Lection();
+            lection.setCourseId(courseId);
+            lection.setLocation(overview);
+            lection.setTitle(title);
+            lection.setStartDate(startDate);
+            lection.setStartTime(startTime);
+            lection.saveInBackground();
+            aLections.addLection(position,lection);
+            aLections.notifyDataSetChanged();
+        } else{
             ParseQuery<Lection> query = ParseQuery.getQuery(Lection.class);
             // Specify the object id
             query.getInBackground(lectionId, new GetCallback<Lection>() {
@@ -171,10 +182,7 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
                     }
                 }
             });
-
         }
-
-
     }
 }
 
