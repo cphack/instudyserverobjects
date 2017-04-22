@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/chat_text_round_left"
         android:padding="12dp"
-
         android:textColor="@color/text_accent"
         android:textIsSelectable="true"
         android:textSize="12sp"
