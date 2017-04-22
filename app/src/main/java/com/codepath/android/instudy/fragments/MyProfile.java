@@ -14,7 +14,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
@@ -32,7 +31,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.models.Message;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -158,7 +156,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
 
                         // Create a new file for the resized bitmap
                         pPName = String.valueOf(selectedImage).replace("jpg","png");
-                        Log.d("DEBUG","Photo cpature saved file "+pPName);
+                        //Log.d("DEBUG","Photo cpature saved file "+pPName);
                         Uri resizedUri = Uri.parse(pPName);
                         File resizedFile = new File(resizedUri.getPath());
                         resizedFile.createNewFile();
@@ -176,17 +174,14 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                                 profileImg.setImageDrawable(circularBitmapDrawable);
                             }
                         });
-
-
-                        /*Picasso.with(getContext())
+                        Picasso.with(getContext())
                             .load(resizedUri)
                             .fit()
                             .centerInside()
                             .placeholder(studyowl)
                             .error(theaderowl)
                             .transform(new RoundedCornersTransformation(30, 30))
-                            .into(profileImg);*/
-
+                            .into(profileImg);
                         byte[] image = bytes.toByteArray();
                         ParseFile pfile = new ParseFile("myprofilepic.png", image);
                         pfile.saveInBackground();
@@ -220,7 +215,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                     ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                     bitmapScaled.compress(Bitmap.CompressFormat.PNG, 40, bytes);
                     String fP4BMap = String.format("file://%s/%s.png", getExternalStorageDirectory(), myGalPic);
-                    Log.d("DEBUG","Photo from gallery saved in file "+fP4BMap);
+                    //Log.d("DEBUG","Photo from gallery saved in file "+fP4BMap);
                     File galFile = new File(getExternalStorageDirectory(), myGalPic+".png");
                     Uri galUri = Uri.parse(fP4BMap);
                     byte[] selpic = bytes.toByteArray();
@@ -257,7 +252,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
     public void SetProfile(View v) {
         final String myName = me.getString("FullName");
         etUserName.setText(myName); // is known at user login creation
-        Log.d("DEBUG", "Found this user: "+myName);
+        //Log.d("DEBUG", "Found this user: "+myName);
         String myProfile = me.getString("Profile");
         if(myProfile != "None") {
                 getUserProfileFromParseAndUpdate();
@@ -276,33 +271,33 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
 
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void takePhoto() {
-        Log.d("DEBUG", " entering take photo ");
-        boolean this_is_android_v7 = false;
+        //Log.d("DEBUG", " entering take photo ");
+        boolean this_is_android_v7 = true;
         if (!checkCameraHardware(getContext())) {
             Toast.makeText(getContext(), "No Camera on this device", Toast.LENGTH_LONG).show();
             Log.d("DEBUG", "No Camera on this device");
             return;
         }
-        Log.d("DEBUG", " Past camera hardware check ");
+        //Log.d("DEBUG", " Past camera hardware check ");
         //String photoFileLocation = "android.resource://com.codepath.android.instudy/files/Pictures/InStudy";
         //Uri photoURI = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".provider", createImageFile());
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (this_is_android_v7) {
             if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                File path = new File(Environment.getExternalStorageDirectory(),"../../../SDCARD/DCIM");
-                Log.d("DEBUG"," photo path is "+path.toString());
+                File path = new File(Environment.getExternalStorageDirectory(),"");
+                //Log.d("DEBUG"," photo path is "+path.toString());
                 File photo = new File( path ,parseProfileImageName+".png"); //+System.currentTimeMillis()
                 try {
                     photo.createNewFile();
-                    Log.d("DEBUG","Attempted to create photo file");
+                    //Log.d("DEBUG","Attempted to create photo file");
                 } catch (IOException e) {
                     Log.d("DEBUG","Failed to create photo file");
                     e.printStackTrace();
                 }
-                Log.d("DEBUG"," photo file is "+photo.toString());
-                imageUri = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photo);
-                //imageUri = Uri.fromFile(photo);
-                Log.d("DEBUG","imageUri is "+imageUri.toString());
+                //Log.d("DEBUG"," photo file is "+photo.toString());
+                //imageUri = FileProvider.getUriForFile(this.getContext(), this.getContext().getPackageName(), photo);
+                imageUri = Uri.fromFile(photo);
+                //Log.d("DEBUG","imageUri is "+imageUri.toString());
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -371,7 +366,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
             });
         } else {
             Toast.makeText(getContext(),"No Profile Picture stored ", Toast.LENGTH_SHORT).show();
-            Log.d("DEBUG","Getting dummy file");
+            //Log.d("DEBUG","Getting dummy file");
             // Make dummy profile picture and store in on disk
             File photo = new File(getExternalStorageDirectory(), myParseGetPic + ".png");
             File dummyProfile = new File("android.resource://com.codepath.android.instudy/drawable/theaderowl.png");
