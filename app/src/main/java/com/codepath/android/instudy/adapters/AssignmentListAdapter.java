@@ -10,10 +10,7 @@ import android.widget.TextView;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.models.Assignment;
-import com.codepath.android.instudy.models.Lection;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -40,6 +37,15 @@ public class AssignmentListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return mAssignments.size();
     }
 
+    public void addAssignment(int position, Assignment a) {
+        if(position == 0 ) { // only if there are no lections
+            mAssignments.add(position, a);
+        } else { // even if position 0, but lecion exists first delete then add
+            mAssignments.remove(position);
+            mAssignments.add(position, a);
+        }
+    }
+
     // inflate xml layout and return  viewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,15 +64,12 @@ public class AssignmentListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void configureItem(final ItemAssignment vh, int position) {
 
-        Assignment l = mAssignments.get(position);
+        Assignment a = mAssignments.get(position);
 
-        vh.tvAssignmentName.setText(l.getTitle());
-      //  vh.tvLocation.setText(l.getLocation());
-
-        DateFormat datef = new SimpleDateFormat("MMM-dd");
-        DateFormat timef = new SimpleDateFormat(" HH:mm");
-        vh.tvDate.setText(datef.format(l.getStartDate()));
-        vh.tvTime.setText(timef.format(l.getStartDate()));
+        vh.tvAssignmentName.setText(a.getAssignment());
+        vh.tvAssignmentDescription.setText(a.getAssignmentDescription());
+        vh.tvDate.setText(a.getDueDate());
+        vh.tvTime.setText(a.getDueTime());
     }
 
     public  class ItemAssignment extends  RecyclerView.ViewHolder {
@@ -74,18 +77,17 @@ public class AssignmentListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public TextView tvDate;
         public TextView tvTime;
         public TextView tvAssignmentName;
-        public TextView tvDetails;
+        public TextView tvAssignmentDescription;
 
         //Define constructor wichi accept entire row and find sub views
         public ItemAssignment(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
             tvDate=(TextView) itemView.findViewById(R.id.tvDate);
             tvTime=(TextView) itemView.findViewById(R.id.tvTime);
             tvAssignmentName=(TextView) itemView.findViewById(R.id.tvAssignmentName);
-            tvDetails=(TextView) itemView.findViewById(R.id.tvDetails);
+            tvAssignmentDescription=(TextView) itemView.findViewById(R.id.tvAssignmentDescription);
         }
     }
 

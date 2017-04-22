@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
             // Highlight the selected item has been done by NavigationView
             menuItem.setChecked(true);
             // Set action bar title
-            setTitle(menuItem.getTitle());
+            setAssignment(menuItem.getAssignment());
             // Close the navigation drawer
             mDrawer.closeDrawers();
         }*/
@@ -231,62 +231,62 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
         user.put("ProfileImage", "http://i.imgur.com/DGTOSfL.png");
         user.saveInBackground();
        /* Course course = new Course();
-        course.setTitle("CSE 120 Computer Science Principles (5) NW, QSR");
+        course.setAssignment("CSE 120 Computer Science Principles (5) NW, QSR");
         course.setDescription("Introduces fundamental concepts of computer science and computational thinking. Includes logical reasoning, problem solving, data representation, abstraction, the creation of digital artifacts such as web pages and programs, managing complexity, operation of computers and networks, effective web searching, ethical, legal and social aspects of information technology. May not be taken for credit if credit earned in CSE 100/INFO 100.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
 
         course = new Course();
-        course.setTitle("CSE 131 Science and Art of Digital Photography (4) VLPA Hemingway");
+        course.setAssignment("CSE 131 Science and Art of Digital Photography (4) VLPA Hemingway");
         course.setDescription("Covers the fundamentals of digital photography, including computational imaging; the elements of photographic composition and design; and the future of internet-enabled photography.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 142 Computer Programming I (4) NW, QSR");
+        course.setAssignment("CSE 142 Computer Programming I (4) NW, QSR");
         course.setDescription("Basic programming-in-the-small abilities and concepts including procedural programming (methods, parameters, return, values), basic control structures (sequence, if/else, for loop, while loop), file processing, arrays, and an introduction to defining objects. Intended for students without prior programming experience. Offered: AWSpS.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 143 Computer Programming II (5) NW, QSR");
+        course.setAssignment("CSE 143 Computer Programming II (5) NW, QSR");
         course.setDescription("Continuation of CSE 142. Concepts of data abstraction and encapsulation including stacks, queues, linked lists, binary trees, recursion, instruction to complexity and use of predefined collection classes. Prerequisite: CSE 142. Offered: AWSpS.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 154 Web Programming (5) QSR");
+        course.setAssignment("CSE 154 Web Programming (5) QSR");
         course.setDescription("Covers languages, tools, and techniques for developing interactive and dynamic web pages. Topics include page styling, design, and layout; client and server side scripting; web security; and interacting with data sources such as databases. Prerequisite: minimum grade of 2.0 in either CSE 142, CSE 143, or CSE 160.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 160 Data Programming (4) NW, QSR");
+        course.setAssignment("CSE 160 Data Programming (4) NW, QSR");
         course.setDescription("Introduction to computer programming. Assignments solve real data manipulation tasks from science, engineering, business, and the humanities. Concepts of computational thinking, problem-solving, data analysis, Python programming, control and data abstraction, file processing, and data visualization. Intended for students without prior programming experience. No credit if CSE 143 has been taken.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 190 Current Topics in Computer Science and Engineering (1-5, max. 15)");
+        course.setAssignment("CSE 190 Current Topics in Computer Science and Engineering (1-5, max. 15)");
         course.setDescription("View course details in MyPlan: CSE 190");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 301 CSE Internship Education (1-2, max. 12)");
+        course.setAssignment("CSE 301 CSE Internship Education (1-2, max. 12)");
         course.setDescription("CSE Internship practicum; integration of classroom theory with on-the-job training. Periods of full-time work alternate with periods of full-time study. Open only to students who have been admitted to CSE Internship Program or by special permission of the Department. Offered credit/no credit only. Credit/no-credit only. Offered: AWSpS.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 311 Foundations of Computing I (4) QSR");
+        course.setAssignment("CSE 311 Foundations of Computing I (4) QSR");
         course.setDescription("Examines fundamentals of logic, set theory, induction, and algebraic structures with applications to computing; finite state machines; and limits of computability. Prerequisite: CSE 143; either MATH 126 or MATH 136.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();
 
         course = new Course();
-        course.setTitle("CSE 312 Foundations of Computing II (4) QSR");
+        course.setAssignment("CSE 312 Foundations of Computing II (4) QSR");
         course.setDescription("Examines fundamentals of enumeration and discrete probability; applications of randomness to computing; polynomial-time versus NP; and NP-completeness. Prerequisite: CSE 311.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();*/

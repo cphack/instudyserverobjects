@@ -1,33 +1,34 @@
 package com.codepath.android.instudy.models;
 
 import com.parse.ParseClassName;
-
-import com.parse.ParseClassName;
 import com.parse.ParseObject;
-
-import java.util.Date;
 
 @ParseClassName("Assignment")
 public class Assignment extends ParseObject {
     public static final String COURSE_ID_KEY = "courseId";
-    public static final String START_DATE_KEY = "startDate";
-    public static final String DUE_DATE_KEY = "dueDate";
-    public static final String TITLE_KEY = "link";
+    public static final String DUE_DATE_KEY = "duDate";
+    public static final String DUE_TIME_KEY = "duTime";
+    public static final String ASSIGNMENT_KEY = "assignment";
+    public static final String ASSIGNMENTDESC_KEY = "assignmentDesc";
 
     public String getCourseId() {
         return getString(COURSE_ID_KEY);
     }
 
-    public Date getStartDate() {
-        return getDate(START_DATE_KEY);
+    public String getDueTime() {
+        return getString(DUE_TIME_KEY);
     }
 
-    public Date getDueDate() {
-        return getDate(DUE_DATE_KEY);
+    public String getDueDate() {
+        return getString(DUE_DATE_KEY);
     }
 
-    public String getTitle() {
-        return getString(TITLE_KEY);
+    public String getAssignment() {
+        return getString(ASSIGNMENT_KEY);
+    }
+
+    public String getAssignmentDescription() {
+        return getString(ASSIGNMENTDESC_KEY);
     }
 
 
@@ -35,15 +36,19 @@ public class Assignment extends ParseObject {
         put(COURSE_ID_KEY, courseId);
     }
 
-    public void setStartDate(Date startDate) {
-        put(START_DATE_KEY, startDate);
+    public void setDueTime(String startDate) {
+        put(DUE_TIME_KEY, startDate);
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         put(DUE_DATE_KEY, dueDate);
     }
 
-    public void setTitle(String link) {
-        put(TITLE_KEY, link);
+    public void setAssignment(String link) {
+        put(ASSIGNMENT_KEY, link);
+    }
+
+    public void setAssignmentDescription(String link) {
+        put(ASSIGNMENTDESC_KEY, link);
     }
 }

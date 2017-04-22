@@ -4,11 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="10">
+
     <RelativeLayout
         android:layout_width="0dp"
-        android:layout_weight="9"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp">
+        android:layout_margin="25dp"
+        android:layout_weight="9">
 
         <TextView
             android:id="@+id/tvAssignmentName"
@@ -18,7 +19,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tvDetails"
+            android:id="@+id/tvAssignmentDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvAssignmentName"
@@ -29,22 +30,25 @@
     <RelativeLayout
         android:id="@+id/rlLeftColumn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="28 Nov"
-            android:textSize="10sp"/>
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDate"
+            android:layout_marginTop="10dp"
             android:text="16:45"
-            android:textSize="10sp"/>
+            android:textSize="10sp" />
 
     </RelativeLayout>
 

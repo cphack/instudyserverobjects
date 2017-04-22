@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.AssignmentListAdapter;
 import com.codepath.android.instudy.helpers.ItemClickSupport;
-import com.codepath.android.instudy.models.Course;
 import com.codepath.android.instudy.models.Assignment;
+import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -24,8 +24,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class AssignmentListFragment extends Fragment implements EditAssignmentFragment.EditAssignmentDialogListener {
@@ -76,14 +74,19 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Assignment assignment = assignments.get(position);
-                showEditAssignmentDialog(assignment.getObjectId());
+                showEditAssignmentDialog(position, assignment.getObjectId());
             }
         });
 
         btnAddAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditAssignmentDialog("0");
+                int pos = aAssignments.getItemCount();
+                if( pos == 0) {
+                    showEditAssignmentDialog(0, "0");
+                } else {
+                    showEditAssignmentDialog(pos, "0");
+                }
             }
         });
     }
@@ -125,7 +128,6 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
                     if (course.getTeachers().equals(ParseUser.getCurrentUser().getObjectId())) {
                         btnAddAssignment.setVisibility(View.VISIBLE);
                     }
-
                 } else {
                     // something went wrong
                 }
@@ -134,46 +136,52 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
     }
 
 
-    private void showEditAssignmentDialog(String assignmentId) {
+    private void showEditAssignmentDialog(int position, String assignmentId) {
         FragmentManager fm = getFragmentManager();
-        EditAssignmentFragment editAssignmentDialogFragment = EditAssignmentFragment.newInstance(assignmentId);
+        EditAssignmentFragment editAssignmentDialogFragment = EditAssignmentFragment.newInstance(position,assignmentId);
         editAssignmentDialogFragment.setTargetFragment(AssignmentListFragment.this, 300);
         editAssignmentDialogFragment.show(fm, "fragment_edit_assignment");
     }
 
     @Override
-    public void onFinishEditDialog(final String title, final String overview, final Date startDate, String assignmentId) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-        calendar.add(Calendar.DAY_OF_YEAR, 14);
-       final Date dueDate = calendar.getTime();
+    public void onFinishEditDialog(final int position,final String assignmentName, final String assignmentDescription, final String dueDate, final String dueTime, String assignmentId) {
 
 
-        Assignment assignment;
+        Assignment a;
         if(assignmentId.equals("0")){
-            assignment = new Assignment();
-            assignment.setCourseId(courseId);
-            assignment.setTitle(title);
-            assignment.setStartDate(startDate);
-
-
-
-            assignment.setDueDate(dueDate);
-            assignment.saveInBackground();
-        }else{
-
+            a = new Assignment();
+            a.setCourseId(courseId);
+            a.setAssignment(assignmentName);
+            a.setAssignmentDescription(assignmentDescription);
+            a.setDueDate(dueDate);
+            a.setDueTime(dueTime);
+            a.saveInBackground();
+            aAssignments.addAssignment(0,a);
+            aAssignments.notifyDataSetChanged();
+        } else if(assignmentId == null){
+            a = new Assignment();
+            a.setCourseId(courseId);
+            a.setAssignment(assignmentName);
+            a.setAssignmentDescription(assignmentDescription);
+            a.setDueDate(dueDate);
+            a.setDueTime(dueTime);
+            a.saveInBackground();
+            aAssignments.addAssignment(position,a);
+            aAssignments.notifyDataSetChanged();
+        } else{
             ParseQuery<Assignment> query = ParseQuery.getQuery(Assignment.class);
             // Specify the object id
             query.getInBackground(assignmentId, new GetCallback<Assignment>() {
-                public void done(Assignment l, ParseException e) {
+                public void done(Assignment a, ParseException e) {
                     if (e == null) {
-                        l.setCourseId(courseId);
-                        l.setTitle(title);
-                        l.setStartDate(startDate);
-                        l.setDueDate(dueDate);
-                        l.saveInBackground();
-
+                        a.setCourseId(courseId);
+                        a.setAssignment(assignmentName);
+                        a.setAssignmentDescription(assignmentDescription);
+                        a.setDueDate(dueDate);
+                        a.setDueTime(dueTime);
+                        a.saveInBackground();
+                        aAssignments.addAssignment(position,a);
+                        aAssignments.notifyDataSetChanged();
                     } else {
                         // something went wrong
                     }
