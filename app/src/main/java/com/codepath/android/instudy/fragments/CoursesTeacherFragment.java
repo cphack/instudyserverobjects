@@ -133,11 +133,6 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
         });
     }
 
-
-
-
-
-
     public void populateCourseList() {
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         query.whereEqualTo("teachers", ParseUser.getCurrentUser().getObjectId());

@@ -1,15 +1,8 @@
 package com.codepath.android.instudy.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Date;
-
-import static com.codepath.android.instudy.models.Chat.RECIPIENTS_KEY;
 
 
 @ParseClassName("Message")
@@ -17,6 +10,30 @@ public class Message extends ParseObject {
     public static final String USER_ID_KEY = "userId";
     public static final String BODY_KEY = "body";
     public static final String CHAT_KEY = "chatid";
+    private FileModel file;
+    private MapData mapData;
+
+    public FileModel getFile() {
+        return file;
+    }
+
+    public ParseFile getFileName() {
+
+       return this.getParseFile("fileName");
+    }
+
+
+    public void setFile(FileModel file) {
+        this.file = file;
+    }
+
+    public MapData getMapData() {
+        return mapData;
+    }
+
+    public void setMapData(MapData mapData) {
+        this.mapData = mapData;
+    }
 
 
     public String getUserId() {

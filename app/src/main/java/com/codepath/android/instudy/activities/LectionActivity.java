@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.codepath.android.instudy.activities.ChatActivity.MAX_CHAT_MESSAGES_TO_SHOW;
+
 
 public class LectionActivity extends AppCompatActivity {
     @Override

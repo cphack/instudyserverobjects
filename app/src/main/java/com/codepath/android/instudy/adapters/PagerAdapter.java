@@ -11,10 +11,11 @@ import com.codepath.android.instudy.fragments.CoursesTeacherFragment;
 import com.codepath.android.instudy.fragments.ChatListFragment;
 
 
-public class PagerAdapter extends SmartFragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+public class PagerAdapter extends SmartFragmentStatePagerAdapter
+        implements PagerSlidingTabStrip.IconTabProvider {
 
-   // private String tabTitles[] = new String[]{"Courses as Teacher", "Courses as Student", "Messages"};
-    private int icons[] = {R.drawable.professor_tab, R.drawable.mail_tab, R.drawable.student_tab,R.drawable.search_tab};
+    private int icons[] = {R.drawable.professor_tab, R.drawable.mail_tab, R.drawable.student_tab,
+           R.drawable.search_tab};
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
@@ -37,7 +38,7 @@ public class PagerAdapter extends SmartFragmentStatePagerAdapter implements Page
             case 2: // Fragment # 1 - This will show SecondFragment
                 return CoursesStudentFragment.newInstance(2, "Page # 3");
             case 3: // Fragment # 1 - This will show SecondFragment
-                return CoursesSearchFragment.newInstance(3, "Page # 3");
+                return CoursesSearchFragment.newInstance(3, "Page # 4");
             default:
                 return null;
         }

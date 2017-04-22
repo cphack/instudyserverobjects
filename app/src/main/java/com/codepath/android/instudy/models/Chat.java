@@ -13,7 +13,7 @@ import java.util.Date;
 public class Chat extends ParseObject {
 
     public static final String RECIPIENTS_KEY = "recipients";
-    public static final String LAST_MESSAGE_DATE_KEY = "lastDate";
+    public static final String LAST_MESSAGE_DATE_KEY = "updateAt";
     public static final String LAST_MESSAGE_ID = "lastMessageId";
     public static final String CHAT_NAME_KEY = "chatName";
 
@@ -38,9 +38,7 @@ public class Chat extends ParseObject {
         put(RECIPIENTS_KEY, recipients);
     }
 
-    public Date getLastDate() {
-        return getDate(LAST_MESSAGE_DATE_KEY);
-    }
+
 
     public void setLastDate(Date date) {
         put(LAST_MESSAGE_DATE_KEY, date);
@@ -61,7 +59,6 @@ public class Chat extends ParseObject {
     public void setChatName(String name) {
         put(CHAT_NAME_KEY, name);
     }
-
 
 }
 

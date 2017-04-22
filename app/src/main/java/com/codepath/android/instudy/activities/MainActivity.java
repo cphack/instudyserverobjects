@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
                 logout();
                 i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
-            /*case R.id.dvMessages:
-                i = new Intent(MainActivity.this, ChatActivity.class);
+          /*  case R.id.dvTest:
+                runTest();
                 break;*/
             case R.id.dvAddNewCourse:
                 i = new Intent(MainActivity.this, NewCourseActivity.class);
@@ -227,9 +227,7 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
     private void runTest() {
-        ParseUser user = ParseUser.getCurrentUser();
-        user.put("ProfileImage", "http://i.imgur.com/DGTOSfL.png");
-        user.saveInBackground();
+
        /* Course course = new Course();
         course.setAssignment("CSE 120 Computer Science Principles (5) NW, QSR");
         course.setDescription("Introduces fundamental concepts of computer science and computational thinking. Includes logical reasoning, problem solving, data representation, abstraction, the creation of digital artifacts such as web pages and programs, managing complexity, operation of computers and networks, effective web searching, ethical, legal and social aspects of information technology. May not be taken for credit if credit earned in CSE 100/INFO 100.");
@@ -290,6 +288,151 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
         course.setDescription("Examines fundamentals of enumeration and discrete probability; applications of randomness to computing; polynomial-time versus NP; and NP-completeness. Prerequisite: CSE 311.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();*/
+
+
+        ParseUser user;
+        user = new ParseUser();
+        user.setUsername("stu1@mail.com");
+        user.setEmail("stu1@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Stephine Couture");
+        user.put("ProfileImage", "http://i.imgur.com/FW6nGL2.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu2@mail.com");
+        user.setEmail("stu2@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Christa Pitter");
+        user.put("ProfileImage", "http://i.imgur.com/j9sgj8i.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu3@mail.com");
+        user.setEmail("stu3@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Melonie Armendariz");
+        user.put("ProfileImage", "http://i.imgur.com/ppnuu2z.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu4@mail.com");
+        user.setEmail("stu4@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Eula Peachey");
+        user.put("ProfileImage", "http://i.imgur.com/x5FHuNC.jpg");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu5@mail.com");
+        user.setEmail("stu5@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Yee Lansberry");
+        user.put("ProfileImage", "http://i.imgur.com/WLTyidr.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu6@mail.com");
+        user.setEmail("stu6@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Sonia Golliday");
+        user.put("ProfileImage", "http://i.imgur.com/TlnT5kZ.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu7@mail.com");
+        user.setEmail("stu7@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Zella Minks");
+        user.put("ProfileImage", "http://i.imgur.com/fowN1RZ.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu8@mail.com");
+        user.setEmail("stu8@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Victor Mccoin");
+        user.put("ProfileImage", "http://i.imgur.com/z0yNE2v.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu9@mail.com");
+        user.setEmail("stu9@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Devon Gall");
+        user.put("ProfileImage", "http://i.imgur.com/TlnT5kZ.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu10@mail.com");
+        user.setEmail("stu10@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Jerrod Maas");
+        user.put("ProfileImage", "http://i.imgur.com/j9YaqYK.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu11@mail.com");
+        user.setEmail("stu11@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Jimmie Stifter");
+        user.put("ProfileImage", "http://i.imgur.com/h4Mm8gk.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu12@mail.com");
+        user.setEmail("stu12@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Aron Crabill");
+        user.put("ProfileImage", "http://i.imgur.com/OmOCohX.png");
+        user.saveInBackground();
+
+
+        user = new ParseUser();
+        user.setUsername("stu13@mail.com");
+        user.setEmail("stu13@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Lucius Lovern");
+        user.put("ProfileImage", "http://i.imgur.com/Rs5toI2.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu14@mail.com");
+        user.setEmail("stu14@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Byron Cadle");
+        user.put("ProfileImage", "http://i.imgur.com/lW0rDF1.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu15@mail.com");
+        user.setEmail("stu15@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Erik Schachter");
+        user.put("ProfileImage", "http://i.imgur.com/sfFt1SM.png");
+        user.saveInBackground();
+
+        user = new ParseUser();
+        user.setUsername("stu16@mail.com");
+        user.setEmail("stu16@mail.com");
+        user.setPassword("secret123");
+        user.put("FullName", "Christoper Seale");
+        user.put("ProfileImage", "http://i.imgur.com/SfyKKso.png");
+        user.saveInBackground();
+
+
+    }
+
+    private void runTest2(){
+
+
     }
 
     public void openLectionsOverview(String courseId) {
@@ -302,9 +445,9 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
     public void openSendNotification(String courseId) {
-            FragmentManager fm = getSupportFragmentManager();
-            SendTeacherNotificationFragment fragment= SendTeacherNotificationFragment.newInstance(courseId);
-            fragment.show(fm, "fragment_send_notification");
+        FragmentManager fm = getSupportFragmentManager();
+        SendTeacherNotificationFragment fragment = SendTeacherNotificationFragment.newInstance(courseId);
+        fragment.show(fm, "fragment_send_notification");
     }
 
     public void openCourseOverview(String courseid) {
@@ -328,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
     @Override
-    public void onFinishEditDialog(String message,String courseid){
+    public void onFinishEditDialog(String message, String courseid) {
 
         /*
         TODO get Course by courseid
@@ -338,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
 
-    public void openAssignmentsList(String courseid){
+    public void openAssignmentsList(String courseid) {
         Intent i = new Intent(MainActivity.this, AssignmentListActivity.class);
         i.putExtra("courseid", courseid);
         startActivity(i);

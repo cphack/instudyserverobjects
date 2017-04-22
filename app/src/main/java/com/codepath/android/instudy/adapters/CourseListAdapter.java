@@ -159,7 +159,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-
     private void configureViewHolder_sea(final ViewHolder_sea vh, int position) {
         // Get the data model based on position
         final ViewHolder_sea vh1 = vh;
@@ -282,7 +281,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         String endDate ="2017-4-30";
         vh.countDownStart(endDate);
     }
-
 
     public void fetchCommon(ViewHolder_simple viewHolder, Course course) {
 
@@ -416,13 +414,18 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
 
-        private void loadImage(ParseObject user, ImageView ivView, Context context) {
+        private void loadImage(ParseObject user, final ImageView ivView, Context context) {
             String imagePath = user.getString("ProfileImage");
             ivView.setVisibility(View.VISIBLE);
-            Glide.with(context).load(imagePath)
-                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
-                    .placeholder(R.drawable.default_user_white)
-                    .into(ivView);
+            Glide.with(context).load(imagePath).asBitmap().centerCrop().placeholder(R.drawable.default_user_white).into(new BitmapImageViewTarget(ivView) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    ivView.setImageDrawable(circularBitmapDrawable);
+                }
+            });
         }
     }
 
@@ -577,13 +580,18 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
 
-        private void loadImage(ParseObject user, ImageView ivView, Context context) {
+        private void loadImage(ParseObject user, final ImageView ivView, Context context) {
             String imagePath = user.getString("ProfileImage");
             ivView.setVisibility(View.VISIBLE);
-            Glide.with(context).load(imagePath)
-                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
-                    .placeholder(R.drawable.default_user_white)
-                    .into(ivView);
+            Glide.with(context).load(imagePath).asBitmap().centerCrop().placeholder(R.drawable.default_user_white).into(new BitmapImageViewTarget(ivView) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    ivView.setImageDrawable(circularBitmapDrawable);
+                }
+            });
         }
     }
 
@@ -726,13 +734,18 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
 
-        private void loadImage(ParseObject user, ImageView ivView, Context context) {
+        private void loadImage(ParseObject user, final ImageView ivView, Context context) {
             String imagePath = user.getString("ProfileImage");
             ivView.setVisibility(View.VISIBLE);
-            Glide.with(context).load(imagePath)
-                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 2))
-                    .placeholder(R.drawable.default_user_white)
-                    .into(ivView);
+            Glide.with(context).load(imagePath).asBitmap().centerCrop().placeholder(R.drawable.default_user_white).into(new BitmapImageViewTarget(ivView) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    ivView.setImageDrawable(circularBitmapDrawable);
+                }
+            });
         }
 
         public void countDownStart(final String endDate) {

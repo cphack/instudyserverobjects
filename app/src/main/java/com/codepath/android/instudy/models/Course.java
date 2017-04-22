@@ -40,11 +40,10 @@ public class Course extends ParseObject {
     public static final String START_DATE_KEY = "startDate";
     public static final String END_DATE_KEY = "endDate";
     public static final String LECTIONS_KEY = "lections";
-    public static final String ASSIGNMENTS_KEY = "assignemtns";
+    public static final String ASSIGNMENTS_KEY = "assignments";
     public static final String LECTION_KEY = "lection";
-    public static final String ASSIGNMENT_KEY = "assignement";
-
-    public static final String CHAT_KEY = "assignement";
+    public static final String ASSIGNMENT_KEY = "assignment";
+    public static final String CHAT_KEY = "chat";
 
 
 

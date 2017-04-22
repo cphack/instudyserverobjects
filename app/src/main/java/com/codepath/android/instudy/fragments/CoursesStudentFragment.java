@@ -124,9 +124,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             }
 
             @Override
-            public void onCourseSearchApplyClick(String courseid) {
-            }
-
+            public void onCourseSearchApplyClick(String courseid) {}
 
             @Override
             public void onCourseStudentLectionsClick(String courseid) {
@@ -140,9 +138,9 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             public void onCourseStudentSubmitClick(String courseid) {
                 //TODO implement
             }
+
             @Override
             public void onCourseTeacherAssignmentsClick(String courseid) {}
-
 
             @Override
             public void onCourseStudentChatClick(String courseid) {
@@ -152,7 +150,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
                 ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
 
                 query.getInBackground(courseid, new GetCallback<Course>() {
-                    public void done(Course course, ParseException e) {
+                    public void done(final Course course, ParseException e) {
                         if (e == null) {
                             // Access data using the `get` methods for the object
                             String chatid = course.getChatId();
@@ -170,6 +168,8 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
                                     @Override
                                     public void done(ParseException e) {
                                         if (e == null) {
+                                            course.setChatId(chat.getObjectId());
+                                            course.saveInBackground();
                                             MainActivity activity = (MainActivity) getActivity();
                                             if (activity != null) {
                                                 activity.openCourseChatActivity(chat.getObjectId());

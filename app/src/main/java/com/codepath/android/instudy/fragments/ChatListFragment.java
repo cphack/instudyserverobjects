@@ -80,10 +80,9 @@ public class ChatListFragment extends Fragment {
     }
 
     public void populateChatsList() {
-
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         query.whereContains("recipients", ParseUser.getCurrentUser().getObjectId());
-
+        query.orderByDescending("updatedAt");
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Chat>() {
             public void done(List<Chat> itemList, ParseException e) {
@@ -98,7 +97,5 @@ public class ChatListFragment extends Fragment {
             }
         });
     }
-
-
 }
 

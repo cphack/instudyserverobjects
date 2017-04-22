@@ -136,14 +136,22 @@ public class UserListActivity extends AppCompatActivity {
         ArrayList<String> recipients = new ArrayList<>();
         recipients.add(userid);
         recipients.add(ParseUser.getCurrentUser().getObjectId());
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Chat");
+        ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         query.whereContainsAll(Chat.RECIPIENTS_KEY, recipients);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
+        query.findInBackground(new FindCallback<Chat>() {
+            public void done(List<Chat> chats, ParseException e) {
                 if (e == null) {
-                    if (objects.size() == 1) {
-                        openExistingChat(objects.get(0).getObjectId());
-                    } else if (objects.size() == 0) {
+                    Boolean chatFound=false;
+                    if(chats.size()>0)    {
+                        for(Chat c : chats){
+                            if(c.getRecipients().size()==2){
+                                chatFound=true;
+                                openExistingChat(c.getObjectId());
+                                break;
+                            }
+                        }
+                    }
+                    if(!chatFound){
                         openNewChat(userid);
                     }
                 }

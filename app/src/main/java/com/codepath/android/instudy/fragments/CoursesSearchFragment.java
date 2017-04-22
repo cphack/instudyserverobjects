@@ -33,10 +33,6 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
 
     public static CoursesSearchFragment newInstance(int page, String title) {
         CoursesSearchFragment fragment = new CoursesSearchFragment();
-     /*   Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragmentFirst.setArguments(args);*/
         return fragment;
     }
 

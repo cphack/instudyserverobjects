@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp">
+    <TextView
+        android:textIsSelectable="true"
+        android:id="@+id/txtMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_text_round_right"
+        android:textColor="@color/text_accent_light"
+        android:padding="12dp"
+        android:textSize="12sp"
+        android:layout_toStartOf="@+id/ivCorner"/>
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/txtMessage"
+        android:layout_below="@id/txtMessage"
+        android:textSize="10sp"
+        android:text="now"/>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/ivUserChat"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginRight="7dp"
+        android:id="@+id/ivCorner"
+        android:src="@drawable/mcloudelemright"
+        android:layout_above="@+id/timestamp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/txtMessage"
+        />
+
+</RelativeLayout>
