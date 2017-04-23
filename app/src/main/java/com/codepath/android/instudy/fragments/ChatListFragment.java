@@ -29,6 +29,7 @@ public class ChatListFragment extends Fragment {
     ChatListAdapter aChats;
     private RecyclerView lvChats;
     private LinearLayoutManager linearLayoutManager;
+    private String cTitle;
 
     public static ChatListFragment newInstance(int page, String title) {
         ChatListFragment fragment = new ChatListFragment();

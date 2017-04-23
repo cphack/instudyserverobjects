@@ -10,7 +10,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,16 +20,15 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
-import com.codepath.android.instudy.BuildConfig;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.adapters.ChatMessageAdapter;
 import com.codepath.android.instudy.adapters.MessageAdapter;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Message;
@@ -36,6 +36,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -45,14 +46,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static android.R.attr.path;
-import static android.R.id.list;
-import static android.os.Build.VERSION_CODES.M;
-import static com.codepath.android.instudy.R.id.lvCourses;
+import static com.codepath.android.instudy.R.drawable.theaderowl;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,7 +64,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private static final int IMAGE_CAMERA_REQUEST = 2;
     private static final int PLACE_PICKER_REQUEST = 3;
     public final String APP_TAG = "InStudy";
-
     //File
     private File filePathImageCamera;
 
@@ -93,6 +89,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     boolean mFirstLoad;
     Toolbar toolbar;
+    LinearLayout layoutToolbar;
 
 
     // Create a handler which can run code periodically
@@ -113,6 +110,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        layoutToolbar = (LinearLayout)toolbar.findViewById(R.id.toolbar_item_container);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupMessagePosting();
@@ -131,15 +129,206 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void populateData(String chatId) {
+
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         // Specify the object id
         query.getInBackground(chatId, new GetCallback<Chat>() {
-            public void done(Chat chat, ParseException e) {
+            public void done(final Chat chat, final ParseException e) {
+                ArrayList<String> chattrs = chat.getRecipients();
                 if (e == null) {
                     if (chat.getChatName() != null) {
-                        toolbar.setTitle(chat.getChatName());
+                        //toolbar.setTitle(chat.getChatName());
+                        toolbar.setTitle("");
+                        final int NumChatters = chat.getRecipients().size();
+                        if(NumChatters < 2) {
+                            Toast.makeText(getBaseContext(), "No chatters in this group", Toast.LENGTH_SHORT).show();
+                            return;
+                        } // temp check for num of chatters less than 2
+                        String otherChatterId = chattrs.get(0);
+                        final String finalOtherChatterId = otherChatterId;
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                        query.whereEqualTo("objectId",otherChatterId);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if (e == null) {
+                                    final ImageView image1 = (ImageView) toolbar.findViewById(R.id.ivChatter1);
+                                    try {
+                                        String profImg = objects.get(0).getString("ProfileImage");
+                                        Log.d("DEBUG"," Found profile image for userId0: "+ finalOtherChatterId);
+                                        Glide.with(getBaseContext())
+                                                .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image1) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image1.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
+                                    } catch (Exception e0) {
+                                        Log.d("DEBUG"," Could not find profile image for userId0: "+ finalOtherChatterId);
+                                        Glide.with(getBaseContext())
+                                                .load(theaderowl).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image1) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image1.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    // error
+                                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("DEBUG"," Got parse error for this user");
+                                }
+                            }
+                        });
+                        otherChatterId = chattrs.get(1);
+                        query = ParseQuery.getQuery("_User");
+                        final String finalOtherChatterId1 = otherChatterId;
+                        query.whereEqualTo("objectId",otherChatterId);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if (e == null) {
+                                    final ImageView image2 = (ImageView) toolbar.findViewById(R.id.ivChatter2);
+                                    try {
+                                        String profImg = objects.get(1).getString("ProfileImage");
+                                        Log.d("DEBUG"," Found profile image for userId1: "+ finalOtherChatterId1);
+                                        Glide.with(getBaseContext())
+                                                .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image2) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image2.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
+                                    } catch (Exception e1) {
+                                        Log.d("DEBUG"," Could not find profile image for userId1: "+ finalOtherChatterId1);
+                                        Glide.with(getBaseContext())
+                                            .load(theaderowl).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image2) {
+                                                @Override
+                                                protected void setResource(Bitmap resource) {
+                                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                                            RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                    circularBitmapDrawable.setCircular(true);
+                                                    image2.setImageDrawable(circularBitmapDrawable);
+                                                }
+                                            });
+                                    }
+                                } else {
+                                    // error
+                                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("DEBUG"," Got parse error for this user");
+                                }
+                            }
+                        });
+                        otherChatterId = chattrs.get(2);
+                        query = ParseQuery.getQuery("_User");
+                        final String finalOtherChatterId2 = otherChatterId;
+                        query.whereEqualTo("objectId",otherChatterId);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if (e == null) {
+                                    final ImageView image3 = (ImageView) toolbar.findViewById(R.id.ivChatter3);
+                                    try {
+                                        String profImg = objects.get(2).getString("ProfileImage");
+                                        Log.d("DEBUG"," Found profile image for userId2: "+ finalOtherChatterId2);
+                                        Glide.with(getBaseContext())
+                                                .load(profImg).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image3) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image3.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
+                                    } catch (Exception e2) {
+                                        Log.d("DEBUG"," Could not find profile image for userId2: "+ finalOtherChatterId2);
+                                        Glide.with(getBaseContext())
+                                                .load(theaderowl).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image3) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image3.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    // error
+                                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("DEBUG"," Got parse error for this user");
+                                }
+                            }
+                        });
+                        String dNumGroupCh = " + "+String.valueOf(NumChatters-3)+ " Other/s";
+                        TextView etFullName = (TextView) toolbar.findViewById(R.id.etFullName);
+                        etFullName.setText(dNumGroupCh);
+                        etFullName.setTextSize(18);
+                        TextView etOnline = (TextView) toolbar.findViewById(R.id.etOnLine);
+                        etOnline.setText("");
                     } else if (chat.getRecipients().size() == 2) {
-                        //TODO get 2nd user and get his fullname to display on toolbar
+                        // get 2nd user and get their full name to display on toolbar
+                        String otherChatterId = chattrs.get(0);
+                        final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                        query.whereEqualTo("objectId",otherChatterId);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if (e == null) {
+                                    toolbar.setTitle("");
+                                    final ImageView image1 = (ImageView) toolbar.findViewById(R.id.ivChatter1);
+                                    String profImg = objects.get(0).getString("ProfileImage");;
+                                    Glide.with(getBaseContext())
+                                            .load(profImg).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image1) {
+                                        @Override
+                                        protected void setResource(Bitmap resource) {
+                                            RoundedBitmapDrawable circularBitmapDrawable =
+                                                    RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                            circularBitmapDrawable.setCircular(true);
+                                            image1.setImageDrawable(circularBitmapDrawable);
+                                        }
+                                    });
+                                    TextView etFullName = (TextView) toolbar.findViewById(R.id.etFullName);
+                                    // need the otherChattername as a separate variable to avoid null exception
+                                    // as otherChatterName is initialized to no-one
+                                    String otherChatterName = "No-One";
+                                    otherChatterName = objects.get(0).getString("FullName");
+                                    etFullName.setText(otherChatterName);
+                                    TextView etOnline = (TextView) toolbar.findViewById(R.id.etOnLine);
+                                    //long userLast = objects.get(0).getInt("updatedAt");
+//                                    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.'LLL'Z'");
+//                                    Date currentDate=new Date();
+//                                    String parseTime = objects.get(0).getString("_updated_at");
+//                                    Date parseDate = null;
+//                                    try {
+//                                        parseDate = formatter.parse(parseTime);
+//                                    } catch(Exception et) {
+//                                        Toast.makeText(getBaseContext(), et.getMessage(), Toast.LENGTH_SHORT).show();
+//                                        Log.d("DEBUG"," Ex "+et.getMessage());
+//                                    }
+//                                    long difference = currentDate.getTime() - parseDate.getTime();
+//                                    Log.d("DEBUG"," difference is "+difference);
+                                    // Use the difference in time to set on or off line
+                                    long difference = 0;
+                                    if (( difference > 0) && (difference < 1)) {
+                                        etOnline.setText("Online");
+                                    } else {
+                                        etOnline.setText("OffLine");
+                                    }
+
+                                } else {
+                                    // error
+                                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("DEBUG"," Got parse error for this user");
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -399,8 +588,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private void photoCameraIntent() {
         Uri photoUri = getPhotoFileUri(photoFileName);
        if(photoUri!=null){
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            i.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);;
+            i.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);;
             startActivityForResult(i, IMAGE_CAMERA_REQUEST);
         }
     }
