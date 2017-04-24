@@ -56,7 +56,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_coursesstudent, container, false);
-        fabReturn = (FloatingActionButton) v.findViewById(R.id.fabReturn);
+        /*fabReturn = (FloatingActionButton) v.findViewById(R.id.fabReturn);
         fabReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +67,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
                 }
                 ;
             }
-        });
+        });*/
         findControls(v);
         initControls();
         return v;

@@ -192,6 +192,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void configureViewHolder_single(final ItemChatSingle vh, int position) {
         // Get the data model based on position
         Chat chat = mChats.get(position);
+
         vh.tvTimestamp.setText(DateTimeHelper.getRelativeTimeAgo(chat.getUpdatedAt()));
 
 
@@ -224,33 +225,30 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-       /* ParseQuery<Message> query = ParseQuery.getQuery("Message");
-        query.getInBackground(chat.getLastMessageId(), new GetCallback<Message>() {
-            public void done(Message msg, ParseException e) {
-                if (e == null) {
-                    vh.tvLastMessage.setText(msg.getBody());
-                }
-            }
-        });
-*/
+
         ParseQuery<ParseUser> query1 = ParseQuery.getQuery("_User");
         query1.getInBackground(otherUser, new GetCallback<ParseUser>() {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     vh.tvMessageUserName.setText(user.getString("FullName"));
-                    Glide.with(mContext).load(user.getString("ProfileImage")).asBitmap()
-                            .centerCrop().into(new BitmapImageViewTarget(vh.ivMessageUser) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            vh.ivMessageUser.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+                    Glide.with(mContext).load(user.getString("ProfileImage")).asBitmap().centerCrop()
+                            .placeholder(R.drawable.default_user_grey)
+                            .into(new BitmapImageViewTarget(vh.ivMessageUser) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    vh.ivMessageUser.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
                 }
             }
         });
+
+
+
+
     }
 
     public class ItemChatSingle extends RecyclerView.ViewHolder {

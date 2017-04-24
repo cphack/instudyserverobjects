@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.UserListAdapter;
+import com.codepath.android.instudy.fragments.LectionListFragment;
+import com.codepath.android.instudy.fragments.UserListFragment;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
@@ -23,13 +25,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class UserListActivity extends AppCompatActivity {
 
     RecyclerView lvUsers;
     UserListAdapter aUsers;
     ArrayList<ParseObject> users;
-    String[] userids;
+
     private LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -40,89 +41,13 @@ public class UserListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        linearLayoutManager = new LinearLayoutManager(this);
+        String[] userids = getIntent().getStringArrayExtra("users");
 
-        lvUsers = (RecyclerView) findViewById(R.id.lvUsers);
-
-        initAdapter();
-        lvUsers.setAdapter(aUsers);
-        lvUsers.setLayoutManager(linearLayoutManager);
-
-        userids = getIntent().getStringArrayExtra("users");
-
-        if(userids==null){
-
-            ParseQuery<Course> query = new ParseQuery<Course>("Course");
-            query.whereContains("students", ParseUser.getCurrentUser().getObjectId());
-
-            query.findInBackground(new FindCallback<Course>() {
-                public void done(List<Course> itemList, ParseException e) {
-                    if (e == null) {
-                        ArrayList<String> users = new  ArrayList();
-                       for(Course c:itemList){
-                           ArrayList<String> students = c.getStudents();
-                           for(String student : students){
-                               if(student.equals(ParseUser.getCurrentUser().getObjectId())){
-                                   continue;
-                               }
-                               if(!users.contains(student)){
-                                   users.add(student);
-                               }
-                           }
-                       }
-                       userids = users.toArray(new String[users.size()]);
-                        populateUsers();
-                    } else {
-                        Toast.makeText(UserListActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }else{
-            populateUsers();
+        if (savedInstanceState == null) {
+            UserListFragment fragment = (UserListFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.fragment);
+            fragment.populateUserList(userids);
         }
-
-
-
-    }
-
-
-
-
-    private void initAdapter() {
-        users = new ArrayList<ParseObject>();
-        //construct adapter from datasource
-        aUsers = new UserListAdapter(this, users);
-        aUsers.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                 String id= users.get(position).getObjectId();
-                openUserProfile(id);
-            }
-        });
-        aUsers.setOnChatButtonClickListener(new UserListAdapter.OnChatButtonClickListener() {
-            @Override
-            public void onChatButtonClick(View view, int position) {
-                String id= users.get(position).getObjectId();
-                openChat(id);
-            }
-        });
-    }
-
-    //TODO:move to fragment
-    private void populateUsers() {
-        if (userids.length == 0) return;
-        List<String> userIdList = new ArrayList<String>(Arrays.asList(userids));
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.whereContainedIn("objectId", userIdList);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    users.addAll(objects);
-                    aUsers.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     private void openUserProfile(String userid) {

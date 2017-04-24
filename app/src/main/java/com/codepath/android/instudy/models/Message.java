@@ -10,12 +10,10 @@ public class Message extends ParseObject {
     public static final String USER_ID_KEY = "userId";
     public static final String BODY_KEY = "body";
     public static final String CHAT_KEY = "chatid";
-    private FileModel file;
+
     private MapData mapData;
 
-    public FileModel getFile() {
-        return file;
-    }
+
 
     public ParseFile getFileName() {
 
@@ -23,9 +21,7 @@ public class Message extends ParseObject {
     }
 
 
-    public void setFile(FileModel file) {
-        this.file = file;
-    }
+
 
     public MapData getMapData() {
         return mapData;

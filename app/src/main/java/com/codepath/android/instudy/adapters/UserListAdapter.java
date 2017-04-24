@@ -51,11 +51,6 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.chatButtonClickListener = listener;
     }
 
-
-
-
-
-
     private List<ParseObject> mUsers;
     // Store the context for easy access
     private Context mContext;
@@ -106,7 +101,9 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final ViewHolder_User vh=vh1;
         ParseUser user = (ParseUser)mUsers.get(position);
         vh.tvUserName.setText(user.getString("FullName"));
+
         Glide.with(mContext).load(user.getString("ProfileImage")).asBitmap().centerCrop()
+                .placeholder(R.drawable.default_user_grey)
                 .into(new BitmapImageViewTarget(vh.ivUser) {
             @Override
             protected void setResource(Bitmap resource) {
@@ -131,7 +128,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
             ivUser = (ImageView) itemView.findViewById(R.id.ivUser);
-            btnChat = (Button) itemView.findViewById(R.id.btnChat);
+           // btnChat = (Button) itemView.findViewById(R.id.btnChat);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,7 +143,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
 
-            btnChat.setOnClickListener(new View.OnClickListener(){
+           /* btnChat.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     if (chatButtonClickListener != null) {
@@ -156,7 +153,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                     }
                 }
-            });
+            });*/
         }
     }
 }

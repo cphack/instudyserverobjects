@@ -46,9 +46,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context mContext;
 
 
-    public MessageAdapter(@NonNull Context context, @NonNull List<Message> objects) {
+    public MessageAdapter(@NonNull Context context, @NonNull List<Message> objects,ClickListenerChat mClickListenerChat) {
         mMessages = objects;
         mContext = context;
+        this.mClickListenerChat=mClickListenerChat;
     }
 
     @Override
@@ -149,11 +150,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            Message model = mMessages.get(position);
-           /* if (model.getMapModel() != null) {
+            Message msg = mMessages.get(position);
+            if(msg.getFileName()!=null) {
+                mClickListenerChat.clickImageChat(view, position, msg);
+            }
+           /*if (model.getMapData() != null) {
                 mClickListenerChatFirebase.clickImageMapChat(view, position, model.getMapModel().getLatitude(), model.getMapModel().getLongitude());
             } else {
-                mClickListenerChatFirebase.clickImageChat(view, position, model.getUserModel().getName(), model.getUserModel().getPhoto_profile(), model.getFile().getUrl_file());
+
             }*/
         }
 
@@ -206,7 +210,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
          * @param view
          * @param position
          */
-        void clickImageChat(View view, int position, String nameUser, String urlPhotoUser, String urlPhotoClick);
+        void clickImageChat(View view, int position, Message msg);
 
         /**
          * Quando houver click na imagem de mapa

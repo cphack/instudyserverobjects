@@ -1,5 +1,7 @@
 package com.codepath.android.instudy.activities;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -49,9 +51,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.media.MediaRecorder.VideoSource.CAMERA;
 import static com.codepath.android.instudy.R.drawable.theaderowl;
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener,MessageAdapter.ClickListenerChat {
 
 //TODO: implement differnet toolbar if group or single chat
 
@@ -140,21 +143,21 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         //toolbar.setTitle(chat.getChatName());
                         toolbar.setTitle("");
                         final int NumChatters = chat.getRecipients().size();
-                        if(NumChatters < 2) {
+                        if (NumChatters < 2) {
                             Toast.makeText(getBaseContext(), "No chatters in this group", Toast.LENGTH_SHORT).show();
                             return;
                         } // temp check for num of chatters less than 2
                         String otherChatterId = chattrs.get(0);
                         final String finalOtherChatterId = otherChatterId;
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-                        query.whereEqualTo("objectId",otherChatterId);
+                        query.whereEqualTo("objectId", otherChatterId);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> objects, ParseException e) {
                                 if (e == null) {
                                     final ImageView image1 = (ImageView) toolbar.findViewById(R.id.ivChatter1);
                                     try {
                                         String profImg = objects.get(0).getString("ProfileImage");
-                                        Log.d("DEBUG"," Found profile image for userId0: "+ finalOtherChatterId);
+                                        Log.d("DEBUG", " Found profile image for userId0: " + finalOtherChatterId);
                                         Glide.with(getBaseContext())
                                                 .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image1) {
                                             @Override
@@ -166,7 +169,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                             }
                                         });
                                     } catch (Exception e0) {
-                                        Log.d("DEBUG"," Could not find profile image for userId0: "+ finalOtherChatterId);
+                                        Log.d("DEBUG", " Could not find profile image for userId0: " + finalOtherChatterId);
                                         Glide.with(getBaseContext())
                                                 .load(theaderowl).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image1) {
                                             @Override
@@ -181,21 +184,21 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 } else {
                                     // error
                                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d("DEBUG"," Got parse error for this user");
+                                    Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
                         });
                         otherChatterId = chattrs.get(1);
                         query = ParseQuery.getQuery("_User");
                         final String finalOtherChatterId1 = otherChatterId;
-                        query.whereEqualTo("objectId",otherChatterId);
+                        query.whereEqualTo("objectId", otherChatterId);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> objects, ParseException e) {
                                 if (e == null) {
                                     final ImageView image2 = (ImageView) toolbar.findViewById(R.id.ivChatter2);
                                     try {
                                         String profImg = objects.get(1).getString("ProfileImage");
-                                        Log.d("DEBUG"," Found profile image for userId1: "+ finalOtherChatterId1);
+                                        Log.d("DEBUG", " Found profile image for userId1: " + finalOtherChatterId1);
                                         Glide.with(getBaseContext())
                                                 .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image2) {
                                             @Override
@@ -207,38 +210,38 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                             }
                                         });
                                     } catch (Exception e1) {
-                                        Log.d("DEBUG"," Could not find profile image for userId1: "+ finalOtherChatterId1);
+                                        Log.d("DEBUG", " Could not find profile image for userId1: " + finalOtherChatterId1);
                                         Glide.with(getBaseContext())
-                                            .load(theaderowl).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image2) {
-                                                @Override
-                                                protected void setResource(Bitmap resource) {
-                                                    RoundedBitmapDrawable circularBitmapDrawable =
-                                                            RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
-                                                    circularBitmapDrawable.setCircular(true);
-                                                    image2.setImageDrawable(circularBitmapDrawable);
-                                                }
-                                            });
+                                                .load(theaderowl).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image2) {
+                                            @Override
+                                            protected void setResource(Bitmap resource) {
+                                                RoundedBitmapDrawable circularBitmapDrawable =
+                                                        RoundedBitmapDrawableFactory.create(getBaseContext().getResources(), resource);
+                                                circularBitmapDrawable.setCircular(true);
+                                                image2.setImageDrawable(circularBitmapDrawable);
+                                            }
+                                        });
                                     }
                                 } else {
                                     // error
                                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d("DEBUG"," Got parse error for this user");
+                                    Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
                         });
                         otherChatterId = chattrs.get(2);
                         query = ParseQuery.getQuery("_User");
                         final String finalOtherChatterId2 = otherChatterId;
-                        query.whereEqualTo("objectId",otherChatterId);
+                        query.whereEqualTo("objectId", otherChatterId);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> objects, ParseException e) {
                                 if (e == null) {
                                     final ImageView image3 = (ImageView) toolbar.findViewById(R.id.ivChatter3);
                                     try {
                                         String profImg = objects.get(2).getString("ProfileImage");
-                                        Log.d("DEBUG"," Found profile image for userId2: "+ finalOtherChatterId2);
+                                        Log.d("DEBUG", " Found profile image for userId2: " + finalOtherChatterId2);
                                         Glide.with(getBaseContext())
-                                                .load(profImg).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image3) {
+                                                .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image3) {
                                             @Override
                                             protected void setResource(Bitmap resource) {
                                                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -248,9 +251,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                             }
                                         });
                                     } catch (Exception e2) {
-                                        Log.d("DEBUG"," Could not find profile image for userId2: "+ finalOtherChatterId2);
+                                        Log.d("DEBUG", " Could not find profile image for userId2: " + finalOtherChatterId2);
                                         Glide.with(getBaseContext())
-                                                .load(theaderowl).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image3) {
+                                                .load(theaderowl).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image3) {
                                             @Override
                                             protected void setResource(Bitmap resource) {
                                                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -263,11 +266,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 } else {
                                     // error
                                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d("DEBUG"," Got parse error for this user");
+                                    Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
                         });
-                        String dNumGroupCh = " + "+String.valueOf(NumChatters-3)+ " Other/s";
+                        String dNumGroupCh = " + " + String.valueOf(NumChatters - 3) + " Other/s";
                         TextView etFullName = (TextView) toolbar.findViewById(R.id.etFullName);
                         etFullName.setText(dNumGroupCh);
                         etFullName.setTextSize(18);
@@ -277,15 +280,16 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         // get 2nd user and get their full name to display on toolbar
                         String otherChatterId = chattrs.get(0);
                         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-                        query.whereEqualTo("objectId",otherChatterId);
+                        query.whereEqualTo("objectId", otherChatterId);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> objects, ParseException e) {
                                 if (e == null) {
                                     toolbar.setTitle("");
                                     final ImageView image1 = (ImageView) toolbar.findViewById(R.id.ivChatter1);
-                                    String profImg = objects.get(0).getString("ProfileImage");;
+                                    String profImg = objects.get(0).getString("ProfileImage");
+                                    ;
                                     Glide.with(getBaseContext())
-                                            .load(profImg).asBitmap().override(50,50).centerCrop().into(new BitmapImageViewTarget(image1) {
+                                            .load(profImg).asBitmap().override(50, 50).centerCrop().into(new BitmapImageViewTarget(image1) {
                                         @Override
                                         protected void setResource(Bitmap resource) {
                                             RoundedBitmapDrawable circularBitmapDrawable =
@@ -316,7 +320,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 //                                    Log.d("DEBUG"," difference is "+difference);
                                     // Use the difference in time to set on or off line
                                     long difference = 0;
-                                    if (( difference > 0) && (difference < 1)) {
+                                    if ((difference > 0) && (difference < 1)) {
                                         etOnline.setText("Online");
                                     } else {
                                         etOnline.setText("OffLine");
@@ -325,7 +329,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 } else {
                                     // error
                                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.d("DEBUG"," Got parse error for this user");
+                                    Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
                         });
@@ -352,7 +356,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         //lvChat.setTranscriptMode(1); // scroll to the bottom when a new data shows up
 
         //mAdapter = new ChatMessageAdapter(ChatActivity.this, ParseUser.getCurrentUser().getObjectId(), mMessages);
-        adapter = new MessageAdapter(ChatActivity.this, mMessages);
+        adapter = new MessageAdapter(ChatActivity.this, mMessages,this);
         lvChat.setAdapter(adapter);
         linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         lvChat.setLayoutManager(linearLayoutManager);
@@ -396,6 +400,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPhoto:
                 verifyStoragePermissions();
+                //verifyCameraPermission();
                 break;
             case R.id.btnGallery:
                 photoGalleryIntent();
@@ -463,7 +468,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         message.setBody(data);
         message.setUserId(ParseUser.getCurrentUser().getObjectId());
         if (bmp == null) {
-            Toast.makeText(ChatActivity.this,"Problem with image",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChatActivity.this, "Problem with image", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -515,7 +520,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-       // addMessage(message);
+        // addMessage(message);
         etMessage.setText(null);
     }
 
@@ -540,7 +545,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 try {
 
                     Uri photoUri = getPhotoFileUri(photoFileName);
-                    if(photoUri==null) return;
+                    if (photoUri == null) return;
                     bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                     sendFileMessage(bmp);
                 } catch (FileNotFoundException e) {
@@ -585,16 +590,47 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    public void verifyCameraPermission() {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    ChatActivity.this,
+                    new String[]{Manifest.permission.CAMERA},
+                    IMAGE_CAMERA_REQUEST
+            );
+        } else {
+            permission = ActivityCompat.checkSelfPermission(ChatActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        ChatActivity.this,
+                        PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+            } else {
+                // we already have permission, lets go ahead and call camera intent
+                photoCameraIntent();
+            }
+        }
+    }
+
+
     private void photoCameraIntent() {
         Uri photoUri = getPhotoFileUri(photoFileName);
-       if(photoUri!=null){
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);;
-            i.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);;
+        if (photoUri != null) {
+            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            i.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(i, IMAGE_CAMERA_REQUEST);
         }
     }
 
-    private Uri getPhotoFileUri(String fileName){
+    private Uri getPhotoFileUri(String fileName) {
       /*  String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
             File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
@@ -611,10 +647,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             // See https://guides.codepath.com/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
             return FileProvider.getUriForFile(MyActivity.this, "com.codepath.fileprovider", file);
         }*/
-        Uri photoUri= null;
+        Uri photoUri = null;
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
             String name = DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString();
+
+
             File photoFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName);
             try {
                 if (photoFile.exists() == false) {
@@ -627,12 +665,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
             photoUri = Uri.fromFile(photoFile);
         }
-        return  photoUri;
+        return photoUri;
     }
 
     private void photoGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
+
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Get Photo From"), IMAGE_GALLERY_REQUEST);
     }
@@ -653,8 +692,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public void addMessage(Message msg){
-        mMessages.add(0,msg);
+    public void addMessage(Message msg) {
+        mMessages.add(0, msg);
         adapter.notifyDataSetChanged();
     }
 
@@ -668,5 +707,26 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
     }*/
 
+    @Override
+    public void clickImageChat(View view, int position, final Message msg) {
 
+        ParseQuery<ParseUser> query = ParseQuery.getQuery("_User");
+        query.getInBackground(msg.getUserId(), new GetCallback<ParseUser>() {
+            public void done(ParseUser user, ParseException e) {
+                if (e == null) {
+                    Intent intent = new Intent(ChatActivity.this,FullScreenImageActivity.class);
+                    intent.putExtra("nameUser",user.getString("FullName"));
+                    intent.putExtra("urlPhotoUser",user.getString("ProfileImage"));
+                    intent.putExtra("urlPhotoClick",msg.getFileName().getUrl());
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void clickImageMapChat(View view, int position, String latitude, String longitude) {
+
+    }
 }

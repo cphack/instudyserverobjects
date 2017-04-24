@@ -27,12 +27,15 @@ public class DateTimeHelper {
             long dateMillis = sf.parse(rawJsonDate).getTime();
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
-            relativeDate = relativeDate.replace(" minutes ago", "m")
+            relativeDate = relativeDate
+                    .replace("Yesterday", "1d")
+                    .replace(" minutes ago", "m")
                     .replace(" minute ago", "m")
                     .replace(" hours ago", "h")
                     .replace(" hour ago", "h")
                     .replace(" days ago", "d")
                     .replace(" day ago", "d");
+
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -55,7 +58,9 @@ public class DateTimeHelper {
         long dateMillis = date.getTime();
         relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                 System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
-        relativeDate = relativeDate.replace(" minutes ago", "m")
+        relativeDate = relativeDate
+                .replace("Yesterday", "1d")
+                .replace(" minutes ago", "m")
                 .replace(" minute ago", "m")
                 .replace(" hours ago", "h")
                 .replace(" hour ago", "h")

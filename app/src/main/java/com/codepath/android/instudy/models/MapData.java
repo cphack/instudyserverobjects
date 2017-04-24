@@ -1,8 +1,5 @@
 package com.codepath.android.instudy.models;
 
-/**
- * Created by Alessandro Barreto on 24/06/2016.
- */
 public class MapData {
     private String latitude;
     private String longitude;
