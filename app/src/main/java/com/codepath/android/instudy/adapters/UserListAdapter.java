@@ -31,25 +31,18 @@ import static android.R.attr.type;
 public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Define listener member variable
-    private OnItemClickListener listener;
+    private UserItemClickListener listener;
     // Define the listener interface
-    public interface OnItemClickListener {
+    public interface UserItemClickListener {
         void onItemClick(View itemView, int position);
-    }
-    // Define the method that allows the parent activity or fragment to define the listener
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-    // Define listener member variable
-    private OnChatButtonClickListener chatButtonClickListener;
-    // Define the listener interface
-    public interface OnChatButtonClickListener {
         void onChatButtonClick(View itemView, int position);
     }
+
     // Define the method that allows the parent activity or fragment to define the listener
-    public void setOnChatButtonClickListener(OnChatButtonClickListener listener) {
-        this.chatButtonClickListener = listener;
+    public void setOnUserListClickListener(UserItemClickListener listener) {
+        this.listener = listener;
     }
+
 
     private List<ParseObject> mUsers;
     // Store the context for easy access
@@ -58,6 +51,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public UserListAdapter(@NonNull Context context, @NonNull List<ParseObject> objects) {
         mUsers = objects;
         mContext = context;
+       // this.listener=listener;
     }
 
     // Easy access to the context object in the recyclerview
@@ -120,7 +114,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // for any view that will be set as you render a row
         public TextView tvUserName;
         public ImageView ivUser;
-        public Button btnChat;
+        public ImageView ivChat;
 
         //Define constructor wichi accept entire row and find sub views
         public ViewHolder_User(final View itemView) {
@@ -128,7 +122,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemView);
             tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
             ivUser = (ImageView) itemView.findViewById(R.id.ivUser);
-           // btnChat = (Button) itemView.findViewById(R.id.btnChat);
+            ivChat= (ImageView) itemView.findViewById(R.id.ivChat);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,17 +137,17 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
 
-           /* btnChat.setOnClickListener(new View.OnClickListener(){
+            ivChat.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    if (chatButtonClickListener != null) {
+                    if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            chatButtonClickListener.onChatButtonClick(itemView, position);
+                            listener.onChatButtonClick(itemView, position);
                         }
                     }
                 }
-            });*/
+            });
         }
     }
 }

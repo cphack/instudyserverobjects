@@ -102,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
                 i = new Intent(MainActivity.this, NewCourseActivity.class);
                 break;
 
+            case R.id.dvSettings:
+                i = new Intent(MainActivity.this, SettingsActivity.class);
+                break;
+
+
             case R.id.dvMyProfile:
                 i = new Intent(MainActivity.this, MyProfileActivity.class);
                 break;

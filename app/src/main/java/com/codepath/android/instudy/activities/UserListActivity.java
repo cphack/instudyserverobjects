@@ -47,16 +47,18 @@ public class UserListActivity extends AppCompatActivity {
             UserListFragment fragment = (UserListFragment)
                     getSupportFragmentManager().findFragmentById(R.id.fragment);
             fragment.populateUserList(userids);
+
+
         }
     }
 
-    private void openUserProfile(String userid) {
+    public void openUserProfile(String userid) {
         Intent i = new Intent(UserListActivity.this,UserProfileActivity.class);
         i.putExtra("userid",userid);
         startActivity(i);
     }
 
-    private void openChat(final String userid) {
+    public void openChat(final String userid) {
 
         ArrayList<String> recipients = new ArrayList<>();
         recipients.add(userid);

@@ -1,7 +1,10 @@
 package com.codepath.android.instudy.adapters;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.android.instudy.R;
@@ -14,31 +17,43 @@ import com.codepath.android.instudy.fragments.ChatListFragment;
 public class PagerAdapter extends SmartFragmentStatePagerAdapter
         implements PagerSlidingTabStrip.IconTabProvider {
 
-    private int icons[] = {R.drawable.professor_tab, R.drawable.mail_tab, R.drawable.student_tab,
-           R.drawable.search_tab};
+    Boolean showTeacherTab = false;
 
-    public PagerAdapter(FragmentManager fm) {
+    private int icons[] = {R.drawable.professor_tab, R.drawable.student_tab,R.drawable.mail_tab,
+            R.drawable.search_tab};
+    private int icons1[] = { R.drawable.student_tab,R.drawable.mail_tab,R.drawable.search_tab};
+
+
+    public PagerAdapter(FragmentManager fm, Boolean showTeacherTabFlag) {
         super(fm);
-
+        showTeacherTab = showTeacherTabFlag;
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return showTeacherTab?4:3;
     }
 
     @Override
     public Fragment getItem(int position) {
 
         switch (position) {
-            case 0: // Fragment # 0 - This will show FirstFragment
-                return CoursesTeacherFragment.newInstance(0, "Page # 1");
-            case 1: // Fragment # 0 - This will show FirstFragment different title
-                return ChatListFragment.newInstance(1, "Page # 2");
-            case 2: // Fragment # 1 - This will show SecondFragment
-                return CoursesStudentFragment.newInstance(2, "Page # 3");
-            case 3: // Fragment # 1 - This will show SecondFragment
-                return CoursesSearchFragment.newInstance(3, "Page # 4");
+            case 0:
+                if(showTeacherTab){
+                return CoursesTeacherFragment.newInstance(0, "p1");}
+                else{return CoursesStudentFragment.newInstance(1, "p2");}
+            case 1:
+                if(showTeacherTab){
+                return CoursesStudentFragment.newInstance(1, "p2");}
+                else{return ChatListFragment.newInstance(2, "p3");}
+            case 2:
+                if(showTeacherTab){
+                return ChatListFragment.newInstance(2, "p3");}
+                else{return CoursesSearchFragment.newInstance(3, "p4");}
+            case 3:
+                if(showTeacherTab){
+                return CoursesSearchFragment.newInstance(3, "p4");}
+                else{return null;}
             default:
                 return null;
         }
@@ -46,7 +61,12 @@ public class PagerAdapter extends SmartFragmentStatePagerAdapter
 
     @Override
     public int getPageIconResId(int position) {
-        return icons[position];
-    }
 
+        if(showTeacherTab){
+            return icons[position];
+        }else
+        {
+            return icons1[position];
+        }
+    }
 }

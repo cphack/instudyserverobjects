@@ -52,24 +52,19 @@ import static android.app.Activity.RESULT_OK;
 import static android.os.Environment.getExternalStorageDirectory;
 import static com.codepath.android.instudy.R.drawable.studyowl;
 import static com.codepath.android.instudy.R.drawable.theaderowl;
+import static com.codepath.android.instudy.R.id.ivUser;
+import static com.codepath.android.instudy.R.id.myProfile;
 
 @RuntimePermissions
 public class MyProfile extends Fragment implements View.OnClickListener, EditStatusFragment.EditNameDialogListener {
 
     TextView etUserName;
-    EditText etTagline;
-    EditText etLocation;
     TextView etShareNotes;
-    Button btSnapPic;
     Button btSave;
-    Button btGalPic;
     ImageView ivGallery;
     ImageView ivCamera;
-    public String TagLine = "Tag Line";
-    public String Location = "New York City";
-    public String ShareNotes = " I may not be able to attend";
     LinearLayout llStatusLine;
-    ListView lvChat;
+
     ArrayList<Message> mMessages;
     private ParseUser me;
     ImageView profileImg;
@@ -83,25 +78,16 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         // Inflate the layout for this fragment
         View v = (View) inflater.inflate(R.layout.fragment_myprofile, container, false);
-        lvChat = (ListView) v.findViewById(R.id.lvChat);
         etUserName = (TextView) v.findViewById(R.id.tvFullName);
-       /* etTagline = (EditText) v.findViewById(R.id.etTagLine);
-        etLocation = (EditText) v.findViewById(R.id.etLocation);*/
         etShareNotes = (TextView) v.findViewById(R.id.tvStatusLine);
-        /*btSnapPic = (Button) v.findViewById(R.id.btSnapPic);*/
-/*        btGalPic = (Button) v.findViewById(R.id.btGalPic);*/
         ivGallery=(ImageView)v.findViewById(R.id.ivGallery);
         ivCamera=(ImageView)v.findViewById(R.id.ivCamera);
         btSave = (Button) v.findViewById(R.id.btSave);
         llStatusLine=(LinearLayout) v.findViewById(R.id.llStatusLine);
         profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
         me =  ParseUser.getCurrentUser();
-        mMessages = new ArrayList<Message>();
         ivCamera.setOnClickListener(this);
         btSave.setOnClickListener(this);
         ivGallery.setOnClickListener(this);
@@ -129,8 +115,9 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                 break;
         }
     }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
@@ -146,7 +133,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                         Bitmap bitmapScaled = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
                         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                         imageView.setImageBitmap(bitmapScaled);
-                        //Toast.makeText(getContext(), selectedImage.toString(),Toast.LENGTH_LONG).show();
+
                         // Configure byte output stream
                         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                         // Rescale larger to store on device
@@ -174,14 +161,6 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                                 profileImg.setImageDrawable(circularBitmapDrawable);
                             }
                         });
-                        Picasso.with(getContext())
-                            .load(resizedUri)
-                            .fit()
-                            .centerInside()
-                            .placeholder(studyowl)
-                            .error(theaderowl)
-                            .transform(new RoundedCornersTransformation(30, 30))
-                            .into(profileImg);
                         byte[] image = bytes.toByteArray();
                         ParseFile pfile = new ParseFile("myprofilepic.png", image);
                         pfile.saveInBackground();
@@ -251,12 +230,30 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
 
     public void SetProfile(View v) {
         final String myName = me.getString("FullName");
-        etUserName.setText(myName); // is known at user login creation
-        //Log.d("DEBUG", "Found this user: "+myName);
-        String myProfile = me.getString("Profile");
-        if(myProfile != "None") {
-                getUserProfileFromParseAndUpdate();
+        etUserName.setText(myName);
+
+        String profileImageUrl;
+
+        if(me.getParseFile("ImageFile")!=null){
+            ParseFile imageFile = me.getParseFile("ImageFile");
+                //profileImg
+            profileImageUrl = imageFile.getUrl();
+        }else
+        {
+            profileImageUrl = me.getString("ProfileImage");
         }
+
+        Glide.with(this).load(profileImageUrl).asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImg) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                profileImg.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+
+
     }
     /** Check if this device has a camera */
     private boolean checkCameraHardware(Context context) {

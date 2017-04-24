@@ -52,24 +52,23 @@ public class OverviewCourseFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_overview_course, container, false);
         // Inflate the layout for this fragment
-        tvCourseName=(TextView) v.findViewById(R.id.tvCourseName);
-        tvDescription=(TextView) v.findViewById(R.id.tvDescription);
-        tvNumLections=(TextView) v.findViewById(R.id. tvNumLections);
-        tvNumAssignments=(TextView) v.findViewById(R.id.tvNumAssignments);
-        ivTeacherImage=(ImageView ) v.findViewById(R.id.ivTeacherImage);
-        tvTeacherName=(TextView) v.findViewById(R.id.tvTeacherName);
+        tvCourseName = (TextView) v.findViewById(R.id.tvCourseName);
+        tvDescription = (TextView) v.findViewById(R.id.tvDescription);
+        tvNumLections = (TextView) v.findViewById(R.id.tvNumLections);
+        tvNumAssignments = (TextView) v.findViewById(R.id.tvNumAssignments);
+        ivTeacherImage = (ImageView) v.findViewById(R.id.ivTeacherImage);
+        tvTeacherName = (TextView) v.findViewById(R.id.tvTeacherName);
 
         return v;
     }
 
-    public void getCourseData(String courseid ) {
+    public void getCourseData(String courseid) {
         // Specify which class to query
         ParseQuery<Course> query = ParseQuery.getQuery(Course.class);
         // Specify the object id

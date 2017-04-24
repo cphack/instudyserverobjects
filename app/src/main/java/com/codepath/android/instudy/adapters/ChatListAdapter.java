@@ -245,10 +245,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             }
         });
-
-
-
-
     }
 
     public class ItemChatSingle extends RecyclerView.ViewHolder {

@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.MessageAdapter;
+import com.codepath.android.instudy.fragments.ChatToolbarGroupFragment;
+import com.codepath.android.instudy.fragments.ChatToolbarSingleFragment;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Message;
 import com.parse.FindCallback;
@@ -52,7 +56,7 @@ import java.util.List;
 
 import static com.codepath.android.instudy.R.drawable.theaderowl;
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener,MessageAdapter.ClickListenerChat {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener, MessageAdapter.ClickListenerChat {
 
 //TODO: implement differnet toolbar if group or single chat
 
@@ -66,7 +70,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private static final int PLACE_PICKER_REQUEST = 3;
     public final String APP_TAG = "InStudy";
     //File
-    private File filePathImageCamera;    public boolean doUpdate = false;
+    private File filePathImageCamera;
+    public boolean doUpdate = false;
     public boolean first_update = false;
     public boolean local_update_by_send = false;
 
@@ -101,12 +106,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     Runnable mRefreshMessagesRunnable = new Runnable() {
         @Override
         public void run() {
-            if ((updateChat() || !first_update ) && (!local_update_by_send)) {
+            if ((updateChat() || !first_update) && (!local_update_by_send)) {
                 first_update = true;
                 local_update_by_send = false;
                 refreshMessages();
             } else {
-                Log.d("DEBUG","No Update as last updated was more than 2 secs ago");
+                Log.d("DEBUG", "No Update as last updated was more than 2 secs ago");
             }
             myHandler.postDelayed(this, POLL_INTERVAL);
         }
@@ -147,8 +152,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     doUpdate = false;
                     long recent_updated = adapter.getLastMessageTime(0);
                     String Uid = adapter.getUsrId(0);
-                    Log.d("DEBUG", "Msg Id: " + adapter.getMsgId(0)+"is at ["+0+"] "+ recent_updated + " by " + Uid);
-                    if ((recent_updated > 0 ) && (recent_updated < 2)) {
+                    Log.d("DEBUG", "Msg Id: " + adapter.getMsgId(0) + "is at [" + 0 + "] " + recent_updated + " by " + Uid);
+                    if ((recent_updated > 0) && (recent_updated < 2)) {
                         doUpdate = true;
                     }
                 } else {
@@ -160,24 +165,35 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void populateData(String chatId) {
-
+        toolbar.setTitle("");
         ParseQuery<Chat> query = ParseQuery.getQuery(Chat.class);
         // Specify the object id
         query.getInBackground(chatId, new GetCallback<Chat>() {
             public void done(final Chat chat, final ParseException e) {
                 ArrayList<String> chattrs = chat.getRecipients();
                 if (e == null) {
-                    if (chat.getChatName() != null) {
-                        //toolbar.setTitle(chat.getChatName());
-                        toolbar.setTitle("");
+/*                    if (chat.getChatName() ==null||TextUtils.isEmpty(chat.getChatName())) {*/
                         final int NumChatters = chat.getRecipients().size();
                         if (NumChatters < 2) {
                             Toast.makeText(getBaseContext(), "No chatters in this group", Toast.LENGTH_SHORT).show();
                             return;
-                        } // temp check for num of chatters less than 2
-                        String otherChatterId = chattrs.get(0);
-                        final String finalOtherChatterId = otherChatterId;
-                        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+                        }else if(NumChatters==2){
+                            chattrs.remove(ParseUser.getCurrentUser().getObjectId());
+                            String otherChatterId =chattrs.get(0);
+                            ChatToolbarSingleFragment f =ChatToolbarSingleFragment.newInstance(otherChatterId);
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.tbFragment, f);
+                            ft.commit();
+                        }else if(NumChatters>2) {
+                            String chatName = chat.getChatName();
+                            ChatToolbarGroupFragment f = ChatToolbarGroupFragment.newInstance(chattrs,chatName);
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.tbFragment, f);
+                            ft.commit();
+                        }
+
+
+                   /*     ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
                         query.whereEqualTo("objectId", otherChatterId);
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> objects, ParseException e) {
@@ -215,8 +231,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                     Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
-                        });
-                        otherChatterId = chattrs.get(1);
+                        });*/
+                       /* otherChatterId = chattrs.get(1);
                         query = ParseQuery.getQuery("_User");
                         final String finalOtherChatterId1 = otherChatterId;
                         query.whereEqualTo("objectId", otherChatterId);
@@ -256,8 +272,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                     Log.d("DEBUG", " Got parse error for this user");
                                 }
                             }
-                        });
-                        otherChatterId = chattrs.get(2);
+                        });*/
+                      /*  otherChatterId = chattrs.get(2);
                         query = ParseQuery.getQuery("_User");
                         final String finalOtherChatterId2 = otherChatterId;
                         query.whereEqualTo("objectId", otherChatterId);
@@ -303,8 +319,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         etFullName.setText(dNumGroupCh);
                         etFullName.setTextSize(18);
                         TextView etOnline = (TextView) toolbar.findViewById(R.id.etOnLine);
-                        etOnline.setText("");
-                    } else if (chat.getRecipients().size() == 2) {
+                        etOnline.setText("");*/
+                     /*else if (chat.getRecipients().size() == 2) {
                         // get 2nd user and get their full name to display on toolbar
                         String otherChatterId = chattrs.get(0);
                         final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
@@ -348,7 +364,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             }
                         });
-                    }
+                    }*/
                 }
             }
         });
@@ -371,7 +387,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         //lvChat.setTranscriptMode(1); // scroll to the bottom when a new data shows up
 
         //mAdapter = new ChatMessageAdapter(ChatActivity.this, ParseUser.getCurrentUser().getObjectId(), mMessages);
-        adapter = new MessageAdapter(ChatActivity.this, mMessages,this);
+        adapter = new MessageAdapter(ChatActivity.this, mMessages, this);
         lvChat.setAdapter(adapter);
         linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         lvChat.setLayoutManager(linearLayoutManager);
@@ -735,10 +751,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         query.getInBackground(msg.getUserId(), new GetCallback<ParseUser>() {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
-                    Intent intent = new Intent(ChatActivity.this,FullScreenImageActivity.class);
-                    intent.putExtra("nameUser",user.getString("FullName"));
-                    intent.putExtra("urlPhotoUser",user.getString("ProfileImage"));
-                    intent.putExtra("urlPhotoClick",msg.getFileName().getUrl());
+                    Intent intent = new Intent(ChatActivity.this, FullScreenImageActivity.class);
+                    intent.putExtra("nameUser", user.getString("FullName"));
+                    intent.putExtra("urlPhotoUser", user.getString("ProfileImage"));
+                    intent.putExtra("urlPhotoClick", msg.getFileName().getUrl());
                     startActivity(intent);
                 }
             }

@@ -37,9 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvAboutCourse"
             android:layout_marginTop="5dp"
-            android:text="This course was designed for reference librarians and readers who need health statistics.
-The course emphasizes improved research library service based on an appreciation of the sources, limits and uses of health statistics.
-"
             android:textColor="@color/text_accent"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -70,7 +67,7 @@ The course emphasizes improved research library service based on an appreciation
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="5 courses"
+                android:text="5 lessons"
                 android:textColor="@color/text_accent"
                 android:textSize="10sp"
                 android:layout_below="@id/ivLectionsIcons"/>
@@ -102,7 +99,7 @@ The course emphasizes improved research library service based on an appreciation
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="MENTOR"
+        android:text="PROFESSOR"
         android:textColor="@color/text_not_accent"
         android:textSize="14sp"
         android:textStyle="bold"

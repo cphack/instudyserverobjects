@@ -71,7 +71,7 @@ public class UserListFragment extends Fragment {
         lvUsers.setAdapter(aUsers);
         lvUsers.setLayoutManager(linearLayoutManager);
 
-        ItemClickSupport.addTo(lvUsers).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+       /* ItemClickSupport.addTo(lvUsers).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent i = new Intent(getActivity(), ChatActivity.class);
@@ -79,26 +79,24 @@ public class UserListFragment extends Fragment {
                 i.putExtra("userid", user.getObjectId());
                 startActivity(i);
             }
-        });
+        });*/
     }
 
     private void initAdapter() {
         users = new ArrayList<ParseObject>();
         //construct adapter from datasource
         aUsers = new UserListAdapter(getActivity(), users);
-
-        aUsers.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
+        aUsers.setOnUserListClickListener(new UserListAdapter.UserItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View itemView, int position) {
                 String id= users.get(position).getObjectId();
-                //openUserProfile(id);
+                openUserDetails(id);
             }
-        });
-        aUsers.setOnChatButtonClickListener(new UserListAdapter.OnChatButtonClickListener() {
+
             @Override
-            public void onChatButtonClick(View view, int position) {
+            public void onChatButtonClick(View itemView, int position) {
                 String id= users.get(position).getObjectId();
-                //openChat(id);
+                openUserChat(id);
             }
         });
     }
@@ -134,15 +132,9 @@ public class UserListFragment extends Fragment {
         }else{
             populateUsers(userids);
         }
-
-
-
-
-
-
-
-
     }
+
+
 
     private void populateUsers(String[] userids){
         if (userids.length == 0) return;
@@ -158,6 +150,18 @@ public class UserListFragment extends Fragment {
                 }
             }
         });
+    }
+
+
+    public void openUserDetails(String userid) {
+        UserListActivity a = (UserListActivity)this.getActivity();
+        a.openUserProfile(userid);
+    }
+
+
+    public void openUserChat(String userid) {
+        UserListActivity a = (UserListActivity)this.getActivity();
+        a.openChat(userid);
     }
 }
 
