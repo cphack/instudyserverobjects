@@ -6,11 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.helpers.DateTimeHelper;
-import com.codepath.android.instudy.models.Chat;
-import com.codepath.android.instudy.models.Course;
 import com.codepath.android.instudy.models.Message;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -29,8 +26,6 @@ import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.List;
-
-import static android.R.attr.type;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -104,6 +99,43 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return mMessages.size();
+    }
+
+    public void addMsg(Message m) {
+            mMessages.add(0, m);
+    }
+
+    public long getLastMessageTime(int position) {
+        if( mMessages.size() > 0 ) {
+            Date lMsg = mMessages.get(position).getUpdatedAt();
+            if (lMsg == null) {
+                return 10;
+            } // any number greater than 2
+            else { // return last updated time in secs
+                Log.d("DEBUG", "Now : "+(System.currentTimeMillis()/1000)
+                +" lMsg "+(lMsg.getTime()/1000)
+                );
+                return (System.currentTimeMillis() - lMsg.getTime()) / 1000;
+            }
+        } else {
+            return 10;
+        }
+    }
+
+    public String getUsrId(int position) {
+        if( mMessages.size() > 0 ) {
+            return String.valueOf(mMessages.get(position).getUserId());
+        } else {
+            return "None";
+        }
+    }
+
+    public String getMsgId(int position) {
+        if( mMessages.size() > 0 ) {
+            return String.valueOf(mMessages.get(position).getChatId());
+        } else {
+            return "None";
+        }
     }
 
 

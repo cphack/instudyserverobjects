@@ -1,7 +1,6 @@
 package com.codepath.android.instudy.activities;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -51,7 +50,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.media.MediaRecorder.VideoSource.CAMERA;
 import static com.codepath.android.instudy.R.drawable.theaderowl;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener,MessageAdapter.ClickListenerChat {
@@ -68,7 +66,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private static final int PLACE_PICKER_REQUEST = 3;
     public final String APP_TAG = "InStudy";
     //File
-    private File filePathImageCamera;
+    private File filePathImageCamera;    public boolean doUpdate = false;
+    public boolean first_update = false;
+    public boolean local_update_by_send = false;
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -101,7 +101,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     Runnable mRefreshMessagesRunnable = new Runnable() {
         @Override
         public void run() {
-            refreshMessages();
+            if ((updateChat() || !first_update ) && (!local_update_by_send)) {
+                first_update = true;
+                local_update_by_send = false;
+                refreshMessages();
+            } else {
+                Log.d("DEBUG","No Update as last updated was more than 2 secs ago");
+            }
             myHandler.postDelayed(this, POLL_INTERVAL);
         }
     };
@@ -129,6 +135,28 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
+    }
+
+    boolean updateChat() {
+        // Construct query to execute
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.whereEqualTo(Message.CHAT_KEY, this.chatId);
+        query.findInBackground(new FindCallback<Message>() {
+            public void done(List<Message> messages, ParseException e) {
+                if (e == null) {
+                    doUpdate = false;
+                    long recent_updated = adapter.getLastMessageTime(0);
+                    String Uid = adapter.getUsrId(0);
+                    Log.d("DEBUG", "Msg Id: " + adapter.getMsgId(0)+"is at ["+0+"] "+ recent_updated + " by " + Uid);
+                    if ((recent_updated > 0 ) && (recent_updated < 2)) {
+                        doUpdate = true;
+                    }
+                } else {
+                    Log.e("message", "Error Loading Messages" + e);
+                }
+            }
+        });
+        return doUpdate;
     }
 
     private void populateData(String chatId) {
@@ -305,19 +333,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                                     otherChatterName = objects.get(0).getString("FullName");
                                     etFullName.setText(otherChatterName);
                                     TextView etOnline = (TextView) toolbar.findViewById(R.id.etOnLine);
-                                    //long userLast = objects.get(0).getInt("updatedAt");
-//                                    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.'LLL'Z'");
-//                                    Date currentDate=new Date();
-//                                    String parseTime = objects.get(0).getString("_updated_at");
-//                                    Date parseDate = null;
-//                                    try {
-//                                        parseDate = formatter.parse(parseTime);
-//                                    } catch(Exception et) {
-//                                        Toast.makeText(getBaseContext(), et.getMessage(), Toast.LENGTH_SHORT).show();
-//                                        Log.d("DEBUG"," Ex "+et.getMessage());
-//                                    }
-//                                    long difference = currentDate.getTime() - parseDate.getTime();
-//                                    Log.d("DEBUG"," difference is "+difference);
                                     // Use the difference in time to set on or off line
                                     long difference = 0;
                                     if ((difference > 0) && (difference < 1)) {
@@ -457,6 +472,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             message.setUserId(ParseUser.getCurrentUser().getObjectId());
         }
         etMessage.setText(null);
+        adapter.addMsg(message);
+        adapter.notifyDataSetChanged();
+        local_update_by_send = true; // block un-necessary refresh from parse
 
     }
 
@@ -522,6 +540,9 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         });
         // addMessage(message);
         etMessage.setText(null);
+        adapter.addMsg(message);
+        adapter.notifyDataSetChanged();
+        local_update_by_send = true; // block un-necessary refresh from parse
     }
 
     @Override
