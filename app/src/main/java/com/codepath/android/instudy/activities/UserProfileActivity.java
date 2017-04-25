@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.UserListAdapter;
+import com.codepath.android.instudy.fragments.UserProfile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -35,5 +36,17 @@ public class UserProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("User profile");
+        String userid = getIntent().getStringExtra("userid");
+
+        if (savedInstanceState == null) {
+            UserProfile f = (UserProfile)
+                    getSupportFragmentManager().findFragmentById(R.id.fragment);
+            if(f!=null){
+                f.setProfile(userid);
+            }
+        }
     }
+
+
 }
