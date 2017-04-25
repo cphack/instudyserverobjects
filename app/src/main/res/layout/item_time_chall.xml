@@ -33,6 +33,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_marginTop="15dp"
         android:id="@+id/tvDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:layout_marginTop="15dp"
         android:id="@+id/tvEvent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

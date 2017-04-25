@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="55dp"
     android:layout_marginLeft="20dp"
     android:orientation="horizontal"
     android:weightSum="8">
@@ -17,7 +17,7 @@
         <View
             android:layout_marginLeft="7dp"
             android:layout_width="1dip"
-            android:layout_height="5dp"
+            android:layout_height="30dp"
             android:background="@color/text_not_accent" />
         <ImageView
             android:layout_width="15dp"
@@ -26,13 +26,14 @@
         <View
             android:layout_marginLeft="7dp"
             android:layout_width="1dip"
-            android:layout_height="30dp"
+            android:layout_height="10dp"
             android:background="@color/text_not_accent" />
 
 
     </LinearLayout>
 
     <TextView
+        android:layout_marginTop="30dp"
         android:id="@+id/tvDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:layout_marginTop="30dp"
         android:id="@+id/tvEvent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
