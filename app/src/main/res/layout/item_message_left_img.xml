@@ -16,13 +16,7 @@
         android:layout_height="35dp"
         android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:id="@+id/ivCorner"
-        android:src="@drawable/mcloudelemleft"
-        android:layout_alignBottom="@+id/img_chat"
-        android:layout_toEndOf="@+id/ivUserChat" />
+
 
     <ImageView
         android:id="@+id/img_chat"

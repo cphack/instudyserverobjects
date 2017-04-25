@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context="com.codepath.android.instudy.activities.MyProfileActivity">
 
     <android.support.v7.widget.Toolbar
@@ -23,11 +24,12 @@
         android:name="com.codepath.android.instudy.fragments.MyProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        />
 
 
 </RelativeLayout>

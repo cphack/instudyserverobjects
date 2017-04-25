@@ -56,10 +56,10 @@ import static com.codepath.android.instudy.R.id.ivUser;
 import static com.codepath.android.instudy.R.id.myProfile;
 
 @RuntimePermissions
-public class MyProfile extends Fragment implements View.OnClickListener, EditStatusFragment.EditNameDialogListener {
+public class MyProfile extends Fragment implements View.OnClickListener{
 
     TextView etUserName;
-    TextView etShareNotes;
+    TextView tvStatusLine;
     Button btSave;
     ImageView ivGallery;
     ImageView ivCamera;
@@ -81,7 +81,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
         // Inflate the layout for this fragment
         View v = (View) inflater.inflate(R.layout.fragment_myprofile, container, false);
         etUserName = (TextView) v.findViewById(R.id.tvFullName);
-        etShareNotes = (TextView) v.findViewById(R.id.tvStatusLine);
+        tvStatusLine = (TextView) v.findViewById(R.id.tvStatusLine);
         ivGallery=(ImageView)v.findViewById(R.id.ivGallery);
         ivCamera=(ImageView)v.findViewById(R.id.ivCamera);
         btSave = (Button) v.findViewById(R.id.btSave);
@@ -229,9 +229,6 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
     }
 
     public void SetProfile(View v) {
-        final String myName = me.getString("FullName");
-        etUserName.setText(myName);
-
         String profileImageUrl;
 
         if(me.getParseFile("ImageFile")!=null){
@@ -252,6 +249,13 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
                 profileImg.setImageDrawable(circularBitmapDrawable);
             }
         });
+
+        String value =  me.getString("FullName");
+        if (value != null ) { etUserName.setText(value); }
+
+        value =  me.getString("statusLine");
+        if (value != null ) {tvStatusLine.setText(value);}
+
 
 
     }
@@ -316,14 +320,13 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
     }
 
     private void getUserProfileFromParseAndUpdate() {
-        String value = (String) me.getString("FullName");
-        if (value != null ) { etUserName.setText(value); } else {etUserName.setText("None");}
-        /*value = (String) me.getString("TagLine");
-        if (value != null ) { etTagline.setText(value);} else {etTagline.setText("None");}
-        value = (String) me.getString("Location");
-        if (value != null ) {etLocation.setText(value);} else {etLocation.setText("None");}*/
-        value = (String) me.getString("ShareNotes");
-        if (value != null ) {etShareNotes.setText(value);} else {etShareNotes.setText("None");}
+        String value =  me.getString("FullName");
+        if (value != null ) { etUserName.setText(value); }
+
+        value = (String) me.getString("statusLine");
+        if (value != null ) {tvStatusLine.setText(value);}
+
+
         ParseFile phFile = (ParseFile) me.get("ImageFile");
         if(phFile != null ) {
             phFile.getDataInBackground(new GetDataCallback() {
@@ -422,12 +425,7 @@ public class MyProfile extends Fragment implements View.OnClickListener, EditSta
 
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
-        EditStatusFragment editNameDialogFragment = EditStatusFragment.newInstance("Some status");
+        EditStatusFragment editNameDialogFragment = EditStatusFragment.newInstance();
         editNameDialogFragment.show(fm, "fragment_edit_status");
-    }
-
-    @Override
-    public void onFinishEditDialog(String inputText) {
-        Toast.makeText(getActivity(), "Hi, " + inputText, Toast.LENGTH_SHORT).show();
     }
 }

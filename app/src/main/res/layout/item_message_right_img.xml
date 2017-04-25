@@ -14,7 +14,6 @@
         android:minHeight="100dp"
         android:minWidth="100dp"
         android:background="@drawable/chat_text_round_right"
-        android:padding="1dp"
         android:layout_toStartOf="@+id/ivCorner"
         />
 
@@ -28,16 +27,7 @@
         android:text="now"/>
 
 
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="7dp"
-        android:id="@+id/ivCorner"
-        android:src="@drawable/mcloudelemright"
-        android:layout_above="@+id/timestamp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/txtMessage"
-        />
+
 
     <ImageView
         android:id="@+id/ivUserChat"
