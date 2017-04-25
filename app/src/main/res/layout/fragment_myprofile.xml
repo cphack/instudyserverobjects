@@ -17,6 +17,7 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/default_user_white" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -42,6 +43,7 @@
                 android:src="@drawable/icgallery1" />
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,34 +109,38 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
+                android:id="@+id/rlAddNewEvent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rlAddNewEvent">
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvAddEvent"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="15dp"
-                android:lines="2"
-                android:minLines="2"
-                android:text="ADD NEW TIMELINE EVENT"
-                android:textColor="@color/text_not_accent"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvAddEvent"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="15dp"
+                    android:lines="2"
+                    android:minLines="2"
+                    android:text="ADD NEW TIMELINE EVENT"
+                    android:textColor="@color/text_not_accent"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
 
-            <ImageView
-                android:id="@+id/ivAddEvent"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="5dp"
-                android:layout_toStartOf="@+id/tvAddEvent"
-                android:src="@drawable/add_circular_button" />
+                <ImageView
+                    android:id="@+id/ivAddEvent"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toStartOf="@+id/tvAddEvent"
+                    android:src="@drawable/add_circular_button" />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 
-
+    <FrameLayout
+        android:id="@+id/timeline_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"/>
 </LinearLayout>

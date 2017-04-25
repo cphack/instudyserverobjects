@@ -135,7 +135,6 @@
                     android:layout_below="@+id/tvStartDate"
                     android:background="@drawable/text_field_round"
                     android:drawableLeft="@android:drawable/ic_menu_my_calendar" />
-
             </RelativeLayout>
 
             <RelativeLayout

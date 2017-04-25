@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
@@ -34,6 +36,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.models.Message;
 import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -99,8 +102,28 @@ public class MyProfile extends Fragment implements View.OnClickListener,
         llStatusLine.setOnClickListener(this);
         // Set profile values
         SetProfile(v);
+        //fill timeline
+
         return v;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        insertNestedFragment();
+    }
+
+    // Embeds the child fragment dynamically
+    private void insertNestedFragment() {
+        TimelineFragment childFragment = new TimelineFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.timeline_container, childFragment).commit();
+        childFragment.populateTimeline(ParseUser.getCurrentUser().getObjectId());
+    }
+
+
+
+
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
