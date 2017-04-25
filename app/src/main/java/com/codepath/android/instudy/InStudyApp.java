@@ -6,6 +6,7 @@ import android.content.Context;
 import com.codepath.android.instudy.models.Assignment;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Course;
+import com.codepath.android.instudy.models.Event;
 import com.codepath.android.instudy.models.Lection;
 import com.codepath.android.instudy.models.Message;
 import com.parse.Parse;
@@ -31,6 +32,7 @@ public class InStudyApp extends Application {
         ParseObject.registerSubclass(Course.class);
         ParseObject.registerSubclass(Lection.class);
         ParseObject.registerSubclass(Assignment.class);
+        ParseObject.registerSubclass(Event.class);
 
         // Existing initialization happens after all classes are registere
 

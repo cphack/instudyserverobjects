@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/list_back_color"
     android:padding="10dp">
 
     <TextView
@@ -33,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/header1"
             android:background="@drawable/text_field_round"
-            android:text="test"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:padding="3dp"/>
 
         <TextView
             android:id="@+id/tvheader2"
@@ -52,13 +53,64 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvheader2"
             android:background="@drawable/text_field_round"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:padding="3dp"/>
+
+        <TextView
+            android:id="@+id/tvheader3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etLink"
+            android:layout_marginTop="25dp"
+            android:text="Event type"
+            android:textColor="@color/login_inactive"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:id="@+id/rlType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvheader3"
+            android:layout_marginTop="15dp">
+
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbWork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Internship/Work" />
+
+                <RadioButton
+                    android:id="@+id/rbChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Challenge" />
+
+                <RadioButton
+                    android:id="@+id/rbConference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conference" />
+
+                <RadioButton
+                    android:id="@+id/rbCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Course" />
+            </RadioGroup>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/llDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etLink"
+            android:layout_below="@+id/rlType"
             android:layout_marginTop="25dp"
             android:orientation="horizontal"
             android:weightSum="2">

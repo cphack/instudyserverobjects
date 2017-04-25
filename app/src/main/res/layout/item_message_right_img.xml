@@ -16,6 +16,8 @@
         android:background="@drawable/chat_text_round_right_image"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="20dp"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
         />
 
     <TextView

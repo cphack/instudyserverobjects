@@ -57,7 +57,8 @@ import static com.codepath.android.instudy.R.id.ivUser;
 import static com.codepath.android.instudy.R.id.myProfile;
 
 @RuntimePermissions
-public class MyProfile extends Fragment implements View.OnClickListener,EditStatusFragment.EditNameDialogListener {
+public class MyProfile extends Fragment implements View.OnClickListener,
+        EditStatusFragment.EditNameDialogListener,AddEventFragment.AddEventDialogListener {
 
     TextView etUserName;
     TextView tvStatusLine;
@@ -447,5 +448,10 @@ public class MyProfile extends Fragment implements View.OnClickListener,EditStat
     @Override
     public void onFinishEditDialog(String inputText) {
         tvStatusLine.setText(inputText);
+    }
+
+    @Override
+    public void onCloseDialog() {
+        //refresh fragment with timeline
     }
 }
