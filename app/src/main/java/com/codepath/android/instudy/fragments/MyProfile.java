@@ -56,7 +56,7 @@ import static com.codepath.android.instudy.R.id.ivUser;
 import static com.codepath.android.instudy.R.id.myProfile;
 
 @RuntimePermissions
-public class MyProfile extends Fragment implements View.OnClickListener{
+public class MyProfile extends Fragment implements View.OnClickListener,EditStatusFragment.EditNameDialogListener {
 
     TextView etUserName;
     TextView tvStatusLine;
@@ -426,6 +426,12 @@ public class MyProfile extends Fragment implements View.OnClickListener{
     private void showEditDialog() {
         FragmentManager fm = getFragmentManager();
         EditStatusFragment editNameDialogFragment = EditStatusFragment.newInstance();
+        editNameDialogFragment.setTargetFragment(MyProfile.this, 300);
         editNameDialogFragment.show(fm, "fragment_edit_status");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        tvStatusLine.setText(inputText);
     }
 }

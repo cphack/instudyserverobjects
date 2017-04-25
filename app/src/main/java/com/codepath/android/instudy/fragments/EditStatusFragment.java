@@ -25,6 +25,12 @@ public class EditStatusFragment extends DialogFragment   {
     private EditText etStatusUpdate;
     Button btnUpdate;
 
+    public interface EditNameDialogListener {
+        void onFinishEditDialog(String inputText);
+    }
+
+
+
     public EditStatusFragment() {
     }
 
@@ -59,6 +65,9 @@ public class EditStatusFragment extends DialogFragment   {
 
                 cUser.put("statusLine",etStatusUpdate.getText().toString());
                 cUser.saveInBackground();
+                EditNameDialogListener listener = (EditNameDialogListener) getTargetFragment();
+                listener.onFinishEditDialog(etStatusUpdate.getText().toString());
+
 
                 // Close the dialog and return back to the parent activity
                 dismiss();
