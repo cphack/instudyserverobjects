@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class MyProfile extends Fragment implements View.OnClickListener,EditStat
     ImageView ivGallery;
     ImageView ivCamera;
     LinearLayout llStatusLine;
+    RelativeLayout rlAddNewEvent;
 
     ArrayList<Message> mMessages;
     private ParseUser me;
@@ -87,11 +89,12 @@ public class MyProfile extends Fragment implements View.OnClickListener,EditStat
         btSave = (Button) v.findViewById(R.id.btSave);
         llStatusLine=(LinearLayout) v.findViewById(R.id.llStatusLine);
         profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
+        rlAddNewEvent = (RelativeLayout)v.findViewById(R.id.rlAddNewEvent);
         me =  ParseUser.getCurrentUser();
         ivCamera.setOnClickListener(this);
-        btSave.setOnClickListener(this);
-        ivGallery.setOnClickListener(this);
 
+        ivGallery.setOnClickListener(this);
+        rlAddNewEvent.setOnClickListener(this);
         llStatusLine.setOnClickListener(this);
         // Set profile values
         SetProfile(v);
@@ -112,6 +115,9 @@ public class MyProfile extends Fragment implements View.OnClickListener,EditStat
                 break;
             case R.id.llStatusLine:
                 showEditDialog();
+                break;
+            case R.id.rlAddNewEvent:
+                showAddNewEventDialog();
                 break;
         }
     }
@@ -428,6 +434,14 @@ public class MyProfile extends Fragment implements View.OnClickListener,EditStat
         EditStatusFragment editNameDialogFragment = EditStatusFragment.newInstance();
         editNameDialogFragment.setTargetFragment(MyProfile.this, 300);
         editNameDialogFragment.show(fm, "fragment_edit_status");
+    }
+
+
+    private void showAddNewEventDialog() {
+        FragmentManager fm = getFragmentManager();
+        AddEventFragment frg = AddEventFragment.newInstance();
+        frg.setTargetFragment(MyProfile.this, 300);
+        frg.show(fm, "fragment_add_new_event");
     }
 
     @Override

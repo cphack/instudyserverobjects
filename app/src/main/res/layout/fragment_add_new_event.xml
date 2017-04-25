@@ -1,0 +1,124 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIMELINE EVENT"
+        android:textColor="@color/text_not_accent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvHeader"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/header1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event name"
+            android:textColor="@color/login_inactive"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header1"
+            android:background="@drawable/text_field_round"
+            android:text="test"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvheader2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etEventName"
+            android:layout_marginTop="25dp"
+            android:text="Additional link"
+            android:textColor="@color/login_inactive"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/etLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvheader2"
+            android:background="@drawable/text_field_round"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/llDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etLink"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start date"
+                    android:textColor="@color/login_inactive"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/dtStartDate"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvStartDate"
+                    android:background="@drawable/text_field_round"
+                    android:drawableLeft="@android:drawable/ic_menu_my_calendar" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvEndDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End date"
+                    android:textColor="@color/login_inactive"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/dtEndDate"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvEndDate"
+                    android:background="@drawable/text_field_round"
+                    android:drawableLeft="@android:drawable/ic_menu_my_calendar" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddEvent"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/llDates"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/action_button_round"
+            android:text="Add Event"
+            android:textColor="@color/login_active"
+            android:textSize="8sp" />
+    </RelativeLayout>
+</RelativeLayout>

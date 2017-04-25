@@ -16,19 +16,19 @@
         android:layout_height="35dp"
         android:layout_alignParentStart="true" />
 
-
-
     <ImageView
         android:id="@+id/img_chat"
         android:minWidth="100dp"
         android:minHeight="100dp"
         android:maxWidth="150dp"
         android:maxHeight="150dp"
-        android:background="@drawable/chat_text_round_left"
+        android:background="@drawable/chat_text_round_left_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="1dp"
-        android:layout_toEndOf="@+id/ivCorner" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/timestamp"
