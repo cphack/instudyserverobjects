@@ -53,8 +53,8 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     public void openUserProfile(String userid) {
-        Intent i = new Intent(UserListActivity.this,UserProfileActivity.class);
-        i.putExtra("userid",userid);
+        Intent i = new Intent(UserListActivity.this, UserProfileActivity.class);
+        i.putExtra("userid", userid);
         startActivity(i);
     }
 
@@ -68,17 +68,17 @@ public class UserListActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<Chat>() {
             public void done(List<Chat> chats, ParseException e) {
                 if (e == null) {
-                    Boolean chatFound=false;
-                    if(chats.size()>0)    {
-                        for(Chat c : chats){
-                            if(c.getRecipients().size()==2){
-                                chatFound=true;
+                    Boolean chatFound = false;
+                    if (chats.size() > 0) {
+                        for (Chat c : chats) {
+                            if (c.getRecipients().size() == 2) {
+                                chatFound = true;
                                 openExistingChat(c.getObjectId());
                                 break;
                             }
                         }
                     }
-                    if(!chatFound){
+                    if (!chatFound) {
                         openNewChat(userid);
                     }
                 }
@@ -87,14 +87,14 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     private void openExistingChat(String chatId) {
-        Intent i = new Intent(UserListActivity.this,ChatActivity.class);
-        i.putExtra("chatid",chatId);
+        Intent i = new Intent(UserListActivity.this, ChatActivity.class);
+        i.putExtra("chatid", chatId);
         startActivity(i);
     }
 
     private void openNewChat(String userid) {
-        Intent i = new Intent(UserListActivity.this,ChatActivity.class);
-        i.putExtra("userid",userid);
+        Intent i = new Intent(UserListActivity.this, ChatActivity.class);
+        i.putExtra("userid", userid);
         startActivity(i);
     }
 }

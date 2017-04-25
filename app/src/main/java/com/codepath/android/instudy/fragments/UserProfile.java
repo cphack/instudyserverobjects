@@ -77,26 +77,17 @@ public class UserProfile extends Fragment {
         profileImg = (ImageView) v.findViewById(R.id.ivProfileImage);
         rlAddNewEvent = (RelativeLayout) v.findViewById(R.id.rlAddNewEvent);
 
-
-       // String userid = ParseUser.getCurrentUser().getObjectId();
-        // Set profile values
-       // SetProfile(userid);
-        //fill timeline
-
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TimelineFragment childFragment = new TimelineFragment();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.timeline_container, childFragment).commit();
-        childFragment.populateTimeline(ParseUser.getCurrentUser().getObjectId());
+
     }
 
 
     public void setProfile(String userid) {
-        ParseQuery<ParseUser> query = new ParseQuery<ParseUser>("_User");
+        ParseQuery<ParseUser> query = new ParseQuery<>("_User");
         query.getInBackground(userid, new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser me, ParseException e) {
@@ -129,8 +120,16 @@ public class UserProfile extends Fragment {
                 if (value != null) {
                     tvStatusLine.setText(value);
                 }
-
             }
         });
+
+        TimelineFragment f = new TimelineFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.timeline_container, f,"timeline_frag").commit();
+        /*TimelineFragment f = (TimelineFragment)
+                getChildFragmentManager().findFragmentByTag("timeline_frag");*/
+        if (f != null) {
+            f.populateTimeline(userid);
+        }
     }
 }
