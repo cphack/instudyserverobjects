@@ -116,7 +116,7 @@ public class MyProfile extends Fragment implements View.OnClickListener,
     private void insertNestedFragment() {
         TimelineFragment childFragment = new TimelineFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.timeline_container, childFragment).commit();
+        transaction.replace(R.id.timeline_container, childFragment,"timelinefrag").commit();
         childFragment.populateTimeline(ParseUser.getCurrentUser().getObjectId());
     }
 
@@ -475,6 +475,15 @@ public class MyProfile extends Fragment implements View.OnClickListener,
 
     @Override
     public void onCloseDialog() {
-        //refresh fragment with timeline
+        /*TimelineFragment childFragment = new TimelineFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.timeline_container, childFragment).commit();
+        childFragment.populateTimeline(ParseUser.getCurrentUser().getObjectId());
+*/
+        TimelineFragment f= (TimelineFragment)
+                getChildFragmentManager().findFragmentByTag("timelinefrag");
+        if(f!=null){
+            f.populateTimeline(ParseUser.getCurrentUser().getObjectId());
+        }
     }
 }

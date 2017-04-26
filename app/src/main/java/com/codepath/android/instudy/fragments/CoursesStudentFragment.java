@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.activities.MainActivity;
 import com.codepath.android.instudy.adapters.CourseListAdapter;
+import com.codepath.android.instudy.models.Assignment;
+import com.codepath.android.instudy.models.Assignment_User;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
@@ -136,7 +138,24 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
 
             @Override
             public void onCourseStudentSubmitClick(String courseid) {
-                //TODO implement
+                ParseQuery<Assignment> aquery = ParseQuery.getQuery(Assignment.class);
+                aquery.whereEqualTo(Assignment.COURSE_ID_KEY, courseid);
+                aquery.whereGreaterThan(Assignment.DUE_DATE_KEY, new Date());
+                aquery.findInBackground(new FindCallback<Assignment>() {
+                    public void done(List<Assignment> assigns, ParseException e) {
+                        if (e == null) {
+                            if (assigns.size()>0) {
+                                final Assignment assignment = assigns.get(0);
+                                Assignment_User au = new Assignment_User();
+                                au.setUserId(ParseUser.getCurrentUser().getObjectId());
+                                au.setAssignment(assignment.getObjectId());
+                                au.setSubmit(true);
+                                au.saveInBackground();
+                                Toast.makeText(getContext(),"Thank you, this assignment was submitted!",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
             }
 
             @Override
@@ -211,6 +230,5 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             }
         });
     }
-
 }
 

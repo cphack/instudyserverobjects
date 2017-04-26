@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.helpers.RoundedCornersTransformation;
+import com.codepath.android.instudy.models.Assignment;
+import com.codepath.android.instudy.models.Assignment_User;
 import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.codepath.android.instudy.R.id.ll1Stu;
 
 /**
  * Created by alex_ on 4/10/2017.
@@ -269,7 +273,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         users.add(obj);
                     }
                 }
-
                 vh.populateUserList(users, mContext);
             }
         });
@@ -277,9 +280,43 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         students.remove(curUserId);
         vh.setUserListIds(students);
 
+        //work with assignment
 
-        String endDate ="2017-4-30";
-        vh.countDownStart(endDate);
+        ParseQuery<Assignment> aquery = ParseQuery.getQuery(Assignment.class);
+        aquery.whereEqualTo(Assignment.COURSE_ID_KEY, course.getObjectId());
+        aquery.whereGreaterThan(Assignment.DUE_DATE_KEY, new Date());
+        aquery.findInBackground(new FindCallback<Assignment>() {
+            public void done(List<Assignment> assigns, ParseException e) {
+                if (e == null) {
+                    if (assigns.size()>0) {
+                        final Assignment assignment = assigns.get(0);
+                        ParseQuery<Assignment_User> auquery = ParseQuery.getQuery(Assignment_User.class);
+                        auquery.whereEqualTo(Assignment_User.ASSIGNMENT_ID_KEY, assigns.get(0).getObjectId());
+                        auquery.whereEqualTo(Assignment_User.USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
+                        auquery.findInBackground(new FindCallback<Assignment_User>() {
+                            @Override
+                            public void done(List<Assignment_User> objects, ParseException e) {
+                                if(objects.size()>1 && objects.get(0).wasSubmited()){
+                                    vh.hideAssignBlock();
+                                }else
+                                {
+
+
+                                    vh.countDownStart(assignment.getDueDate());
+                                }
+                            }
+                        });
+                        //search for assignment _user
+                        //if found -> hideblock
+                        //else duedate= specify
+                    }else{
+                        vh.hideAssignBlock();
+                    }
+                }
+            }
+        });
+
+
     }
 
     public void fetchCommon(ViewHolder_simple viewHolder, Course course) {
@@ -647,7 +684,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvDayStu = (TextView) itemView.findViewById(R.id.txtTimerDayStu);
             tvHourStu = (TextView) itemView.findViewById(R.id.txtTimerHourStu);
             tvMinuteStu = (TextView) itemView.findViewById(R.id.txtTimerMinuteStu);
-            llCtr = (LinearLayout) itemView.findViewById(R.id.ll1Stu);
+            llCtr = (LinearLayout) itemView.findViewById(ll1Stu);
 
             llUsers.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -695,6 +732,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         int position = getAdapterPosition();
                         Course course = mCourses.get(position);
                         if (position != RecyclerView.NO_POSITION) {
+                            hideAssignBlock();
                             userListener.onCourseStudentSubmitClick(course.getObjectId());
                         }
                     }
@@ -783,6 +821,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             };
             handler.postDelayed(runnable, 0);
+        }
+
+        public void hideAssignBlock(){
+            btnAssignSubmit.setVisibility(View.INVISIBLE);
+            llCtr.setVisibility(View.INVISIBLE);
         }
     }
 }
