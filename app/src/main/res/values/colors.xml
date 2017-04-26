@@ -25,7 +25,8 @@
     <color name="chat_right_color">#5e3f91</color>
     <color name="chat_left_color">#e9ebf0</color>
 
-
+    <item name="gray_holo_dark" type="color">#ff464646</item>
+    <item name="gray_holo_light" type="color">#ffd0d0d0</item>
 
 
 

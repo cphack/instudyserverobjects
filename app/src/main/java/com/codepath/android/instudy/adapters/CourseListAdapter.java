@@ -299,8 +299,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                                     vh.hideAssignBlock();
                                 }else
                                 {
-
-
                                     vh.countDownStart(assignment.getDueDate());
                                 }
                             }
