@@ -17,6 +17,7 @@ public class OverviewCourseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Course overview");
 
         String courseid = getIntent().getStringExtra("courseid");
 

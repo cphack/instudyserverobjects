@@ -1,11 +1,15 @@
 package com.codepath.android.instudy.models;
 
+import android.text.TextUtils;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -44,24 +48,38 @@ public class Course extends ParseObject {
     public static final String LECTION_KEY = "lection";
     public static final String ASSIGNMENT_KEY = "assignment";
     public static final String CHAT_KEY = "chat";
+    public static final String LOCATION_KEY = "location";
 
 
+    public String getLocation() {
+        return getString(LOCATION_KEY);
+    }
 
-public String getChatId(){return getString(CHAT_KEY);}
+
+    public String getChatId() {
+        return getString(CHAT_KEY);
+    }
+
     public void setChatId(String chatId) {
         put(CHAT_KEY, chatId);
     }
+
     public String getTitle() {
         return getString(TITLE_KEY);
     }
+
     public String getDescription() {
         return getString(DESCRIPTION_KEY);
     }
-    public String getTeachers() { return getString(TEACHERS_KEY);}
+
+    public String getTeachers() {
+        return getString(TEACHERS_KEY);
+    }
+
     public ArrayList<String> getStudents() {
         ArrayList<String> result = new ArrayList<>();
         JSONArray sts = getJSONArray(STUDENTS_KEY);
-        if(sts!=null) {
+        if (sts != null) {
             for (int i = 0; i < sts.length(); i++) {
                 try {
                     result.add((String) sts.get(i));
@@ -73,15 +91,19 @@ public String getChatId(){return getString(CHAT_KEY);}
         }
         return result;
     }
+
     public Integer getMaxStudentNum() {
         return getInt(MAX_STUDENTS_KEY);
     }
+
     public Date getStartDate() {
         return getDate(START_DATE_KEY);
     }
+
     public Date getEndDate() {
         return getDate(END_DATE_KEY);
     }
+
     public ArrayList<String> getLections() {
         ArrayList<String> result = new ArrayList<>();
         JSONArray lcs = getJSONArray(LECTIONS_KEY);
@@ -96,6 +118,7 @@ public String getChatId(){return getString(CHAT_KEY);}
         }
         return result;
     }
+
     public ArrayList<String> getAssignements() {
         ArrayList<String> result = new ArrayList<>();
         JSONArray asms = getJSONArray(ASSIGNMENTS_KEY);
@@ -110,49 +133,75 @@ public String getChatId(){return getString(CHAT_KEY);}
         }
         return result;
     }
+
     public String getLection() {
         return getString(LECTION_KEY);
     }
+
     public String getAssignment() {
         return getString(ASSIGNMENT_KEY);
     }
-    public String getSubTitle(){return "14 April 2017 Campus C, aud.244";}
+
+    public String getSubTitle() {
+
+        DateFormat df = new SimpleDateFormat("MMM dd yyyy");
+        Date dt = new Date();
+        if(this.getUpdatedAt()!=null){
+            dt = this.getUpdatedAt();
+        }
+        String sdt = df.format(dt);
+
+        String loc= "Campus C, aud.244";
+        if(getLocation()!=null&&!TextUtils.isEmpty(getLocation())){
+            loc=getLocation();
+        }
+        return String.format("%s %s",sdt,loc);
+    }
 
 
     public void setTitle(String title) {
         put(TITLE_KEY, title);
     }
+
     public void setDescription(String description) {
         put(DESCRIPTION_KEY, description);
     }
+
     public void setTeachers(String teacher) {
         put(TEACHERS_KEY, teacher);
     }
+
     public void setStudents(ArrayList<String> students) {
         put(STUDENTS_KEY, students);
     }
-    public void setMaxStudetnNum(Integer maxStudentNum ) {
+
+    public void setMaxStudetnNum(Integer maxStudentNum) {
         put(MAX_STUDENTS_KEY, maxStudentNum);
     }
+
     public void setStartDate(Date startDate) {
         put(START_DATE_KEY, startDate);
     }
+
     public void setEndDate(Date endDate) {
         put(END_DATE_KEY, endDate);
     }
+
     public void setLections(ArrayList<String> lections) {
         put(LECTIONS_KEY, lections);
     }
+
     public void setAssignemtns(ArrayList<String> assignments) {
         put(ASSIGNMENTS_KEY, assignments);
     }
+
     public void setLection(String lection) {
         put(LECTION_KEY, lection);
     }
+
     public void setAssignment(String assignment) {
         put(ASSIGNMENT_KEY, assignment);
     }
-
 
 
 }

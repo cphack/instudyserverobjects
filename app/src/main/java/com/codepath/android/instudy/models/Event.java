@@ -55,8 +55,8 @@ public class Event extends ParseObject {
         put(TYPE_KEY, type);
     }
 
-    public Date getStartDate() {
-        return getDate(START_DATE_KEY);
+    public String getStartDate() {
+        return getString(START_DATE_KEY);
     }
     public void setStartDate(Date date) {
         put(START_DATE_KEY, date);

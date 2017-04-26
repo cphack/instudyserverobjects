@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="5 lessons"
+                android:text="15 lessons"
                 android:textColor="@color/text_accent"
                 android:textSize="10sp"
                 android:layout_below="@id/ivLectionsIcons"/>
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="3 assignments"
+                android:text="5 assignments"
                 android:textColor="@color/text_accent"
                 android:textSize="10sp"
                 android:layout_below="@id/ivAssignment"/>

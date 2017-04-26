@@ -111,6 +111,7 @@ public class LectionListFragment extends Fragment implements EditLectionFragment
         courseId = courseid;
         ParseQuery<Lection> query = ParseQuery.getQuery(Lection.class);
         query.whereEqualTo(Lection.COURSE_ID_KEY, courseid);
+        query.orderByAscending(Lection.START_DATE_KEY);
 
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Lection>() {

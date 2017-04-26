@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,14 +42,22 @@ public class UserListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String setTitle = getIntent().getStringExtra("title");
+        if(setTitle==null|| TextUtils.isEmpty(setTitle)) {
+            getSupportActionBar().setTitle("Students:");
+        }else
+        {
+            getSupportActionBar().setTitle(setTitle);
+        }
+
+
+
         String[] userids = getIntent().getStringArrayExtra("users");
 
         if (savedInstanceState == null) {
             UserListFragment fragment = (UserListFragment)
                     getSupportFragmentManager().findFragmentById(R.id.fragment);
             fragment.populateUserList(userids);
-
-
         }
     }
 

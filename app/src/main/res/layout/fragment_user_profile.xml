@@ -29,8 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-
-            android:text="Alexandr Climov"
             android:textColor="@color/text_accent"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -40,7 +38,7 @@
             android:id="@+id/tvCommonCourse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You have 3 common courses"
+            android:text="You have 4 common courses"
             android:textColor="@color/text_not_accent"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tvFullName"
@@ -69,7 +67,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
-                android:text="This line will contains just simple data like today's status"
                 android:textColor="@color/text_accent"
                 android:textSize="12sp" />
         </LinearLayout>

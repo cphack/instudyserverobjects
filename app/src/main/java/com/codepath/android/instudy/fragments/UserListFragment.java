@@ -161,6 +161,7 @@ public class UserListFragment extends Fragment {
 
     public void openUserChat(String userid) {
         UserListActivity a = (UserListActivity)this.getActivity();
+
         a.openChat(userid);
     }
 }

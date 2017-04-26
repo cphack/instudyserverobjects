@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.helpers.DateTimeHelper;
 import com.codepath.android.instudy.models.Event;
 import com.parse.ParseObject;
 
@@ -139,34 +141,25 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private void configureDefault(final ItemTimeDefault vh, int position) {
         // Get the data model based on position
         Event e = mEvents.get(position);
-        /*
-        vh.tvTimestamp.setText(DateTimeHelper.getRelativeTimeAgo(chat.getUpdatedAt()));
-        ArrayList<String> users = chat.getRecipients();
 
-
-        String groupName = chat.getChatName();
-        if (groupName == null || TextUtils.isEmpty(groupName)) {
-            groupName = "Group chat";
+        if(e.getStartDate()==null) {
+            vh.tvDate.setText("Apr 26");
+        }else {
+            vh.tvDate.setText(e.getStartDate());
         }
-        vh.tvGroupName.setText(groupName);
-//        vh.tvGroupNum.setText(String.format("%s members", users.size()));*/
-
+        vh.tvEvent.setText(e.getTitle());
     }
 
     private void configureUniv(final ItemTimeUniv vh, int position) {
         // Get the data model based on position
         Event e = mEvents.get(position);
-        /*
-        vh.tvTimestamp.setText(DateTimeHelper.getRelativeTimeAgo(chat.getUpdatedAt()));
-        ArrayList<String> users = chat.getRecipients();
 
-
-        String groupName = chat.getChatName();
-        if (groupName == null || TextUtils.isEmpty(groupName)) {
-            groupName = "Group chat";
+        if(e.getStartDate()==null) {
+            vh.tvDate.setText("Apr 26");
+        }else {
+            vh.tvDate.setText(e.getStartDate());
         }
-        vh.tvGroupName.setText(groupName);
-//        vh.tvGroupNum.setText(String.format("%s members", users.size()));*/
+        vh.tvEvent.setText(e.getTitle());
 
     }
 

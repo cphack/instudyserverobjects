@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_weight="4"
-        android:text="Applied Text mining in Python"
+        android:text="Finish course CSE 190 Computer science and Engineering "
         android:textColor="@color/text_accent"
         android:textSize="12sp" />
 

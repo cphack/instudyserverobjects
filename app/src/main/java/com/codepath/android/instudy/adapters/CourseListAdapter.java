@@ -437,12 +437,12 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 tvMessage.setText("1 friend will attend this course.");
                 loadImage(users.get(0), ivUser1, context);
             } else if (users.size() > 1) {
-                int count = users.size() > 5 ? 4 : users.size();
-                tvMessage.setText(String.format("%s friends will attend this course", count));
+                int count = users.size() > 5 ? 5 : users.size();
+                tvMessage.setText(String.format("%s friends will attend this course", users.size()));
                 for (int i = 0; i < count; i++) {
                     loadImage(users.get(i), ctrls.get(i), context);
                 }
-                if (count > 5) {
+                if (users.size() > 5) {
                     ivMoreIcon.setVisibility(View.VISIBLE);
                 }
             }
@@ -604,11 +604,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 loadImage(users.get(0), ivUser1, context);
             } else if (users.size() > 1) {
                 int count = users.size() > 7 ? 6 : users.size();
-                tvMessage.setText(String.format("%s students attend this course", count));
+                tvMessage.setText(String.format("%s students attend this course", users.size()));
                 for (int i = 0; i < count; i++) {
                     loadImage(users.get(i), ctrls.get(i), context);
                 }
-                if (count > 7) {
+                if (users.size() > 7) {
                     ivMoreIcon.setVisibility(View.VISIBLE);
                 }
             }
@@ -652,6 +652,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public Runnable runnable;
         public LinearLayout llCtr;
         Button btnAssignSubmit;
+        TextView tvTL;
 
         public void setUserListIds(ArrayList<String> userids) {
             this.userIds = userids;
@@ -677,6 +678,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ivMoreIcon = (ImageView) itemView.findViewById(R.id.ivMore);
             tvMessage = (TextView) itemView.findViewById(R.id.tvMessage);
             llUsers = (LinearLayout) itemView.findViewById(R.id.llUsers);
+            tvTL=(TextView) itemView.findViewById(R.id.tvTL);
 
             tvDayStu = (TextView) itemView.findViewById(R.id.txtTimerDayStu);
             tvHourStu = (TextView) itemView.findViewById(R.id.txtTimerHourStu);
@@ -758,12 +760,12 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 tvMessage.setText("1 friend will attend this course.");
                 loadImage(users.get(0), ivUser1, context);
             } else if (users.size() > 1) {
-                int count = users.size() > 5 ? 4 : users.size();
-                tvMessage.setText(String.format("%s friends will attend this course", count));
+                int count = users.size() > 5 ? 5 : users.size();
+                tvMessage.setText(String.format("%s friends will attend this course", users.size()));
                 for (int i = 0; i < count; i++) {
                     loadImage(users.get(i), ctrls.get(i), context);
                 }
-                if (count > 5) {
+                if (users.size() > 5) {
                     ivMoreIcon.setVisibility(View.VISIBLE);
                 }
             }
@@ -822,6 +824,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void hideAssignBlock(){
             btnAssignSubmit.setVisibility(View.INVISIBLE);
             llCtr.setVisibility(View.INVISIBLE);
+            tvTL.setVisibility(View.INVISIBLE);
         }
     }
 }
