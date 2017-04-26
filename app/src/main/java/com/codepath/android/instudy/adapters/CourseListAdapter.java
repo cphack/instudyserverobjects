@@ -790,8 +790,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void run() {
                     handler.postDelayed(this, 1000);
                     try {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                                "yyyy-MM-dd");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         // Here Set your Event Date
                         Date eventDate = dateFormat.parse(endDate);
                         Date currentDate = new Date();

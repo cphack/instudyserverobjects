@@ -72,6 +72,9 @@
             android:parentActivityName=".activities.ChatListActivity">
         </activity>
         <activity android:name=".activities.FullScreenImageActivity" />
+        <activity android:name=".activities.NotificationListActivity"
+            android:parentActivityName=".activities.MainActivity"></activity>
+        <activity android:name=".activities.NotificationActivity" android:parentActivityName=".activities.NotificationListActivity"></activity>
 
 
         <activity android:name=".activities.SettingsActivity" android:parentActivityName=".activities.MainActivity"></activity>

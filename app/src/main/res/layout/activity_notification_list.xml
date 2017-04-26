@@ -18,10 +18,13 @@
         android:background="@color/toolbar_back_color">
     </android.support.v7.widget.Toolbar>
 
-    <WebView
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvNotifications"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/wvNotification"
-        ></WebView>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        />
 
 </RelativeLayout>
