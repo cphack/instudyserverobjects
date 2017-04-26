@@ -3,10 +3,10 @@ package com.codepath.android.instudy.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.AssignmentListFragment;
-import com.codepath.android.instudy.fragments.LectionListFragment;
 
 
 public class AssignmentListActivity extends AppCompatActivity {
@@ -23,6 +23,9 @@ public class AssignmentListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String courseid = getIntent().getStringExtra("courseid");
+        String courseTitle = getIntent().getStringExtra("courseTitle");
+        TextView tvCourseTitle = (TextView) toolbar.findViewById(R.id.tvCourseTitle);
+        if(courseTitle != null) tvCourseTitle.setText(courseTitle);
 
         if (savedInstanceState == null) {
             AssignmentListFragment fragment = (AssignmentListFragment)

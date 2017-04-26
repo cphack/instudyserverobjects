@@ -440,9 +440,10 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
 
     }
 
-    public void openLectionsOverview(String courseId) {
+    public void openLectionsOverview(String courseId, String courseTitle) {
         Intent i = new Intent(MainActivity.this, LectionsListActivity.class);
         i.putExtra("courseid", courseId);
+        i.putExtra("courseTitle", courseTitle);
         startActivity(i);
     }
 
@@ -468,10 +469,11 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
 
-    public void openLectionList(String courseid) {
+    public void openLectionList(String courseid, String courseTitle) {
 
         Intent i = new Intent(MainActivity.this, LectionsListActivity.class);
         i.putExtra("courseid", courseid);
+        i.putExtra("courseTitle", courseTitle);
         startActivity(i);
     }
 
@@ -486,9 +488,10 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
     }
 
 
-    public void openAssignmentsList(String courseid) {
+    public void openAssignmentsList(String courseid, String courseTitle) {
         Intent i = new Intent(MainActivity.this, AssignmentListActivity.class);
         i.putExtra("courseid", courseid);
+        i.putExtra("courseTitle", courseTitle);
         startActivity(i);
     }
 

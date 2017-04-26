@@ -6,16 +6,6 @@
     android:background="@color/list_back_color"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnAddAssignment"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/action_button_round"
-        android:text="Add assignment"
-        android:textColor="@color/login_active"
-        android:textSize="8sp" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvAssignments"
         android:layout_width="match_parent"
@@ -25,6 +15,22 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:layout_weight="0.09">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fbAddAssignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+    </RelativeLayout>
 
 </LinearLayout>

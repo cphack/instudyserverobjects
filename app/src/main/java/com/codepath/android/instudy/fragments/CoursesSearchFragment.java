@@ -21,10 +21,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import static android.R.id.message;
 
 public class CoursesSearchFragment extends BaseCoursesFragment {
 
@@ -128,13 +125,13 @@ public class CoursesSearchFragment extends BaseCoursesFragment {
             }
 
             @Override
-            public void onCourseTeacherAssignmentsClick(String courseid) {}
+            public void onCourseTeacherAssignmentsClick(String courseid, String courseTitle) {}
             @Override
-            public void onCourseStudentLectionsClick(String courseid) {            }
+            public void onCourseStudentLectionsClick(String courseid, String courseTitle) {            }
             @Override
             public void onCourseStudentSubmitClick(String courseid) {            }
             @Override
-            public void onCourseTeacherLectionsClick(String courseid) {            }
+            public void onCourseTeacherLectionsClick(String courseid, String courseTitle) {            }
             @Override
             public void onCourseTeacherManageClick(String courseid) {            }
             @Override

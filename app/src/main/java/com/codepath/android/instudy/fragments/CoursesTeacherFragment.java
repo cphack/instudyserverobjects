@@ -1,14 +1,9 @@
 package com.codepath.android.instudy.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +18,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class CoursesTeacherFragment extends BaseCoursesFragment {
@@ -94,24 +85,24 @@ public class CoursesTeacherFragment extends BaseCoursesFragment {
             public void onCourseSearchApplyClick(String courseid) {}
 
             @Override
-            public void onCourseStudentLectionsClick(String courseid){}
+            public void onCourseStudentLectionsClick(String courseid, String courseTitle){}
             @Override
             public void onCourseStudentSubmitClick(String courseid){}
 
 
             @Override
-            public void onCourseTeacherLectionsClick(String courseid) {
+            public void onCourseTeacherLectionsClick(String courseid, String courseTitle) {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
-                    activity.openLectionsOverview(courseid);
+                    activity.openLectionsOverview(courseid, courseTitle);
                 }
             }
 
             @Override
-            public void onCourseTeacherAssignmentsClick(String courseid) {
+            public void onCourseTeacherAssignmentsClick(String courseid, String courseTitle) {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
-                    activity.openAssignmentsList(courseid);
+                    activity.openAssignmentsList(courseid, courseTitle);
                 }
             }
 

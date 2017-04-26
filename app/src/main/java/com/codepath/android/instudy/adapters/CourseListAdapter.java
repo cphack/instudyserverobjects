@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
-import com.codepath.android.instudy.helpers.RoundedCornersTransformation;
 import com.codepath.android.instudy.models.Assignment;
 import com.codepath.android.instudy.models.Assignment_User;
 import com.codepath.android.instudy.models.Course;
@@ -49,9 +48,9 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public interface OnUserClickListListener {
         void onUserListClick(ArrayList<String> userids);
 
-        void onCourseTeacherLectionsClick(String courseid);
+        void onCourseTeacherLectionsClick(String courseid, String courseTitle);
 
-        void onCourseTeacherAssignmentsClick(String courseid);
+        void onCourseTeacherAssignmentsClick(String courseid, String courseTitle);
 
         void onCourseTeacherManageClick(String courseid);
 
@@ -61,7 +60,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         void onCourseSearchApplyClick(String courseid);
 
-        void onCourseStudentLectionsClick(String courseid);
+        void onCourseStudentLectionsClick(String courseid, String courseTitle);
 
         void onCourseStudentSubmitClick(String courseid);
 
@@ -531,7 +530,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         int position = getAdapterPosition();
                         Course course = mCourses.get(position);
                         if (position != RecyclerView.NO_POSITION) {
-                            userListener.onCourseTeacherLectionsClick(course.getObjectId());
+                            userListener.onCourseTeacherLectionsClick(course.getObjectId(), course.getTitle());
                         }
                     }
                 }
@@ -570,7 +569,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         int position = getAdapterPosition();
                         Course course = mCourses.get(position);
                         if (position != RecyclerView.NO_POSITION) {
-                            userListener.onCourseTeacherAssignmentsClick(course.getObjectId());
+                            userListener.onCourseTeacherAssignmentsClick(course.getObjectId(), course.getTitle());
                         }
                     }
                 }
@@ -706,7 +705,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         int position = getAdapterPosition();
                         Course course = mCourses.get(position);
                         if (position != RecyclerView.NO_POSITION) {
-                            userListener.onCourseStudentLectionsClick(course.getObjectId());
+                            userListener.onCourseStudentLectionsClick(course.getObjectId(), course.getTitle());
                         }
                     }
                 }

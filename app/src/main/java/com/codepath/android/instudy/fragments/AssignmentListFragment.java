@@ -2,6 +2,7 @@ package com.codepath.android.instudy.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,19 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.adapters.AssignmentListAdapter;
 import com.codepath.android.instudy.helpers.ItemClickSupport;
 import com.codepath.android.instudy.models.Assignment;
-import com.codepath.android.instudy.models.Course;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,8 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
     ArrayList<Assignment> assignments;
     AssignmentListAdapter aAssignments;
     private RecyclerView lvAssignments;
-    Button btnAddAssignment;
+    private FloatingActionButton fab;
+    //Button btnAddAssignment;
     private LinearLayoutManager linearLayoutManager;
     String courseId;
     public static AssignmentListFragment newInstance(String courseid) {
@@ -62,8 +61,9 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
     private void findControls(View v) {
         lvAssignments = (RecyclerView) v.findViewById(R.id.lvAssignments);
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        btnAddAssignment = (Button) v.findViewById(R.id.btnAddAssignment);
-        btnAddAssignment.setVisibility(View.INVISIBLE);
+        fab = (FloatingActionButton) v.findViewById(R.id.fbAddAssignment);
+//        btnAddAssignment = (Button) v.findViewById(R.id.btnAddAssignment);
+//        btnAddAssignment.setVisibility(View.INVISIBLE);
     }
 
     private void initControls() {        //connect adapter with recyclerView
@@ -78,14 +78,26 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
             }
         });
 
-        btnAddAssignment.setOnClickListener(new View.OnClickListener() {
+//        btnAddAssignment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int pos = aAssignments.getItemCount();
+//                if( pos == 0) {
+//                    showEditAssignmentDialog(0, "0");
+//                } else {
+//                    showEditAssignmentDialog(pos, "0");
+//                }
+//            }
+//        });
+
+        fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 int pos = aAssignments.getItemCount();
                 if( pos == 0) {
                     showEditAssignmentDialog(0, "0");
                 } else {
-                    showEditAssignmentDialog(pos, "0");
+                    showEditAssignmentDialog(pos, null);
                 }
             }
         });
@@ -118,21 +130,21 @@ public class AssignmentListFragment extends Fragment implements EditAssignmentFr
         });
 
 
-        // Specify which class to query
-        ParseQuery<Course> query1 = ParseQuery.getQuery(Course.class);
-        // Specify the object id
-        query1.getInBackground(courseid, new GetCallback<Course>() {
-            public void done(Course course, ParseException e) {
-                if (e == null) {
-                    // Access data using the `get` methods for the object
-                    if (course.getTeachers().equals(ParseUser.getCurrentUser().getObjectId())) {
-                        btnAddAssignment.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    // something went wrong
-                }
-            }
-        });
+//        // Specify which class to query
+//        ParseQuery<Course> query1 = ParseQuery.getQuery(Course.class);
+//        // Specify the object id
+//        query1.getInBackground(courseid, new GetCallback<Course>() {
+//            public void done(Course course, ParseException e) {
+//                if (e == null) {
+//                    // Access data using the `get` methods for the object
+//                    if (course.getTeachers().equals(ParseUser.getCurrentUser().getObjectId())) {
+//                        btnAddAssignment.setVisibility(View.VISIBLE);
+//                    }
+//                } else {
+//                    // something went wrong
+//                }
+//            }
+//        });
     }
 
 

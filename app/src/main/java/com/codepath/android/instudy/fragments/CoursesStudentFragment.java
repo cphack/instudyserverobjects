@@ -1,14 +1,10 @@
 package com.codepath.android.instudy.fragments;
 
-import android.content.Intent;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +27,6 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static android.R.id.message;
 
 public class CoursesStudentFragment extends BaseCoursesFragment {
 
@@ -110,7 +104,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             }
 
             @Override
-            public void onCourseTeacherLectionsClick(String courseid) {
+            public void onCourseTeacherLectionsClick(String courseid, String courseTitle) {
             }
 
             @Override
@@ -129,10 +123,10 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             public void onCourseSearchApplyClick(String courseid) {}
 
             @Override
-            public void onCourseStudentLectionsClick(String courseid) {
+            public void onCourseStudentLectionsClick(String courseid, String courseTitle) {
                 MainActivity activity = (MainActivity) getActivity();
                 if (activity != null) {
-                    activity.openLectionList(courseid);
+                    activity.openLectionList(courseid, courseTitle);
                 }
             }
 
@@ -159,7 +153,7 @@ public class CoursesStudentFragment extends BaseCoursesFragment {
             }
 
             @Override
-            public void onCourseTeacherAssignmentsClick(String courseid) {}
+            public void onCourseTeacherAssignmentsClick(String courseid, String courseTitle) {}
 
             @Override
             public void onCourseStudentChatClick(String courseid) {
