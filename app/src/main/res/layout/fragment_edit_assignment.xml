@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/tvLectionName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="LECTION ASSIGNMENT NAME"
@@ -21,9 +21,10 @@
 
     <EditText
         android:id="@+id/etAssignmentName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_round"
         android:padding="3dp"
         android:text="Assignment #1"
         android:textColor="@color/text_accent"
@@ -33,9 +34,9 @@
 
     <TextView
         android:id="@+id/tvOverview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="ASSIGNMENT TOPICS"
         android:textColor="@color/text_not_accent"
         android:textSize="14sp"
@@ -44,9 +45,10 @@
 
     <EditText
         android:id="@+id/etAssignmentDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@drawable/text_field_round"
         android:imeOptions="actionDone"
         android:padding="3dp"
         android:text="Deliverables:"
@@ -57,14 +59,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:elevation="1dp"
         tools:ignore="InefficientWeight,UnusedAttribute">
 
         <TextView
             android:id="@+id/tvDueDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/tvDueTime"
             android:layout_alignParentTop="true"
@@ -86,7 +88,7 @@
 
         <DatePicker
             android:id="@+id/dpDueDate"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/tvDueDate"
@@ -121,15 +123,16 @@
             android:inputType="textPersonName"
             android:textSize="10sp"
             tools:ignore="HardcodedText,SmallSp" />
+
         <TimePicker
             android:id="@+id/tPDueTime"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:timePickerMode="spinner"
-            tools:ignore="UnusedAttribute"
-            android:layout_below="@+id/etDueTime"
+            android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/dpDueDate"
-            android:layout_alignParentEnd="true" />
+            android:layout_below="@+id/etDueTime"
+            android:timePickerMode="spinner"
+            tools:ignore="UnusedAttribute" />
 
     </RelativeLayout>
 

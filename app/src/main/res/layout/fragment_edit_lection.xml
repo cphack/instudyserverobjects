@@ -1,15 +1,17 @@
 <!-- fragment_edit_name.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="7dp">
+    android:padding="7dp"
+    app:layout_collapseParallaxMultiplier="0.1">
 
     <TextView
         android:id="@+id/tvLectionName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="LECTION NAME"
@@ -20,7 +22,7 @@
 
     <EditText
         android:id="@+id/etLectionName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/text_field_round"
@@ -33,7 +35,7 @@
 
     <TextView
         android:id="@+id/tvOverview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="LECTION TOPICS"
@@ -44,7 +46,7 @@
 
     <EditText
         android:id="@+id/etOverview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/text_field_round"
@@ -58,13 +60,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:ignore="InefficientWeight">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/tvStartDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Start  Date :"
             android:textColor="@color/login_inactive"
@@ -73,7 +74,7 @@
 
         <DatePicker
             android:id="@+id/dPStart"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/tPStart"
@@ -104,11 +105,12 @@
             android:layout_below="@+id/dPStart"
             android:ems="10"
             android:inputType="date"
+            android:textSize="10sp"
             tools:ignore="LabelFor" />
 
         <TimePicker
             android:id="@+id/tPStart"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/etTime"
@@ -117,11 +119,10 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/tPStart"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/dPStart"
+            android:layout_below="@+id/dPStart"
             android:text="Start  Time:"
             android:textColor="@color/login_inactive"
             tools:ignore="HardcodedText" />
