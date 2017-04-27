@@ -28,6 +28,8 @@ import com.codepath.android.instudy.R;
 import com.codepath.android.instudy.fragments.MainTabsFragment;
 import com.codepath.android.instudy.fragments.MyProfile;
 import com.codepath.android.instudy.fragments.SendTeacherNotificationFragment;
+import com.codepath.android.instudy.models.Course;
+import com.codepath.android.instudy.models.Notification;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
                 logout();
                 i = new Intent(MainActivity.this, LoginActivity.class);
                 break;
-          /*  case R.id.dvTest:
+         /*   case R.id.dvTest:
                 runTest();
                 break;*/
             case R.id.dvAddNewCourse:
@@ -244,32 +246,29 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
 
     private void runTest() {
 
-       /* Course course = new Course();
-        course.setAssignment("CSE 120 Computer Science Principles (5) NW, QSR");
-        course.setDescription("Introduces fundamental concepts of computer science and computational thinking. Includes logical reasoning, problem solving, data representation, abstraction, the creation of digital artifacts such as web pages and programs, managing complexity, operation of computers and networks, effective web searching, ethical, legal and social aspects of information technology. May not be taken for credit if credit earned in CSE 100/INFO 100.");
-        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        Notification course = new Notification();
+        course.setTitle("The next course will start in 30 min in Campus A");
+        course.setType("univ");
+
         course.saveInBackground();
 
 
-        course = new Course();
-        course.setAssignment("CSE 131 Science and Art of Digital Photography (4) VLPA Hemingway");
-        course.setDescription("Covers the fundamentals of digital photography, including computational imaging; the elements of photographic composition and design; and the future of internet-enabled photography.");
-        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course = new Notification();
+        course.setTitle("You have only 4 days left to complete assignment for CSE 142");
+        course.setType("univ");
+
         course.saveInBackground();
 
-        course = new Course();
-        course.setAssignment("CSE 142 Computer Programming I (4) NW, QSR");
-        course.setDescription("Basic programming-in-the-small abilities and concepts including procedural programming (methods, parameters, return, values), basic control structures (sequence, if/else, for loop, while loop), file processing, arrays, and an introduction to defining objects. Intended for students without prior programming experience. Offered: AWSpS.");
-        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
+        course = new Notification();
+        course.setTitle("Opportunity for internship in Google");
+        course.setDescrip("Ready to apply for an internship or a full-time job at Google? Here is what you’ll need: 1)Resume, 2)University transcript, 3)Cover letter");
+        course.setType("work");
+        course.setLink("https://careers.google.com/students/");
         course.saveInBackground();
 
-        course = new Course();
-        course.setAssignment("CSE 143 Computer Programming II (5) NW, QSR");
-        course.setDescription("Continuation of CSE 142. Concepts of data abstraction and encapsulation including stacks, queues, linked lists, binary trees, recursion, instruction to complexity and use of predefined collection classes. Prerequisite: CSE 142. Offered: AWSpS.");
-        course.setTeachers(ParseUser.getCurrentUser().getObjectId());
-        course.saveInBackground();
 
-        course = new Course();
+
+       /* course = new Course();
         course.setAssignment("CSE 154 Web Programming (5) QSR");
         course.setDescription("Covers languages, tools, and techniques for developing interactive and dynamic web pages. Topics include page styling, design, and layout; client and server side scripting; web security; and interacting with data sources such as databases. Prerequisite: minimum grade of 2.0 in either CSE 142, CSE 143, or CSE 160.");
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
@@ -305,143 +304,6 @@ public class MainActivity extends AppCompatActivity implements SendTeacherNotifi
         course.setTeachers(ParseUser.getCurrentUser().getObjectId());
         course.saveInBackground();*/
 
-
-        ParseUser user;
-        user = new ParseUser();
-        user.setUsername("stu1@mail.com");
-        user.setEmail("stu1@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Stephine Couture");
-        user.put("ProfileImage", "http://i.imgur.com/FW6nGL2.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu2@mail.com");
-        user.setEmail("stu2@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Christa Pitter");
-        user.put("ProfileImage", "http://i.imgur.com/j9sgj8i.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu3@mail.com");
-        user.setEmail("stu3@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Melonie Armendariz");
-        user.put("ProfileImage", "http://i.imgur.com/ppnuu2z.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu4@mail.com");
-        user.setEmail("stu4@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Eula Peachey");
-        user.put("ProfileImage", "http://i.imgur.com/x5FHuNC.jpg");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu5@mail.com");
-        user.setEmail("stu5@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Yee Lansberry");
-        user.put("ProfileImage", "http://i.imgur.com/WLTyidr.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu6@mail.com");
-        user.setEmail("stu6@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Sonia Golliday");
-        user.put("ProfileImage", "http://i.imgur.com/TlnT5kZ.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu7@mail.com");
-        user.setEmail("stu7@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Zella Minks");
-        user.put("ProfileImage", "http://i.imgur.com/fowN1RZ.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu8@mail.com");
-        user.setEmail("stu8@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Victor Mccoin");
-        user.put("ProfileImage", "http://i.imgur.com/z0yNE2v.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu9@mail.com");
-        user.setEmail("stu9@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Devon Gall");
-        user.put("ProfileImage", "http://i.imgur.com/TlnT5kZ.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu10@mail.com");
-        user.setEmail("stu10@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Jerrod Maas");
-        user.put("ProfileImage", "http://i.imgur.com/j9YaqYK.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu11@mail.com");
-        user.setEmail("stu11@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Jimmie Stifter");
-        user.put("ProfileImage", "http://i.imgur.com/h4Mm8gk.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu12@mail.com");
-        user.setEmail("stu12@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Aron Crabill");
-        user.put("ProfileImage", "http://i.imgur.com/OmOCohX.png");
-        user.saveInBackground();
-
-
-        user = new ParseUser();
-        user.setUsername("stu13@mail.com");
-        user.setEmail("stu13@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Lucius Lovern");
-        user.put("ProfileImage", "http://i.imgur.com/Rs5toI2.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu14@mail.com");
-        user.setEmail("stu14@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Byron Cadle");
-        user.put("ProfileImage", "http://i.imgur.com/lW0rDF1.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu15@mail.com");
-        user.setEmail("stu15@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Erik Schachter");
-        user.put("ProfileImage", "http://i.imgur.com/sfFt1SM.png");
-        user.saveInBackground();
-
-        user = new ParseUser();
-        user.setUsername("stu16@mail.com");
-        user.setEmail("stu16@mail.com");
-        user.setPassword("secret123");
-        user.put("FullName", "Christoper Seale");
-        user.put("ProfileImage", "http://i.imgur.com/SfyKKso.png");
-        user.saveInBackground();
 
 
     }

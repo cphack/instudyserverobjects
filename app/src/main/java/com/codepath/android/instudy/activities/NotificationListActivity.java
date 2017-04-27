@@ -65,10 +65,7 @@ public class NotificationListActivity extends AppCompatActivity {
                 Chat chat = chats.get(position);
                 i.putExtra("chatid", chat.getObjectId());
                 startActivity(i);
-            }
-        });*/
-
-
+            }        });*/
 
         populateList();
 
@@ -78,7 +75,6 @@ public class NotificationListActivity extends AppCompatActivity {
 
     public void populateList() {
         ParseQuery<Notification> query = ParseQuery.getQuery(Notification.class);
-        query.orderByAscending("updatedAt");
         // Execute the find asynchronously
         query.findInBackground(new FindCallback<Notification>() {
             public void done(List<Notification> itemList, ParseException e) {

@@ -281,9 +281,9 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         //work with assignment
 
-        ParseQuery<Assignment> aquery = ParseQuery.getQuery(Assignment.class);
+      /*  ParseQuery<Assignment> aquery = ParseQuery.getQuery(Assignment.class);
         aquery.whereEqualTo(Assignment.COURSE_ID_KEY, course.getObjectId());
-        aquery.whereGreaterThan(Assignment.DUE_DATE_KEY, new Date());
+        aquery.whereLessThan(Assignment.DUE_DATE_KEY, new Date());
         aquery.findInBackground(new FindCallback<Assignment>() {
             public void done(List<Assignment> assigns, ParseException e) {
                 if (e == null) {
@@ -311,7 +311,14 @@ public class CourseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 }
             }
-        });
+        });*/
+
+      if(course.getObjectId().equals("RKmO2WrHNv")){
+          vh.countDownStart("2017-05-01");
+      }else{
+          vh.hideAssignBlock();
+      }
+
 
 
     }

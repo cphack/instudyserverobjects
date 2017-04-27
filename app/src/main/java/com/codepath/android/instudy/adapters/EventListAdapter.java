@@ -143,7 +143,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Event e = mEvents.get(position);
 
         if(e.getStartDate()==null) {
-            vh.tvDate.setText("Apr 26");
+           /* vh.tvDate.setText("Apr 26");*/
         }else {
             vh.tvDate.setText(e.getStartDate());
         }

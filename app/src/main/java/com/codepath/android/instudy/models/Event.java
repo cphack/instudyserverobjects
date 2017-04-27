@@ -22,7 +22,7 @@ public class Event extends ParseObject {
     public static final String TITLE_KEY = "title";
     public static final String LINK_KEY = "link";
     public static final String TYPE_KEY = "type";
-    public static final String START_DATE_KEY = "startDate";
+    public static final String START_DATE_KEY = "StartDate";
     public static final String END_DATE_KEY = "endDate";
 
     public String getUserId() {
