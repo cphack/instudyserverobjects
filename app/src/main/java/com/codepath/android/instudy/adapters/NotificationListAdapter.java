@@ -1,11 +1,15 @@
 package com.codepath.android.instudy.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.codepath.android.instudy.R;
+import com.codepath.android.instudy.activities.NotificationActivity;
 import com.codepath.android.instudy.helpers.DateTimeHelper;
 import com.codepath.android.instudy.models.Chat;
 import com.codepath.android.instudy.models.Message;
@@ -30,6 +35,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.codepath.android.instudy.R.id.tvName;
 
 
 public class NotificationListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -75,7 +82,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
             case WORK:
                 View v3 = inflater.inflate(R.layout.item_note_work, parent, false);
-                viewHolder = new ItemNoteWork(v3);
+                viewHolder = new ItemNoteWork(v3,getContext());
                 break;
         }
 
@@ -150,6 +157,8 @@ public class NotificationListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void configureNoteWork(final ItemNoteWork vh, int position) {
         Notification n = mNotes.get(position);
+
+        vh.rootView.setTag(n);
         String title = n.getTitle();
         vh.tvTitle.setText(title);
         vh.tvDescrip.setText(n.getDescrip());
@@ -184,15 +193,34 @@ public class NotificationListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public class ItemNoteWork extends RecyclerView.ViewHolder {
 
+        final View rootView;
         public TextView tvTitle;
         public TextView tvDescrip;
         public ImageView ivLogo;
 
-        public ItemNoteWork(View itemView) {
+        public ItemNoteWork(View itemView, final Context context) {
             super(itemView);
+
+            rootView = itemView;
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvDescrip = (TextView) itemView.findViewById(R.id.tvDescrip);
             ivLogo = (ImageView) itemView.findViewById(R.id.ivLogo);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Notification n = (Notification)v.getTag();
+                    if (n != null) {
+
+                        Intent i = new Intent(context, NotificationActivity.class);
+                        i.putExtra("notificationurl", n.getLink());
+
+
+                        context.startActivity(i);
+                    }
+                }
+            });
         }
     }
 
